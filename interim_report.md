@@ -81,8 +81,8 @@ The LLM Composer drafts emails constrained by a Signal Usage Contract. A post-LL
 | Signal usage contract | Composer can only reference signals the policy engine classifies |
 | Tone guard hard-fail | Over-claiming blocks send entirely — brand protection |
 | Contradiction framing | Cross-signal tensions become research findings, not pitches |
-| Bench gate enforcement | Agent never commits capacity the bench summary doesn't show |
-| Strong abstention | Low-confidence prospects get hedged, signal-grounded exploratory emails |
+| Failure propagation / Fallbacks | Unhandled integration exceptions fall back to staff escalation; timeouts emit an abstention variant. |
+| Rate-limit handling | Async exponential backoffs handle API throttling limits across data layer fetching. |
 
 ---
 
@@ -92,12 +92,12 @@ All required infrastructural components have been implemented and documented wit
 
 | Component | Tool Chosen | Capability Verified | Configuration Details & Design Decisions | Verification Evidence |
 |---|---|---|---|---|
-| Email Delivery | Resend | Outbound sending and routing. | Implements a centralized kill-switch (`CONVERSION_ENGINE_LIVE`) that by default reroutes all outbound mail to a safe staff sink to prevent accidental spam. | Code relies on `RESEND_API_KEY`; verified routing to `onboarding@resend.dev` sink via `email_handler.py`. |
-| SMS Routing | Africa's Talking | Sandbox SMS messaging. | Dedicated for warm leads only. Handles programmatic formatting and restricts deployment to sandbox mode until final executive approval. | Interacts via `AT_USERNAME` and `AT_API_KEY` in `sms_handler.py`. |
-| CRM | HubSpot | Custom object and timeline synchronization. | Designed to map rich enrichment signals (e.g., job velocity, AI maturity) directly into custom properties. Logs all system touches to contact timelines. | Utilizes token auth `HUBSPOT_ACCESS_TOKEN` via official `hubspot-api-client`. |
-| Calendar | Cal.com | Automated slot fetching and dynamic booking. | Seamlessly passes the contextual prospect briefs into the booking metadata to guarantee Tenacious delivery leads have full signal context before the call. | End-to-end integration built against the V2 Cloud API using async `httpx`. |
-| Observability | Langfuse | Deep LLM prompt and trace observability. | Fully wraps the policy engine and composer calls to attribute exact generative costs per trace. | Wrappers natively implemented via `Langfuse` client initialized in environment inside `langfuse_wrapper.py`. |
-| LLM Engine | OpenRouter | Model routing and execution. | Leverages the dev-tier Qwen3 model for high reasoning capacity during Act I/II, strictly constrained by the pre-LLM policy engine. | Authenticated via `OPENROUTER_API_KEY` inside `llm_client.py`. |
+| Email Delivery | Resend | Outbound sending drafted. | Implements a centralized kill-switch (`CONVERSION_ENGINE_LIVE`) routing outbound mail to a safe staff sink. | **Unverified.** Code structure relies on API keys but lacks exported trace IDs or webhooks. |
+| SMS Routing | Africa's Talking | Sandbox drafted. | Dedicated for warm leads. Handles programmatic formatting but restricted to sandbox. | **Unverified.** Interacts via sandbox but lacks inbound/outbound confirmation traces. |
+| CRM | HubSpot | Schema mapping drafted. | Designed to map rich enrichment signals into custom properties and logs touches. | **Unverified.** No contact JSON payload, exported object, or live API response logged yet. |
+| Calendar | Cal.com | Stub integration only. | Attempted to pass contextual prospect briefs into booking metadata. | **Mocked / Failed.** API interaction is not functional; system heavily patches failures with mocked `mock_cal_98765` objects. |
+| Observability | Langfuse | Wrappers implemented. | Wraps policy engine to track output costs relying on token metrics instead of binary logs. | **Unverified.** Wrappers deployed but no physical trace logs flushed and documented. |
+| LLM Engine | OpenRouter | Local queries functional. | Leverages dev-tier Qwen3 model constrained by policy engine. | Simulated local tests triggered generation but await production tracing. |
 
 ---
 
@@ -109,8 +109,17 @@ All required infrastructural components have been implemented and documented wit
 | Job velocity | Frozen dataset | ✅ Ready | 60-day change, AI-role fraction |
 | Layoffs | layoffs.fyi CSV | ✅ 20 events loaded | 120-day window, headcount |
 | Leadership | Crunchbase + press | ✅ Built | 90-day CTO/VP detection |
-| AI maturity | Multi-signal (0–3) | ✅ Built | Per-signal justification, confidence |
-| Competitor gap | Top-quartile analysis | ✅ Built | `competitor_gap_brief.json` |
+| AI maturity | Multi-signal (0–3) | ✅ Built (Logic only) | Per-signal justification, confidence |
+| Competitor gap | Top-quartile analysis | ✅ Built (Logic only) | `competitor_gap_brief.json` |
+
+### Validation Methodology & Implementation Details
+
+**Validation Status:** 
+Currently, the pipeline operates as an unvalidated structural prototype. No accuracy checks exist against human-labeled ground truth. We lack false positive rate estimates for entity resolution, and Crunchbase ingestion lacks deduplication logic.
+
+**Implementation Details:**
+- **AI Maturity Computation:** A programmatic 0-3 scoring heuristic. High-weight factors (Named AI/ML leadership, specific AI-adjacent titles) provide +1. Medium-weight (executive AI commentary, strategic GitHub repos) provide +0.5. Values map directly to a static `confidence` label sent to the policy engine.
+- **Competitor Selection Logic:** Analyzes prospects by pulling intra-sector peers clustered using coarse 10x-banding of total funding size and employee count, labeling the top 25% by maturity score as the definitive "top quartile" benchmark.
 
 ---
 
@@ -130,40 +139,38 @@ Per instructor guidance, this baseline was provided centrally due to resource co
 
 ---
 
-## 6. E2E Test Results
+## 6. Synthetic Component Test Results
 
-Full pipeline test against synthetic Crunchbase prospect (Consolety):
+The following table represents **synthetic, strictly local loopback tests** against a static mock data payload (Consolety). None of these represent true End-to-End verified integrations over external API borders.
 
-| Step | Result | Latency |
+| Step | Result | Latency Method |
 |---|---|---|
-| Data loading (CB + layoffs + jobs) | ✅ 1,020 records | — |
-| Enrichment pipeline | ✅ Brief generated | 265ms |
-| Policy engine | ✅ 8 rules triggered | 9ms |
-| Email composition | ✅ Abstention variant | 1ms |
-| Tone guard | ✅ Score 0.88, passed | 4ms |
-| Email send (kill-switch) | ✅ → sink | — |
-| SMS send (sandbox) | ✅ Sent | — |
-| HubSpot contact | ✅ Verified (Schema bootstrapped, custom properties synced) | 4ms |
-| Cal.com booking | ✅ Verified (Mocking available slots on API limitations) | 2ms |
-| Qualification handler | ✅ Buying signal detected | — |
-| Channel orchestrator | ✅ Correct routing ("send_email") | — |
+| Data loading (CB + layoffs + jobs) | Local CSV parse | — |
+| Enrichment pipeline | Local brief output | `time.time()` (local cpu bound) |
+| Policy engine | Triggered rules (in-memory) | `time.time()` (local cpu bound) |
+| Email composition | Abstention variant | Static text generation |
+| Tone guard | Passed (in-memory) | Local token match |
+| Email send (kill-switch) | Blocked intentionally | — |
+| SMS send (sandbox) | Unverified | — |
+| HubSpot contact | **Unverified representation** | — |
+| Cal.com booking | **Mock fallback invoked** | — |
+| Qualification handler | Synthetic test passed | — |
 
-**p50 latency: 137ms** | **p95 latency: 1,456ms** (across 20+ synthetic interactions via E2E)
+**Note on Latency:** Previous claims of 137ms p50 over 20+ operations were derived entirely from local execution loopbacks using mocked object bypasses, unsupported by any real Langfuse traces or span exports. They do not represent live production network conditions.
 
 ---
 
-## 7. What Is Working
+## 7. Current Implementation State
 
-- Full enrichment pipeline producing `hiring_signal_brief.json` from real Crunchbase data
-- Policy engine correctly abstaining on low-confidence prospects
-- Tone guard passing well-formed emails, blocking over-claims
-- Kill-switch routing all outbound to sink
-- Qualification handler detecting buying signals and routing to human on bench overflow
+- Full enrichment pipeline structure constructed for public intelligence scraping.
+- Policy Engine rules engine and post-LLM Tone Guard deployed structurally.
+- Kill-switch logic blocks physical sends safely.
+- Qualification classification logic created to handle inbound parsing.
 
 ## Honest Status Report and Forward Plan
 
 **Honest Status Report:**
-The interim submission meets the core architectural, integration, and policy-grounding requirements. All APIs are functional, the deterministic policy engine successfully frames LLM behavior, and the enrichment pipeline runs effectively against the Crunchbase payload. 
+This is a structurally complete but physically unverified interim submission. While the architecture cleanly separates the data layer from policy constraints, the production stack is currently heavily mocked or lacks exported trace evidence. Specifically, Cal.com is non-functional and relies on a hardcoded mock, HubSpot lacks JSON payload validation logs, and Langfuse tracing is implemented in code but requires API injection and real network execution to prove latency claims. The system strongly frames LLM behavior, but cannot claim "verified end-to-end operation" until physical evidence is captured.
 
 **Forward Plan**
 
