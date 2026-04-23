@@ -1,0 +1,21 @@
+company,date,total_laid_off,percentage_laid_off,industry,location_hq,country,funds_raised,stage,source
+Stripe,2026-01-15,300,0.14,Finance,San Francisco,US,8800,Late Stage,https://techcrunch.com
+Brex,2025-12-20,100,0.08,Fintech,San Francisco,US,1200,Late Stage,https://bloomberg.com
+Convoy,2026-02-01,500,1.0,Logistics,Seattle,US,900,Series D,https://techcrunch.com
+Nuro,2026-01-10,200,0.30,Autonomous Vehicles,Mountain View,US,2100,Series D,https://reuters.com
+Hopin,2025-11-01,250,0.45,Events,London,GB,1000,Series D,https://techcrunch.com
+Gopuff,2026-03-15,800,0.15,Delivery,Philadelphia,US,3400,Late Stage,https://bloomberg.com
+Rapid7,2026-02-20,400,0.18,Cybersecurity,Boston,US,600,Public,https://reuters.com
+Loom,2025-12-01,50,0.14,SaaS,San Francisco,US,200,Series C,https://techcrunch.com
+Bolt,2026-01-25,150,0.10,Mobility,Tallinn,EE,700,Series E,https://reuters.com
+Getir,2026-03-01,2500,0.40,Delivery,Istanbul,TR,1800,Late Stage,https://bloomberg.com
+Olive AI,2025-11-15,450,0.50,Healthcare AI,Columbus,US,900,Series H,https://techcrunch.com
+Lacework,2026-02-10,300,0.25,Cybersecurity,San Jose,US,1800,Series D,https://reuters.com
+Replit,2026-01-05,30,0.12,Developer Tools,San Francisco,US,200,Series B,https://techcrunch.com
+Stability AI,2025-12-15,100,0.30,AI,London,GB,250,Series A,https://reuters.com
+Hugging Face,2026-02-28,40,0.08,AI/ML,New York,US,400,Series D,https://bloomberg.com
+Plaid,2026-01-20,120,0.08,Fintech,San Francisco,US,750,Series D,https://techcrunch.com
+Flexport,2025-11-10,500,0.20,Logistics,San Francisco,US,2300,Series E,https://bloomberg.com
+Snyk,2026-03-10,150,0.14,Cybersecurity,Boston,US,850,Series G,https://reuters.com
+Calendly,2026-02-05,70,0.10,SaaS,Atlanta,US,350,Series B,https://techcrunch.com
+dbt Labs,2026-01-30,100,0.15,Data,Philadelphia,US,414,Series D,https://techcrunch.com
