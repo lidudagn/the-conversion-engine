@@ -14,5 +14,23 @@
       0.7917
     ],
     "total_tasks": 30
+  },
+  {
+    "run_date": "2026-04-23",
+    "source": "existing_simulation_jsons",
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "total_tasks": 61,
+    "tasks_passed": 17,
+    "pass_at_1": 0.2787,
+    "pass_at_1_ci_95": [
+      0.1629,
+      0.3945
+    ],
+    "std": 0.4521,
+    "p50_latency_seconds": 92.45,
+    "p95_latency_seconds": 214.46,
+    "avg_agent_cost": 0.0,
+    "note": "Scores extracted from per-task reward_info.reward in simulation JSONs. Cost is 0.0 because qwen3-235b-a22b is not in LiteLLM price table; estimated ~$0.30 from OpenRouter billing."
   }
 ]

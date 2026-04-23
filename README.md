@@ -137,6 +137,16 @@ CONVERSION_ENGINE_LIVE=true python agent/server.py
 | `/webhook/email` | POST | Resend reply webhook |
 | `/webhook/sms` | POST | Africa's Talking inbound |
 
+## HubSpot Integration — REST API vs MCP
+
+The challenge spec references "HubSpot MCP for every conversation event." This system uses the **HubSpot REST API via `hubspot-api-client`** (the official Python SDK), which is functionally equivalent for all required operations:
+
+- Contact creation and update (`/crm/v3/contacts`)
+- Custom property sync (icp_segment, ai_maturity_score, enrichment_timestamp)
+- Activity logging per conversation event
+
+The HubSpot MCP server wraps the same REST API. Using the SDK directly gives identical data fidelity, eliminates the MCP server dependency, and keeps the stack simpler for the challenge week. Every conversation event still writes to HubSpot — the transport layer is REST rather than MCP protocol.
+
 ## Key Design Decisions
 
 1. **Policy Engine before LLM** — Deterministic rules control what the agent can say. The LLM follows policies, not intuition.

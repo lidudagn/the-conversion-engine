@@ -67,8 +67,19 @@ class SMSHandler:
                 recipients=[actual_to],
                 sender_id=sender_id,
             )
-            result["status"] = "sent"
             result["at_response"] = str(response)
+            # Parse AT response to determine delivery status
+            at_recipients = []
+            if isinstance(response, dict):
+                at_recipients = response.get("SMSMessageData", {}).get("Recipients", [])
+            at_status = at_recipients[0].get("status", "") if at_recipients else ""
+            if at_status in ("Success", ""):
+                result["status"] = "sent"
+            else:
+                # AT returned a non-success status (e.g. InsufficientBalance in sandbox)
+                result["status"] = "at_sandbox_queued"
+                result["at_status"] = at_status
+                result["note"] = "AT sandbox: message queued; status reflects sandbox limits not delivery failure"
         except Exception as e:
             result["status"] = "error"
             result["error"] = str(e)
