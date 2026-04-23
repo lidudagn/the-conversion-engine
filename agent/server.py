@@ -387,11 +387,48 @@ async def book_discovery_call(req: BookRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+class SMSSendRequest(BaseModel):
+    prospect_phone: str
+    prospect_email: str
+    message: str
+
+
 @app.post("/sms/send")
-async def send_sms(prospect_phone: str, message: str):
-    """Send SMS for warm-lead scheduling."""
-    result = sms_handler.send_sms(to_number=prospect_phone, message=message)
-    return result
+async def send_sms(req: SMSSendRequest):
+    """
+    Send SMS for warm-lead scheduling.
+    Channel hierarchy enforced: SMS is only allowed if the prospect
+    has an active thread AND has already replied to an email (warm lead).
+    """
+    # --- Channel hierarchy gate ---
+    thread = orchestrator._threads.get(req.prospect_email)
+    if not thread:
+        raise HTTPException(
+            status_code=400,
+            detail="No conversation thread found for this prospect. "
+                   "Email outreach must happen before SMS.",
+        )
+    if not thread.email_replied:
+        raise HTTPException(
+            status_code=400,
+            detail="Channel hierarchy violation: prospect has not replied "
+                   "to email yet. SMS is reserved for warm leads only.",
+        )
+
+    result = sms_handler.send_sms(to_number=req.prospect_phone, message=req.message)
+
+    # Update thread state
+    thread.sms_sent = True
+    thread.last_activity = datetime.now().isoformat()
+
+    # Log to HubSpot
+    hubspot.log_activity(
+        contact_id="",
+        activity_type="sms_sent",
+        body=f"SMS sent to {req.prospect_phone}. Kill-switch: {config.KILL_SWITCH}",
+    )
+
+    return {"status": "sent", "sms_result": result, "channel_gate": "passed"}
 
 
 @app.post("/webhook/email")
@@ -410,10 +447,53 @@ async def email_webhook(request: Request):
 
 @app.post("/webhook/sms")
 async def sms_webhook(request: Request):
-    """Handle Africa's Talking SMS webhooks."""
+    """Handle Africa's Talking inbound SMS webhooks.
+    Routes parsed replies to orchestrator and qualification handler."""
     payload = await request.json()
     parsed = sms_handler.process_webhook(payload)
-    return {"status": "received", "parsed": parsed}
+
+    # Route inbound SMS to orchestrator for thread state update
+    from_number = parsed.get("from", "")
+    reply_text = parsed.get("text", "")
+
+    # Resolve prospect email from phone number by scanning active threads
+    prospect_email = None
+    for email, thread in orchestrator._threads.items():
+        if thread.sms_sent:  # this thread has had SMS interaction
+            prospect_email = email
+            break
+
+    if prospect_email and reply_text:
+        # Update thread state via orchestrator
+        thread = orchestrator.handle_reply(prospect_email, "sms", reply_text)
+
+        # Route to qualification handler
+        state = QualificationState(
+            prospect_name=thread.prospect_name,
+            thread_id=thread.thread_id,
+        )
+        updated_state, response = qualifier.process_reply(state, reply_text)
+
+        # Determine next action based on updated thread
+        next_action = orchestrator.determine_next_channel(thread)
+
+        # Log to HubSpot
+        hubspot.log_activity(
+            contact_id="",
+            activity_type="sms_reply_received",
+            body=f"SMS reply from {from_number}. Status: {updated_state.status}. "
+                 f"Next action: {next_action}",
+        )
+
+        return {
+            "status": "processed",
+            "parsed": parsed,
+            "thread_status": thread.status,
+            "qualification_status": updated_state.status,
+            "next_action": next_action,
+        }
+
+    return {"status": "received", "parsed": parsed, "routed": False}
 
 
 @app.get("/threads")
