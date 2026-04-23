@@ -1,0 +1,245 @@
+[
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 2,
+    "mean_pass_at_1": 0.0,
+    "std": 0.0,
+    "ci_95_lower": 0.0,
+    "ci_95_upper": 0.0,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 0.0,
+    "latency_p95_s": 0.0,
+    "scores": [
+      0.0,
+      0.0
+    ],
+    "traces": [],
+    "timestamp": "2026-04-22T19:28:54.180781"
+  },
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 2,
+    "mean_pass_at_1": 0.0,
+    "std": 0.0,
+    "ci_95_lower": 0.0,
+    "ci_95_upper": 0.0,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 7.15,
+    "latency_p95_s": 7.21,
+    "scores": [
+      0.0,
+      0.0
+    ],
+    "traces": [
+      {
+        "trial": 1,
+        "score": 0.0,
+        "latency_s": 7.22,
+        "timestamp": "2026-04-22T19:34:52.154666",
+        "output_snippet": "2026-04-22 19:34:46.040 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/lidya/Videos/week 10/eval/tau2-bench/data\n2026-04-22 19:34:51.245 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled\n2026-04-22 19:34:51.413 | DEBUG    | tau2.registry:<module>:281 - Registering default components...\n2026-04-22 19:34:51.417 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration\n2026-04-22 19:34:"
+      },
+      {
+        "trial": 2,
+        "score": 0.0,
+        "latency_s": 7.09,
+        "timestamp": "2026-04-22T19:34:59.242638",
+        "output_snippet": "2026-04-22 19:34:53.115 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/lidya/Videos/week 10/eval/tau2-bench/data\n2026-04-22 19:34:58.368 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled\n2026-04-22 19:34:58.528 | DEBUG    | tau2.registry:<module>:281 - Registering default components...\n2026-04-22 19:34:58.531 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration\n2026-04-22 19:34:"
+      }
+    ],
+    "timestamp": "2026-04-22T19:35:00.263845"
+  },
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 5,
+    "mean_pass_at_1": 0.0,
+    "std": 0.0,
+    "ci_95_lower": 0.0,
+    "ci_95_upper": 0.0,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 300.0,
+    "latency_p95_s": 300.0,
+    "scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "traces": [],
+    "timestamp": "2026-04-22T20:25:33.724920"
+  },
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 5,
+    "mean_pass_at_1": 0.0,
+    "std": 0.0,
+    "ci_95_lower": 0.0,
+    "ci_95_upper": 0.0,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 236.82,
+    "latency_p95_s": 722.73,
+    "scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "traces": [
+      {
+        "trial": 1,
+        "score": 0.0,
+        "latency_s": 821.42,
+        "timestamp": "2026-04-22T20:52:47.854282",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 gpt-4.1-2025-04-14                                   \u2502\n\u2502             "
+      },
+      {
+        "trial": 2,
+        "score": 0.0,
+        "latency_s": 219.68,
+        "timestamp": "2026-04-22T20:56:27.556630",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 gpt-4.1-2025-04-14                                   \u2502\n\u2502             "
+      },
+      {
+        "trial": 3,
+        "score": 0.0,
+        "latency_s": 233.78,
+        "timestamp": "2026-04-22T21:00:21.357727",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 gpt-4.1-2025-04-14                                   \u2502\n\u2502             "
+      },
+      {
+        "trial": 4,
+        "score": 0.0,
+        "latency_s": 236.82,
+        "timestamp": "2026-04-22T21:04:18.193601",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 gpt-4.1-2025-04-14                                   \u2502\n\u2502             "
+      },
+      {
+        "trial": 5,
+        "score": 0.0,
+        "latency_s": 327.98,
+        "timestamp": "2026-04-22T21:09:46.188687",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 gpt-4.1-2025-04-14                                   \u2502\n\u2502             "
+      }
+    ],
+    "timestamp": "2026-04-22T21:09:47.165237"
+  },
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 5,
+    "mean_pass_at_1": 0.028,
+    "std": 0.0626,
+    "ci_95_lower": -0.0497,
+    "ci_95_upper": 0.1057,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 264.71,
+    "latency_p95_s": 2659.03,
+    "scores": [
+      0.14,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "traces": [
+      {
+        "trial": 1,
+        "score": 0.14,
+        "latency_s": 3156.99,
+        "timestamp": "2026-04-22T22:41:33.803925",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      },
+      {
+        "trial": 2,
+        "score": 0.0,
+        "latency_s": 225.93,
+        "timestamp": "2026-04-22T22:45:19.794973",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      },
+      {
+        "trial": 3,
+        "score": 0.0,
+        "latency_s": 264.71,
+        "timestamp": "2026-04-22T22:49:44.553841",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      },
+      {
+        "trial": 4,
+        "score": 0.0,
+        "latency_s": 667.19,
+        "timestamp": "2026-04-22T23:00:51.782844",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      },
+      {
+        "trial": 5,
+        "score": 0.0,
+        "latency_s": 209.05,
+        "timestamp": "2026-04-22T23:04:20.866859",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      }
+    ],
+    "timestamp": "2026-04-22T23:04:22.402886"
+  },
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 1,
+    "mean_pass_at_1": 0.0,
+    "std": 0.0,
+    "ci_95_lower": 0.0,
+    "ci_95_upper": 0.0,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 198.48,
+    "latency_p95_s": 198.48,
+    "scores": [
+      0.0
+    ],
+    "traces": [
+      {
+        "trial": 1,
+        "score": 0.0,
+        "latency_s": 198.48,
+        "timestamp": "2026-04-22T23:15:00.781203",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      }
+    ],
+    "timestamp": "2026-04-22T23:15:01.785210"
+  },
+  {
+    "domain": "retail",
+    "model": "qwen/qwen3-235b-a22b",
+    "trials": 1,
+    "mean_pass_at_1": 0.0,
+    "std": 0.0,
+    "ci_95_lower": 0.0,
+    "ci_95_upper": 0.0,
+    "cost_per_run_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "latency_p50_s": 256.76,
+    "latency_p95_s": 256.76,
+    "scores": [
+      0.0
+    ],
+    "traces": [
+      {
+        "trial": 1,
+        "score": 0.0,
+        "latency_s": 256.76,
+        "timestamp": "2026-04-22T23:23:11.591732",
+        "output_snippet": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Simulation Configuration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Domain: retail  Task Set: Default  Tasks: All                                \u2502\n\u2502 Trials: 1  Max Steps: 200  Max Errors: 10                                    \u2502\n\u2502                                                                              \u2502\n\u2502 Agent: llm_agent \u2192 openrouter/qwen/qwen3-235b-a22b                           \u2502\n\u2502 User:  user_simulator \u2192 openrouter/qwen/qwen3-235b-a22b                      \u2502\n\u2502             "
+      }
+    ],
+    "timestamp": "2026-04-22T23:23:12.633229"
+  }
+]
