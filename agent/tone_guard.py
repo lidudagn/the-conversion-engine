@@ -158,7 +158,60 @@ Return JSON:
                             )
                             scores["signal_compliance"] -= 0.2
 
-        # Check for bench overcommitment
+        # Hard-fail: guarantee/absolute claim language → overclaiming
+        guarantee_phrases = [
+            "we guarantee", "guaranteed", "100% success", "without exception",
+            "every time", "always deliver", "zero risk", "risk-free",
+            "we promise", "definitively will",
+        ]
+        for phrase in guarantee_phrases:
+            if phrase in draft_lower:
+                issues.append(f"overclaiming: guarantee language ('{phrase}')")
+                scores["overclaiming"] = 0.0
+
+        # Hard-fail: fabricated superlatives → overclaiming
+        superlative_phrases = [
+            "#1 ranked", "#1 firm", "number one", "best in africa",
+            "best in the world", "top-ranked", "industry-leading nps",
+            "nps of 9", "nps of 10",
+        ]
+        for phrase in superlative_phrases:
+            if phrase in draft_lower:
+                issues.append(f"overclaiming: unsubstantiated superlative ('{phrase}')")
+                scores["overclaiming"] = 0.0
+
+        # Hard-fail: bench overcommitment (large specific engineer counts)
+        import re
+        large_eng_match = re.search(r"\b([1-9]\d{2,})\s+(?:dedicated\s+)?engineers?\b", draft_lower)
+        if large_eng_match:
+            count = int(large_eng_match.group(1))
+            capacity = policy.available_capacity or {}
+            total_available = sum(capacity.values()) if capacity else (
+                sum(v for v in capacity.values()) if capacity else 0
+            )
+            # 500+ engineers when bench is small → bench overcommitment
+            if count >= 100:
+                issues.append(f"bench_overcommitment: claims {count} engineers (bench not verified)")
+                scores["overclaiming"] = 0.0
+
+        # Hard-fail: explicit pricing disclosure
+        pricing_match = re.search(r"\$[\d,]+(?:\.\d+)?(?:\s*(?:per|/)\s*(?:month|year|engineer|person))", draft_lower)
+        if pricing_match:
+            issues.append(f"unauthorized_pricing: specific rate disclosed ('{pricing_match.group()}')")
+            scores["overclaiming"] = 0.0
+
+        # Hard-fail: aggressive competitor attacks by name
+        known_competitors = ["accenture", "mckinsey", "deloitte", "bcg", "thoughtworks", "andela"]
+        attack_qualifiers = ["unlike", "better than", "inferior", "overpriced", "underperform", "bloated"]
+        for comp in known_competitors:
+            if comp in draft_lower:
+                for qualifier in attack_qualifiers:
+                    if qualifier in draft_lower:
+                        issues.append(f"overclaiming: competitor attack ('{comp}' + '{qualifier}')")
+                        scores["overclaiming"] = 0.1
+                        break
+
+        # Check for bench overcommitment (bench_match=False path)
         commitment_phrases = [
             "we can provide", "we have", "our team of",
             "dedicated team", "assign", "staff"

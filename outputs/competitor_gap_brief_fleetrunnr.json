@@ -1,0 +1,15 @@
+{
+  "prospect_name": "FleetRunnr",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Cloud Management",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 1
+  },
+  "top_quartile_companies": [],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:38.236802"
+}

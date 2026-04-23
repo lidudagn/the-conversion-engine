@@ -99,8 +99,7 @@ class CalComClient:
                 "email": email,
                 "timeZone": timezone,
             },
-            "meetingNotes": notes,
-            "metadata": metadata or {},
+            "metadata": {**(metadata or {}), "notes": notes},
         }
 
         if not self._active:

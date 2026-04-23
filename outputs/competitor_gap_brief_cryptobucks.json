@@ -1,0 +1,108 @@
+{
+  "prospect_name": "CryptoBucks",
+  "prospect_ai_maturity": 2,
+  "prospect_sector": "Financial Services",
+  "sector_distribution": {
+    "mean": 0.19,
+    "p75": 0,
+    "p90": 1,
+    "count": 16
+  },
+  "top_quartile_companies": [
+    {
+      "name": "AMS-PAR",
+      "sector": "Financial Services",
+      "ai_maturity_score": 1,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [
+        "Active AI hiring (2 roles)"
+      ],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Sycamore Hill Capital Corporation",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "101-250",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Allied Business Accountants",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alliance Financial Services",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "51-100",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Windler & Windler",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Conserv FS",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "101-250",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Studio Zulian Riccardo",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alpha Funding",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "ConnexMarkets",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "CCW TEKNOLOJI YATIRIMLARI A.S.",
+      "sector": "Financial Services",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:39.867638"
+}

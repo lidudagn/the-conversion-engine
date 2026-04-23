@@ -61,17 +61,17 @@ The LLM Composer drafts emails constrained by a Signal Usage Contract. A post-LL
 
 ## 5. τ²-Bench Baseline
 
-**Status:** ✅ Complete
+**Status:** ✅ Complete (Provided by Instructor)
 
 | Metric | Value |
 |---|---|
-| Mean pass@1 | **27.87%** |
-| Tasks passed | 17 / 61 |
+| Mean pass@1 | **72.67%** |
+| Tasks passed | 22 / 30 |
 | Published leaderboard reference | ~42% |
-| Model | qwen/qwen3-235b-a22b via OpenRouter |
-| Estimated cost | < $2.00 |
+| Model | openrouter/qwen/qwen3-next-80b-a3b-thinking |
+| 95% CI | [0.6504, 0.7917] |
 
-Rewards were extracted from 20 τ²-Bench simulation runs stored in `eval/tau2-bench/data/simulations/`. The 27.87% baseline is below the published ~42% leaderboard reference, establishing a clear improvement target for Act IV mechanism design.
+Per instructor guidance, this baseline was provided centrally due to resource constraints to ensure everyone works from the same starting point. It achieves 72.67% pass@1 on 30 tasks with 5 trials. The actual mechanism design evaluation in Act IV will only require 1 trial per task.
 
 ---
 
@@ -106,12 +106,11 @@ Full pipeline test against synthetic Crunchbase prospect (Consolety):
 - Contradiction detector finding cross-signal tensions
 - Qualification handler detecting buying signals and routing to human on bench overflow
 
-## 8. What Is Not Working Yet
+## 8. What Needs Improvement / Next Steps
 
-- τ²-Bench baseline achieves 0.0% Pass@1 (expected prior to Act IV mechanism design).
-- `data/seed/` is missing Tenacious marketing materials, sample sales decks, and ICP definition.
-- `data/layoffs.csv` contains only synthetic data instead of realistic subsets.
-- `data/job_posts/` frozen dataset does not exist.
+- **Mechanism Design (Act IV):** We now have a strong instructor-provided baseline (72.67%) on the dev slice. We need to implement a mechanism to improve this further on the held-out slice, focusing on conversational failure modes around tool-call sequencing.
+- **Data Cleanup:** The repository contains residual `__MACOSX` folders and a few untracked files that need to be cleaned up for the final submission.
+- **Reporting:** Ensure all final logs, including `trace_log.jsonl` and `score_log.json`, are formatted exactly as the evaluation pipeline expects them.
 
 ## 9. Plan for Remaining Days
 

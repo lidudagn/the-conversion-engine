@@ -1,0 +1,106 @@
+{
+  "prospect_name": "Anfotech",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Information Technology",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 16
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Study Crown Limited",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "CC Point Ltd",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Business & ICT Consulting",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "51-100",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Business Human Network",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alpine",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Console Support",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alphline Technologies",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Consonics",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Winpos Ab",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Wickr",
+      "sector": "Information Technology",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "51-100",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:43:06.489438"
+}

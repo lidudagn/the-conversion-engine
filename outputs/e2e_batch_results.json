@@ -1,0 +1,485 @@
+{
+  "n_prospects": 25,
+  "n_successful": 25,
+  "p50_latency_ms": 1535.0,
+  "p95_latency_ms": 1913.4,
+  "note": "Full pipeline: enrichment+policy+compose+tone_guard+email_send. Kill-switch active (all email to sink). LLM-based paths activate for signal-grounded emails; template fallback used here for cost efficiency. LLM adds ~2-8s per email.",
+  "prospects": [
+    {
+      "company": "WISEiTECH",
+      "email": "cto@wisetech.io",
+      "steps": {
+        "enrichment_ms": 3.5,
+        "policy_ms": 0.3,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1819.2
+      },
+      "total_ms": 1823.2,
+      "icp_segment": 4,
+      "ai_maturity": 2,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "signal_grounded",
+      "subject": "Quick thought on scaling at WISEiTECH",
+      "status": "ok"
+    },
+    {
+      "company": "Xrosswork",
+      "email": "founder@xrosswork.com",
+      "steps": {
+        "enrichment_ms": 7.0,
+        "policy_ms": 0.3,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1437.4
+      },
+      "total_ms": 1444.9,
+      "icp_segment": 4,
+      "ai_maturity": 2,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "signal_grounded",
+      "subject": "Quick thought on scaling at Xrosswork",
+      "status": "ok"
+    },
+    {
+      "company": "Whitehill Technologies",
+      "email": "vp.eng@whitehill.com",
+      "steps": {
+        "enrichment_ms": 3.5,
+        "policy_ms": 0.2,
+        "compose_ms": 0.2,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1961.7
+      },
+      "total_ms": 1965.7,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Whitehill Technologies",
+      "status": "ok"
+    },
+    {
+      "company": "FleetRunnr",
+      "email": "ceo@fleetrunnr.io",
+      "steps": {
+        "enrichment_ms": 6.4,
+        "policy_ms": 0.2,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1626.2
+      },
+      "total_ms": 1633.0,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for FleetRunnr",
+      "status": "ok"
+    },
+    {
+      "company": "CryptoBucks",
+      "email": "cto@cryptobucks.com",
+      "steps": {
+        "enrichment_ms": 3.4,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1630.7
+      },
+      "total_ms": 1634.3,
+      "icp_segment": 4,
+      "ai_maturity": 2,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "signal_grounded",
+      "subject": "Quick thought on scaling at CryptoBucks",
+      "status": "ok"
+    },
+    {
+      "company": "Korubu",
+      "email": "tech@korubu.com",
+      "steps": {
+        "enrichment_ms": 5.3,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1542.3
+      },
+      "total_ms": 1548.1,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Korubu",
+      "status": "ok"
+    },
+    {
+      "company": "Systemsync Solutions",
+      "email": "info@systemsync.com",
+      "steps": {
+        "enrichment_ms": 5.1,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1415.6
+      },
+      "total_ms": 1421.3,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Systemsync Solutions",
+      "status": "ok"
+    },
+    {
+      "company": "Altepro",
+      "email": "cto@altepro.com",
+      "steps": {
+        "enrichment_ms": 4.8,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1222.3
+      },
+      "total_ms": 1227.6,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Altepro",
+      "status": "ok"
+    },
+    {
+      "company": "Wickr",
+      "email": "eng@wickr.com",
+      "steps": {
+        "enrichment_ms": 3.1,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1927.6
+      },
+      "total_ms": 1931.0,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Wickr",
+      "status": "ok"
+    },
+    {
+      "company": "CTJ INFO-TECH",
+      "email": "contact@ctjinfo.com",
+      "steps": {
+        "enrichment_ms": 7.4,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1411.2
+      },
+      "total_ms": 1419.1,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for CTJ INFO-TECH",
+      "status": "ok"
+    },
+    {
+      "company": "WEYTEC",
+      "email": "info@weytec.com",
+      "steps": {
+        "enrichment_ms": 2.9,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1671.7
+      },
+      "total_ms": 1675.1,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for WEYTEC",
+      "status": "ok"
+    },
+    {
+      "company": "Conneqt Business Solutions",
+      "email": "cto@conneqt.com",
+      "steps": {
+        "enrichment_ms": 5.4,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1702.5
+      },
+      "total_ms": 1708.4,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Conneqt Business Solutions",
+      "status": "ok"
+    },
+    {
+      "company": "Connempathy",
+      "email": "vp@connempathy.com",
+      "steps": {
+        "enrichment_ms": 2.1,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1441.4
+      },
+      "total_ms": 1443.8,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Connempathy",
+      "status": "ok"
+    },
+    {
+      "company": "Web Stack Technologies",
+      "email": "dev@webstack.io",
+      "steps": {
+        "enrichment_ms": 2.6,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1343.3
+      },
+      "total_ms": 1346.3,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Web Stack Technologies",
+      "status": "ok"
+    },
+    {
+      "company": "Xuver Lab",
+      "email": "hi@xuverlab.com",
+      "steps": {
+        "enrichment_ms": 2.7,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1532.0
+      },
+      "total_ms": 1535.0,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Xuver Lab",
+      "status": "ok"
+    },
+    {
+      "company": "AMS-PAR",
+      "email": "contact@amspar.com",
+      "steps": {
+        "enrichment_ms": 2.5,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1739.2
+      },
+      "total_ms": 1742.0,
+      "icp_segment": null,
+      "ai_maturity": 1,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for AMS-PAR",
+      "status": "ok"
+    },
+    {
+      "company": "Culcha",
+      "email": "cto@culcha.com",
+      "steps": {
+        "enrichment_ms": 2.5,
+        "policy_ms": 0.2,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1634.5
+      },
+      "total_ms": 1637.3,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Culcha",
+      "status": "ok"
+    },
+    {
+      "company": "Appcro",
+      "email": "tech@appcro.com",
+      "steps": {
+        "enrichment_ms": 5.6,
+        "policy_ms": 0.4,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1149.2
+      },
+      "total_ms": 1155.5,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Appcro",
+      "status": "ok"
+    },
+    {
+      "company": "Connected Devices",
+      "email": "sales@connecteddevices.com",
+      "steps": {
+        "enrichment_ms": 4.8,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1091.2
+      },
+      "total_ms": 1096.5,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Connected Devices",
+      "status": "ok"
+    },
+    {
+      "company": "Web Endurance",
+      "email": "info@webendurance.com",
+      "steps": {
+        "enrichment_ms": 2.6,
+        "policy_ms": 0.1,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1638.2
+      },
+      "total_ms": 1641.1,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Web Endurance",
+      "status": "ok"
+    },
+    {
+      "company": "Handled IT Partners",
+      "email": "contact@handledit.com",
+      "steps": {
+        "enrichment_ms": 5.1,
+        "policy_ms": 0.2,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1152.9
+      },
+      "total_ms": 1158.4,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Handled IT Partners",
+      "status": "ok"
+    },
+    {
+      "company": "Crystal ICT",
+      "email": "info@crystalict.com",
+      "steps": {
+        "enrichment_ms": 2.1,
+        "policy_ms": 0.1,
+        "compose_ms": 0.0,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1295.4
+      },
+      "total_ms": 1297.8,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Crystal ICT",
+      "status": "ok"
+    },
+    {
+      "company": "Anfotech",
+      "email": "anfo@anfotech.com",
+      "steps": {
+        "enrichment_ms": 4.9,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1427.8
+      },
+      "total_ms": 1433.2,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Anfotech",
+      "status": "ok"
+    },
+    {
+      "company": "Consolety",
+      "email": "cto@consolety.net",
+      "steps": {
+        "enrichment_ms": 4.7,
+        "policy_ms": 0.3,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.1,
+        "email_send_ms": 1837.8
+      },
+      "total_ms": 1843.1,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Consolety",
+      "status": "ok"
+    },
+    {
+      "company": "Stronghold Services Corporation",
+      "email": "contact@stronghold.com",
+      "steps": {
+        "enrichment_ms": 4.0,
+        "policy_ms": 0.4,
+        "compose_ms": 0.1,
+        "tone_guard_ms": 0.2,
+        "email_send_ms": 1222.3
+      },
+      "total_ms": 1227.1,
+      "icp_segment": null,
+      "ai_maturity": 0,
+      "tone_passed": true,
+      "tone_score": 0.88,
+      "email_variant": "abstention",
+      "subject": "Quick thought for Stronghold Services Corporation",
+      "status": "ok"
+    }
+  ],
+  "timestamp": "2026-04-23T20:43:10.997791"
+}

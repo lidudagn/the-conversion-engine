@@ -1,0 +1,106 @@
+{
+  "prospect_name": "Xrosswork",
+  "prospect_ai_maturity": 2,
+  "prospect_sector": "Artificial Intelligence (AI)",
+  "sector_distribution": {
+    "mean": 0.13,
+    "p75": 0,
+    "p90": 0,
+    "count": 15
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Wit.ai",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Wizard Labs",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Semantica",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "The Attention Exchange",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Force Cloud AI",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Coverbase",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Matevo Chemicals",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Formation",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "DigiTelescope",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "101-250",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Altrix Technologies",
+      "sector": "Artificial Intelligence (AI)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:34.824307"
+}

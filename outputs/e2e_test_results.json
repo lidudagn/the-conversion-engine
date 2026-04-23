@@ -1,0 +1,145 @@
+{
+  "crunchbase_loaded": 1000,
+  "layoffs_loaded": 20,
+  "job_posts_loaded": true,
+  "test_prospect": "WISEiTECH",
+  "enrichment": {
+    "funding": {
+      "event": null,
+      "date": "",
+      "total_usd": null,
+      "type": "",
+      "confidence": "low",
+      "source": "crunchbase"
+    },
+    "job_velocity": {
+      "open_roles": 10,
+      "60d_change": "-40%",
+      "ai_roles_fraction": 0.6,
+      "confidence": "high"
+    },
+    "layoffs": {
+      "event": false,
+      "headcount": 0,
+      "most_recent": null,
+      "confidence": "high"
+    },
+    "leadership": {
+      "new_cto": null,
+      "new_vp_eng": null,
+      "has_recent_change": false,
+      "confidence": "low"
+    },
+    "ai_maturity": {
+      "score": 2,
+      "confidence": "medium",
+      "uncertainty_reason": "Score 2 from high-weight signals but lacking confirmation from additional sources. Some uncertainty remains.",
+      "language_constraint": "should_hedge",
+      "has_ai_leadership": false
+    },
+    "icp_segment": {
+      "primary": 4,
+      "secondary": null,
+      "confidence": 0.5,
+      "edge_case": null
+    },
+    "contradictions_found": 1,
+    "gap_brief_generated": true,
+    "latency_ms": 119
+  },
+  "policy": {
+    "tone_mode": "exploratory",
+    "abstain": false,
+    "use_competitor_gap": false,
+    "gap_delivery_mode": "soft",
+    "assertable_signals": [
+      "job_velocity",
+      "layoffs"
+    ],
+    "question_signals": [
+      "ai_maturity"
+    ],
+    "omit_signals": [
+      "funding",
+      "leadership"
+    ],
+    "bench_match": false,
+    "rules_triggered": 9,
+    "latency_ms": 1
+  },
+  "composition": {
+    "variant": "signal_grounded",
+    "subject": "Quick thought on scaling at WISEiTECH",
+    "body_length": 353,
+    "signals_used": [
+      "job_velocity",
+      "layoffs",
+      "ai_maturity"
+    ],
+    "latency_ms": 0
+  },
+  "tone_guard": {
+    "passed": true,
+    "overall_score": 0.88,
+    "hard_fail": false,
+    "issues": [],
+    "latency_ms": 1
+  },
+  "email_send": {
+    "to": "lidyadagnew7@gmail.com",
+    "original_to": "cto@wise.co.kr",
+    "subject": "Quick thought on scaling at WISEiTECH",
+    "timestamp": "2026-04-23T20:54:42.193236",
+    "kill_switch": true,
+    "status": "sent",
+    "resend_id": "7c7f3a47-7a5c-47ab-98df-e9e620ebecf4"
+  },
+  "sms_send": {
+    "to": "+251923561220",
+    "original_to": "+254711000001",
+    "message": "Hi, this is Tenacious. You mentioned interest in scheduling a call. Would tomorrow at 2pm work?",
+    "timestamp": "2026-04-23T20:54:43.846304",
+    "kill_switch": true,
+    "status": "sent",
+    "at_response": "{'SMSMessageData': {'Message': 'Sent to 0/1 Total Cost: 0', 'Recipients': [{'cost': '0', 'messageId': 'None', 'number': '+251923561220', 'status': 'InsufficientBalance', 'statusCode': 405}]}}"
+  },
+  "hubspot": {
+    "status": "updated",
+    "id": "763552830697",
+    "properties": {
+      "email": "cto@wise.co.kr",
+      "firstname": "",
+      "lastname": "",
+      "company": "WISEiTECH",
+      "jobtitle": "",
+      "icp_segment": "4",
+      "icp_confidence": "0.5",
+      "ai_maturity_score": "2",
+      "enrichment_timestamp": "2026-04-23T20:54:46.411588"
+    }
+  },
+  "calcom_booking": {
+    "status": "booked",
+    "booking_id": 18707337,
+    "start_time": "2026-04-23T20:30:00.000Z",
+    "attendee": "cto@wise.co.kr"
+  },
+  "qualification": {
+    "status": "qualifying",
+    "buying_signals": [
+      "tell me more"
+    ],
+    "response_preview": "Thanks for the response! To make sure I'm not wasting your time \u2014 what's the most pressing challenge"
+  },
+  "orchestrator": {
+    "next_action": "send_email",
+    "thread_status": "cold"
+  },
+  "summary": {
+    "total_steps": 12,
+    "passed": true,
+    "p50_latency_ms": 60.7,
+    "p95_latency_ms": 1520.4,
+    "timestamp": "2026-04-23T20:54:57.890944"
+  }
+}

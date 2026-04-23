@@ -1,4 +1,4 @@
-2026-04-22 21:31:23.194 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/lidya/Videos/week 10/eval/tau2-bench/data
+2026-04-22 21:31:23.194 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/lidya/Videos/the-conversation-engine/eval/tau2-bench/data
 2026-04-22 21:31:28.833 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
 2026-04-22 21:31:29.018 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
 2026-04-22 21:31:29.023 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration

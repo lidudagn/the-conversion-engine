@@ -1,10 +1,9 @@
 """
 Langfuse Observability Wrapper
-Per-trace cost attribution for every LLM call.
+Per-trace cost attribution for every LLM call and enrichment cycle.
+Compatible with Langfuse SDK v4.x.
 """
 
-import os
-import json
 from datetime import datetime
 from typing import Optional
 
@@ -21,6 +20,8 @@ def get_langfuse():
 
     try:
         from langfuse import Langfuse
+        if not config.LANGFUSE_PUBLIC_KEY or not config.LANGFUSE_SECRET_KEY:
+            return None
         _langfuse = Langfuse(
             public_key=config.LANGFUSE_PUBLIC_KEY,
             secret_key=config.LANGFUSE_SECRET_KEY,
@@ -33,75 +34,76 @@ def get_langfuse():
 
 
 def create_trace(name: str, metadata: Optional[dict] = None) -> Optional[object]:
-    """Create a new Langfuse trace."""
+    """Create a Langfuse span (trace). Returns span or None."""
     lf = get_langfuse()
     if not lf:
         return None
     try:
-        trace = lf.trace(
-            name=name,
-            metadata=metadata or {},
-        )
-        return trace
+        span = lf.start_observation(name=name, metadata=metadata or {})
+        return span
     except Exception as e:
         print(f"Warning: Could not create trace: {e}")
         return None
 
 
-def log_llm_call(result: dict, metadata: dict):
+def log_llm_call(result: dict, metadata: dict) -> None:
     """Log an LLM call to Langfuse with cost attribution."""
     lf = get_langfuse()
     if not lf:
         return
-
     try:
-        trace = lf.trace(
-            name=metadata.get("trace_name", "llm_call"),
-            metadata=metadata,
-        )
-
-        trace.generation(
+        usage = result.get("usage", {})
+        span = lf.start_observation(
             name=metadata.get("generation_name", "chat_completion"),
-            model=result.get("model", "unknown"),
+            as_type="generation",
             input=metadata.get("input", ""),
             output=result.get("content", ""),
-            usage={
-                "input": result["usage"]["prompt_tokens"],
-                "output": result["usage"]["completion_tokens"],
-                "total": result["usage"]["total_tokens"],
-                "unit": "TOKENS",
+            model=result.get("model", "unknown"),
+            usage_details={
+                "input": usage.get("prompt_tokens", 0),
+                "output": usage.get("completion_tokens", 0),
+                "total": usage.get("total_tokens", 0),
             },
+            cost_details={"total": result.get("cost_usd", 0)},
             metadata={
+                **metadata,
                 "latency_ms": result.get("latency_ms", 0),
-                "cost_usd": result.get("cost_usd", 0),
             },
         )
+        span.end()
     except Exception as e:
-        print(f"Warning: Langfuse logging failed: {e}")
+        print(f"Warning: Langfuse LLM logging failed: {e}")
 
 
-def log_enrichment_trace(prospect_name: str, brief_data: dict, latency_ms: int):
-    """Log an enrichment pipeline run to Langfuse."""
+def log_enrichment_trace(prospect_name: str, brief_data: dict, latency_ms: int) -> Optional[str]:
+    """Log an enrichment pipeline run to Langfuse. Returns trace context string."""
     lf = get_langfuse()
     if not lf:
-        return
-
+        return None
     try:
-        trace = lf.trace(
+        icp_segment = None
+        ai_score = None
+        if isinstance(brief_data, dict):
+            seg = brief_data.get("icp_segment", {})
+            icp_segment = seg.get("primary") if isinstance(seg, dict) else None
+            ai = brief_data.get("ai_maturity", {})
+            ai_score = ai.get("score") if isinstance(ai, dict) else None
+
+        span = lf.start_observation(
             name="enrichment_pipeline",
+            as_type="span",
+            input={"prospect": prospect_name},
+            output={"icp_segment": icp_segment, "ai_maturity_score": ai_score},
             metadata={
-                "prospect": prospect_name,
                 "latency_ms": latency_ms,
-                "signals_found": len([k for k, v in brief_data.items()
-                                     if isinstance(v, dict) and v.get("confidence") == "high"]),
+                "timestamp": datetime.now().isoformat(),
             },
         )
-        trace.event(
-            name="enrichment_complete",
-            metadata=brief_data,
-        )
+        span.end()
+        return str(id(span))
     except Exception as e:
         print(f"Warning: Langfuse enrichment trace failed: {e}")
+        return None
 
 
 def log_outreach_trace(
@@ -112,30 +114,32 @@ def log_outreach_trace(
     email_sent: bool,
     cost_usd: float,
     latency_ms: int,
-):
+) -> Optional[str]:
     """Log a complete outreach cycle to Langfuse."""
     lf = get_langfuse()
     if not lf:
-        return
-
+        return None
     try:
-        trace = lf.trace(
+        span = lf.start_observation(
             name="outreach_cycle",
+            as_type="span",
+            input={"prospect": prospect_name, "variant": variant},
+            output={"email_sent": email_sent, "tone_score": tone_score},
             metadata={
-                "prospect": prospect_name,
                 "policy_decision_id": policy_decision_id,
-                "variant": variant,
-                "tone_score": tone_score,
-                "email_sent": email_sent,
                 "cost_usd": cost_usd,
                 "latency_ms": latency_ms,
+                "timestamp": datetime.now().isoformat(),
             },
         )
+        span.end()
+        return str(id(span))
     except Exception as e:
         print(f"Warning: Langfuse outreach trace failed: {e}")
+        return None
 
 
-def flush():
+def flush() -> None:
     """Flush pending Langfuse events."""
     lf = get_langfuse()
     if lf:

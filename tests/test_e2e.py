@@ -54,20 +54,28 @@ async def _run_e2e_test():
     # ─── 2. Pick a Test Prospect ─────────────────────────────────────
     print("\n2. Selecting test prospect...")
 
-    # Use a company from the Crunchbase data
+    # Prefer WISEiTECH (AI maturity=2, ICP segment 4) for signal-grounded demo.
+    # Falls back to first company with funding, then first company overall.
+    test_name = "WISEiTECH"
+    test_domain = "wise.co.kr"
+    test_email = f"cto@{test_domain}"
     test_company = None
-    if companies:
-        # Find one with funding data
+    for c in companies:
+        if c.name == test_name:
+            test_company = c
+            break
+    if not test_company:
+        # Fallback: first company with funding data
         for c in companies:
             if c.total_funding_usd and c.total_funding_usd > 1_000_000:
                 test_company = c
                 break
-        if not test_company:
-            test_company = companies[0]
+    if not test_company and companies:
+        test_company = companies[0]
+        test_name = test_company.name
+        test_domain = test_company.domain or "prospect.io"
+        test_email = f"cto@{test_domain}"
 
-    test_name = test_company.name if test_company else "TestCorp"
-    test_domain = test_company.domain if test_company else "testcorp.com"
-    test_email = f"cto@{test_domain}"
     print(f"   Prospect: {test_name} ({test_domain})")
     results["test_prospect"] = test_name
 
@@ -241,8 +249,8 @@ async def _run_e2e_test():
     from agent.sms_handler import SMSHandler
     sms = SMSHandler()
     sms_result = sms.send_sms(
-        to_number="+15551234567",
-        message=f"Hi, this is Tenacious. You mentioned interest in scheduling a call. Would tomorrow at 2pm work?",
+        to_number="+254711000001",  # Valid E.164 test number (AT sandbox)
+        message="Hi, this is Tenacious. You mentioned interest in scheduling a call. Would tomorrow at 2pm work?",
     )
     results["sms_send"] = sms_result
     print(f"   Status: {sms_result['status']}")

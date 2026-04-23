@@ -1,0 +1,26 @@
+
+============================================================
+τ²-Bench Baseline: retail domain
+Model: qwen/qwen3-235b-a22b
+Trials: 5, Slice: dev, Max tasks: 30
+============================================================
+
+
+--- Trial 1/5 ---
+  Score: 0.140, Latency: 3157.0s
+
+--- Trial 2/5 ---
+  Score: 0.000, Latency: 225.9s
+
+--- Trial 3/5 ---
+  Score: 0.000, Latency: 264.7s
+
+--- Trial 4/5 ---
+  Score: 0.000, Latency: 667.2s
+
+--- Trial 5/5 ---
+  Score: 0.000, Latency: 209.0s
+
+Saved to /home/lidya/Videos/the-conversion-engine/eval/score_log.json
+Saved traces to /home/lidya/Videos/the-conversion-engine/eval/trace_log.jsonl
+Generated /home/lidya/Videos/the-conversion-engine/eval/baseline.md

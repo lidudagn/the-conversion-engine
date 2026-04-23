@@ -1,6 +1,6 @@
-# Limited License — TRP1 Week 10 Seed Materials
+# Limited License — TRP1 the-conversation-engine Seed Materials
 
-These seed materials are provided by Tenacious Consulting and Outsourcing and 10 Academy's TRP1 program to enrolled trainees for the duration of the Week 10 Conversion Engine challenge.
+These seed materials are provided by Tenacious Consulting and Outsourcing and 10 Academy's TRP1 program to enrolled trainees for the duration of the the-conversation-engine Conversion Engine challenge.
 
 ## What you may do
 

@@ -1,0 +1,106 @@
+{
+  "prospect_name": "Web Stack Technologies",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Software",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 15
+  },
+  "top_quartile_companies": [
+    {
+      "name": "winVS software AG",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Business Human Network",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alpine",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Console Support",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "WISE",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Whitehill Technologies",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "51-100",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Touritz",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Cawa",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Web & Software Applications",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "FleetRunnr",
+      "sector": "Software",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:53.876570"
+}

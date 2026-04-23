@@ -1,0 +1,106 @@
+{
+  "prospect_name": "Wickr",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Apps",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 15
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Snap21",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Business Human Network",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Touritz",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "TUK",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Almana Digital",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Five Good Friends",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "101-250",
+      "total_funding_usd": null
+    },
+    {
+      "name": "SnapEvent",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "tabMe",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "FoodStream Network",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Table & Board",
+      "sector": "Apps",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:45.698428"
+}

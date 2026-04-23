@@ -1,0 +1,106 @@
+{
+  "prospect_name": "Consolety",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "SEO",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 13
+  },
+  "top_quartile_companies": [
+    {
+      "name": "CBR Marketing",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "WebPerf IO",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "CCDM",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alice June Graphics",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Consisto",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Untriel",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Mizz Marketing",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Mition",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Driver Media Worldwide",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Eagle Eye Media",
+      "sector": "SEO",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:45:45.386440"
+}

@@ -42,4 +42,5 @@ CALCOM_EVENT_TYPE_ID = os.getenv("CALCOM_EVENT_TYPE_ID", "1")
 
 # ─── Sink Addresses (used when kill-switch is active) ─────────────────────────
 SINK_EMAIL = os.getenv("SINK_EMAIL", "sink@tenacious-challenge.test")
-SINK_SMS = os.getenv("SINK_SMS", "+15550000000")
+# +251923561220 is the registered AT sandbox sink number (Ethiopian E.164 format)
+SINK_SMS = os.getenv("SINK_SMS", "+251923561220")

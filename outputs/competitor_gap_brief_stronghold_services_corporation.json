@@ -1,0 +1,15 @@
+{
+  "prospect_name": "Stronghold Services Corporation",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Business Information Systems",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 1
+  },
+  "top_quartile_companies": [],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:43:09.765031"
+}

@@ -285,16 +285,24 @@ class EnrichmentPipeline:
             "source": "crunchbase",
         }
 
+    @staticmethod
+    def _safe_filename(company: str) -> str:
+        """Sanitize company name for use as a filename component."""
+        import re
+        safe = re.sub(r"[^a-z0-9_\-]", "_", company.lower())
+        safe = re.sub(r"_+", "_", safe).strip("_")
+        return safe[:50] or "unknown"
+
     def _save_brief(self, brief: HiringSignalBrief, company: str):
         """Save hiring signal brief to outputs/."""
-        safe_name = company.lower().replace(" ", "_")[:50]
+        safe_name = self._safe_filename(company)
         fpath = self.output_dir / f"hiring_signal_brief_{safe_name}.json"
         with open(fpath, "w") as f:
             json.dump(brief.model_dump(), f, indent=2, default=str)
 
     def _save_gap_brief(self, brief: CompetitorGapBrief, company: str):
         """Save competitor gap brief to outputs/."""
-        safe_name = company.lower().replace(" ", "_")[:50]
+        safe_name = self._safe_filename(company)
         fpath = self.output_dir / f"competitor_gap_brief_{safe_name}.json"
         with open(fpath, "w") as f:
             json.dump(brief.model_dump(), f, indent=2, default=str)

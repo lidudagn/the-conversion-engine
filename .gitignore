@@ -3,9 +3,7 @@ __pycache__/
 *$py.class
 .env
 .pytest_cache/
-outputs/
 eval/tau2_venv/
 eval/__pycache__/
 .DS_Store
-*.jsonl
 *.log

@@ -1,0 +1,408 @@
+{
+  "n_prospects": 25,
+  "p50_latency_ms": 2.2,
+  "p95_latency_ms": 3.0,
+  "prospects": [
+    {
+      "company": "WISEiTECH",
+      "icp_segment": {
+        "primary": 4,
+        "secondary": null,
+        "confidence": 0.5,
+        "edge_case": null
+      },
+      "ai_maturity_score": 2,
+      "job_velocity_roles": 10,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 1,
+      "gap_brief": true,
+      "latency_ms": 3.0
+    },
+    {
+      "company": "Xrosswork",
+      "icp_segment": {
+        "primary": 4,
+        "secondary": null,
+        "confidence": 0.5,
+        "edge_case": null
+      },
+      "ai_maturity_score": 2,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 1,
+      "gap_brief": true,
+      "latency_ms": 1.9
+    },
+    {
+      "company": "Whitehill Technologies",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 1,
+      "gap_brief": true,
+      "latency_ms": 1.5
+    },
+    {
+      "company": "FleetRunnr",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.5
+    },
+    {
+      "company": "CryptoBucks",
+      "icp_segment": {
+        "primary": 4,
+        "secondary": null,
+        "confidence": 0.5,
+        "edge_case": null
+      },
+      "ai_maturity_score": 2,
+      "job_velocity_roles": 10,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 1,
+      "gap_brief": true,
+      "latency_ms": 2.2
+    },
+    {
+      "company": "Korubu",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.6
+    },
+    {
+      "company": "Systemsync Solutions",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.3
+    },
+    {
+      "company": "Altepro",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.2
+    },
+    {
+      "company": "Wickr",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 1,
+      "gap_brief": true,
+      "latency_ms": 3.5
+    },
+    {
+      "company": "CTJ INFO-TECH",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 10,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.3
+    },
+    {
+      "company": "WEYTEC",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 10,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.3
+    },
+    {
+      "company": "Conneqt Business Solutions",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 16,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 1,
+      "gap_brief": true,
+      "latency_ms": 3.0
+    },
+    {
+      "company": "Connempathy",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 10,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.3
+    },
+    {
+      "company": "Web Stack Technologies",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.5
+    },
+    {
+      "company": "Xuver Lab",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.9
+    },
+    {
+      "company": "AMS-PAR",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 1,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.9
+    },
+    {
+      "company": "Culcha",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.7
+    },
+    {
+      "company": "Appcro",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.0
+    },
+    {
+      "company": "Connected Devices",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.9
+    },
+    {
+      "company": "Web Endurance",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.9
+    },
+    {
+      "company": "Handled IT Partners",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.7
+    },
+    {
+      "company": "Crystal ICT",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.4
+    },
+    {
+      "company": "Anfotech",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.2
+    },
+    {
+      "company": "Consolety",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 0,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 2.5
+    },
+    {
+      "company": "Stronghold Services Corporation",
+      "icp_segment": {
+        "primary": null,
+        "secondary": null,
+        "confidence": 0.0,
+        "edge_case": null
+      },
+      "ai_maturity_score": 0,
+      "job_velocity_roles": 5,
+      "has_funding": false,
+      "has_layoff": false,
+      "contradictions": 0,
+      "gap_brief": true,
+      "latency_ms": 1.7
+    }
+  ],
+  "timestamp": "2026-04-23T20:36:33.049587"
+}

@@ -1,0 +1,52 @@
+{
+  "prospect_name": "AMS-PAR",
+  "prospect_ai_maturity": 1,
+  "prospect_sector": "B2B",
+  "sector_distribution": {
+    "mean": 0.2,
+    "p75": 0,
+    "p90": 1,
+    "count": 5
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Sykehusapotekene I Midt-Norge",
+      "sector": "B2B",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Dynamic Marketing Ventures",
+      "sector": "B2B",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Alkapuro",
+      "sector": "B2B",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "American Anodizing Co.",
+      "sector": "B2B",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:56.757705"
+}

@@ -1,0 +1,25 @@
+{
+  "prospect_name": "Crystal ICT",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Information and Communications Technology (ICT)",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 2
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Business & ICT Consulting",
+      "sector": "Information and Communications Technology (ICT)",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "51-100",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:43:05.189636"
+}

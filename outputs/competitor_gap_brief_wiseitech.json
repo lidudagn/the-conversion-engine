@@ -1,0 +1,106 @@
+{
+  "prospect_name": "WISEiTECH",
+  "prospect_ai_maturity": 2,
+  "prospect_sector": "Analytics",
+  "sector_distribution": {
+    "mean": 0.13,
+    "p75": 0,
+    "p90": 0,
+    "count": 15
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Conneqt Business Solutions",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "10001+",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Korubu",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Fluency Health",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Astute Business Partners",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Comprehensive Credit Decisions",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Altola",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "51-100",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Business Solutions & Services",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "101-250",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Cressey Strategies",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "EbiS",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "1-10",
+      "total_funding_usd": null
+    },
+    {
+      "name": "Cornerstone Technology",
+      "sector": "Analytics",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:54:41.931778"
+}

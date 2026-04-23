@@ -1,4 +1,4 @@
-# Data Handling Acknowledgement — TRP1 Week 10
+# Data Handling Acknowledgement — TRP1 the-conversation-engine
 
 ## Instructions
 
@@ -20,7 +20,7 @@ You may not start Act I until program staff confirms your acknowledgement is on 
 
 ## Acknowledgement
 
-I, the undersigned trainee in the TRP1 Week 10 Conversion Engine challenge,
+I, the undersigned trainee in the TRP1 the-conversation-engine Conversion Engine challenge,
 acknowledge that I have read the Data Handling Policy at
 `policy/data_handling_policy.md` and the Kill Switch documentation at
 `infra/killswitch.md`, and I understand and agree to abide by every clause.

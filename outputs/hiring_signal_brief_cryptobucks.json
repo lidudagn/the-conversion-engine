@@ -1,0 +1,62 @@
+{
+  "prospect_name": "CryptoBucks",
+  "prospect_domain": null,
+  "crunchbase_id": "https://www.crunchbase.com/organization/cryptobucks",
+  "funding": {
+    "event": null,
+    "date": "",
+    "total_usd": null,
+    "type": "",
+    "confidence": "low",
+    "source": "crunchbase"
+  },
+  "job_velocity": {
+    "open_roles": 10,
+    "60d_change": "+0%",
+    "ai_roles_fraction": 0.4,
+    "confidence": "high"
+  },
+  "layoffs": {
+    "event": false,
+    "headcount": 0,
+    "most_recent": null,
+    "confidence": "high"
+  },
+  "leadership": {
+    "new_cto": null,
+    "new_vp_eng": null,
+    "has_recent_change": false,
+    "confidence": "low"
+  },
+  "ai_maturity": {
+    "score": 2,
+    "confidence": "medium",
+    "uncertainty_reason": "Score 2 from high-weight signals but lacking confirmation from additional sources. Some uncertainty remains.",
+    "language_constraint": "should_hedge",
+    "has_ai_leadership": false
+  },
+  "icp_segment": {
+    "primary": 4,
+    "secondary": null,
+    "confidence": 0.5,
+    "edge_case": null
+  },
+  "bench_match": {
+    "matched_stacks": [],
+    "available": 12
+  },
+  "contradictions": [
+    {
+      "name": "ai_ambition_vs_no_ai_team",
+      "description": "Company investing in AI but lacks dedicated leadership",
+      "signals_used": [
+        "ai_maturity"
+      ],
+      "confidence": 0.6,
+      "framing": "You seem to be investing in AI but without a dedicated AI leader yet \u2014 that's a pattern where outside expertise can accelerate the first 6 months significantly.",
+      "segment_override": null
+    }
+  ],
+  "competitor_gap_brief_ref": "competitor_gap_brief.json",
+  "generated_at": "2026-04-23T20:42:39.867703"
+}

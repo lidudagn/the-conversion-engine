@@ -1,0 +1,25 @@
+{
+  "prospect_name": "Culcha",
+  "prospect_ai_maturity": 0,
+  "prospect_sector": "Corporate Training",
+  "sector_distribution": {
+    "mean": 0.0,
+    "p75": 0,
+    "p90": 0,
+    "count": 2
+  },
+  "top_quartile_companies": [
+    {
+      "name": "Conlea",
+      "sector": "Corporate Training",
+      "ai_maturity_score": 0,
+      "ai_maturity_confidence": "medium",
+      "key_practices": [],
+      "employee_count": "11-50",
+      "total_funding_usd": null
+    }
+  ],
+  "gaps": [],
+  "confidence_avg": 0.0,
+  "generated_at": "2026-04-23T20:42:58.499771"
+}

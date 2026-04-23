@@ -1,0 +1,51 @@
+{
+  "prospect_name": "Korubu",
+  "prospect_domain": null,
+  "crunchbase_id": "https://www.crunchbase.com/organization/korubu",
+  "funding": {
+    "event": null,
+    "date": "",
+    "total_usd": null,
+    "type": "",
+    "confidence": "low",
+    "source": "crunchbase"
+  },
+  "job_velocity": {
+    "open_roles": 5,
+    "60d_change": "-100%",
+    "ai_roles_fraction": 0.0,
+    "confidence": "medium"
+  },
+  "layoffs": {
+    "event": false,
+    "headcount": 0,
+    "most_recent": null,
+    "confidence": "high"
+  },
+  "leadership": {
+    "new_cto": null,
+    "new_vp_eng": null,
+    "has_recent_change": false,
+    "confidence": "low"
+  },
+  "ai_maturity": {
+    "score": 0,
+    "confidence": "medium",
+    "uncertainty_reason": "Score 0 but absence of public signal does not prove absence of AI capability. Company may keep AI work private.",
+    "language_constraint": "should_hedge",
+    "has_ai_leadership": false
+  },
+  "icp_segment": {
+    "primary": null,
+    "secondary": null,
+    "confidence": 0.0,
+    "edge_case": null
+  },
+  "bench_match": {
+    "matched_stacks": [],
+    "available": 12
+  },
+  "contradictions": [],
+  "competitor_gap_brief_ref": "competitor_gap_brief.json",
+  "generated_at": "2026-04-23T20:42:41.503339"
+}

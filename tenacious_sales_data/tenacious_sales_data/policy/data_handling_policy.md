@@ -1,6 +1,6 @@
-# Data Handling Policy — TRP1 Week 10
+# Data Handling Policy — TRP1 the-conversation-engine
 
-This policy governs what you may do with what data during the Week 10 challenge.
+This policy governs what you may do with what data during the the-conversation-engine challenge.
 Read it carefully. Signing `acknowledgement.md` confirms you have read and agreed
 to abide by every clause below. Violations are grounds for removal from the
 program.

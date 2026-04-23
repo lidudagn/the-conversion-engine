@@ -178,10 +178,12 @@ class PolicyEngine:
             decision.contradictions = high_conf
             if high_conf:
                 decision.contradiction_framing = high_conf[0].get("framing", "")
-                rules.append(f"CONTRADICTION_{high_conf[0]['name'].upper()} → include framing")
+                c_name = high_conf[0].get("name", "unknown").upper()
+                rules.append(f"CONTRADICTION_{c_name} → include framing")
             low_conf = [c for c in contradictions if c.get("confidence", 0) < 0.6]
             for c in low_conf:
-                rules.append(f"CONTRADICTION_{c['name'].upper()}_LOW_CONF → omit")
+                c_name = c.get("name", "unknown").upper()
+                rules.append(f"CONTRADICTION_{c_name}_LOW_CONF → omit")
 
         decision.rules_triggered = rules
 
