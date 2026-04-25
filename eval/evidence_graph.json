@@ -11,12 +11,15 @@
       "value": 0.7267,
       "source_file": "eval/score_log.json",
       "source_path": "[0].pass_at_1",
-      "provenance": "Provided by instructor (git commit d11a97072c49d093f7b5a3e4fe9da95b490d43ba). 150 simulations, 5 trials × 30 tasks, model=openrouter/qwen/qwen3-next-80b-a3b-thinking."
+      "provenance": "Provided by instructor (git commit d11a97072c49d093f7b5a3e4fe9da95b490d43ba). 150 simulations, 5 trials \u00d7 30 tasks, model=openrouter/qwen/qwen3-next-80b-a3b-thinking."
     },
     {
       "claim_id": "C02",
       "claim": "Baseline 95% CI = [0.6504, 0.7917]",
-      "value": [0.6504, 0.7917],
+      "value": [
+        0.6504,
+        0.7917
+      ],
       "source_file": "eval/score_log.json",
       "source_path": "[0].pass_at_1_ci_95",
       "provenance": "Bootstrap CI from instructor run."
@@ -34,15 +37,18 @@
       "claim": "V1 ablation pass@1 = 0.5789, n=19/30",
       "value": 0.5789,
       "source_file": "eval/method.md",
-      "source_path": "§9 Ablation table",
+      "source_path": "\u00a79 Ablation table",
       "provenance": "Train split, 1 trial, qwen3-next-80b-a3b-thinking. 11/30 INFRASTRUCTURE_ERROR (OpenRouter auth); scores from 19/30 tasks."
     },
     {
       "claim_id": "C05",
       "claim": "V1 ablation 95% CI = [0.3684, 0.7895]",
-      "value": [0.3684, 0.7895],
+      "value": [
+        0.3684,
+        0.7895
+      ],
       "source_file": "eval/method.md",
-      "source_path": "§9 Ablation table",
+      "source_path": "\u00a79 Ablation table",
       "provenance": "Bootstrap CI, 2000 resamples, n=19."
     },
     {
@@ -50,7 +56,7 @@
       "claim": "V2 ablation pass@1 = 0.5263, n=19/30",
       "value": 0.5263,
       "source_file": "eval/method.md",
-      "source_path": "§9 Ablation table",
+      "source_path": "\u00a79 Ablation table",
       "provenance": "Train split, 1 trial, qwen3-next-80b-a3b-thinking. 11/30 INFRASTRUCTURE_ERROR."
     },
     {
@@ -64,18 +70,21 @@
     {
       "claim_id": "C08",
       "claim": "V1 held-out 95% CI = [0.2308, 0.7692]",
-      "value": [0.2308, 0.7692],
+      "value": [
+        0.2308,
+        0.7692
+      ],
       "source_file": "eval/score_log.json",
       "source_path": "[2].bootstrap_ci_95",
       "provenance": "Bootstrap CI, 2000 resamples, n=13."
     },
     {
       "claim_id": "C09",
-      "claim": "Delta A (V1) = −0.2652",
+      "claim": "Delta A (V1) = \u22120.2652",
       "value": -0.2652,
       "source_file": "eval/score_log.json",
       "source_path": "[2].delta_a_vs_baseline",
-      "provenance": "0.4615 − 0.7267 = −0.2652. Negative result; see method.md §9 for diagnosis."
+      "provenance": "0.4615 \u2212 0.7267 = \u22120.2652. Negative result; see method.md \u00a79 for diagnosis."
     },
     {
       "claim_id": "C10",
@@ -87,8 +96,12 @@
     },
     {
       "claim_id": "C11",
-      "claim": "Probe suite: 63 probes, 100% pass rate",
-      "value": {"total": 63, "passed": 63, "pass_rate": 1.0},
+      "claim": "Probe suite: 65 probes, 100% pass rate",
+      "value": {
+        "total": 65,
+        "passed": 65,
+        "pass_rate": 1.0
+      },
       "source_file": "probes/probe_results.json",
       "source_path": "root.total_probes / root.passed / root.pass_rate",
       "provenance": "Automated probe runner 2026-04-24T15:36:15. 5 hard_fails_correctly_triggered."
@@ -104,7 +117,10 @@
     {
       "claim_id": "C13",
       "claim": "E2E batch: 25 prospects processed, 25 successful",
-      "value": {"n_prospects": 25, "n_successful": 25},
+      "value": {
+        "n_prospects": 25,
+        "n_successful": 25
+      },
       "source_file": "outputs/e2e_batch_results.json",
       "source_path": "root.n_prospects / root.n_successful",
       "provenance": "Full pipeline run 2026-04-23T20:43:10. Kill-switch active; emails routed to sink."
@@ -112,10 +128,13 @@
     {
       "claim_id": "C14",
       "claim": "E2E pipeline latency: p50=1535ms, p95=1913ms",
-      "value": {"p50_ms": 1535.0, "p95_ms": 1913.4},
+      "value": {
+        "p50_ms": 1535.0,
+        "p95_ms": 1913.4
+      },
       "source_file": "outputs/e2e_batch_results.json",
       "source_path": "root.p50_latency_ms / root.p95_latency_ms",
-      "provenance": "Wall-clock latency for enrichment+policy+compose+tone_guard. LLM path adds ~2–8s (template fallback used for batch run)."
+      "provenance": "Wall-clock latency for enrichment+policy+compose+tone_guard. LLM path adds ~2\u20138s (template fallback used for batch run)."
     },
     {
       "claim_id": "C15",
@@ -130,8 +149,38 @@
       "claim": "Total evaluation budget spent: ~$0.86",
       "value": 0.86,
       "source_file": "eval/method.md",
-      "source_path": "§10 Cost Budget table",
+      "source_path": "\u00a710 Cost Budget table",
       "provenance": "V1+V2 ablation ~$0.60, V1 held-out ~$0.20, V3 held-out ~$0.06, probes ~$0.002."
+    },
+    {
+      "claim_id": "C17",
+      "claim": "ToneGuard Semantic LLM Check Catch Rate = 0%",
+      "value": 0.0,
+      "source_file": "probes/semantic_validation_results.json",
+      "source_path": "root.catch_rate_semantic",
+      "provenance": "Validation suite of 10 wrong-segment semantic probes using meta-llama/llama-3.3-70b-instruct:free. Model consistently failed to identify mismatch between draft pitch and buyer segment context."
+    },
+    {
+      "claim_id": "C18",
+      "claim": "AI Maturity Scorer Exact Accuracy = 72.0%, Within-1 Accuracy = 96.0%",
+      "value": {
+        "exact": 0.72,
+        "within_1": 0.96
+      },
+      "source_file": "data/validation/ai_maturity_validation_results.json",
+      "source_path": "root.exact_accuracy / root.within_1_accuracy",
+      "provenance": "Evaluation against 25 hand-labeled companies randomly sampled from Crunchbase ODM dataset."
+    },
+    {
+      "claim_id": "C19",
+      "claim": "AI Maturity Scorer Score-0 Recall = 100%, False Positive Rate = 0%",
+      "value": {
+        "score_0_recall": 1.0,
+        "score_1_fp_rate": 0.0
+      },
+      "source_file": "data/validation/ai_maturity_validation_results.json",
+      "source_path": "root.per_score_metrics.0",
+      "provenance": "Scorer correctly abstained on 16/16 companies with no public AI signal, preserving brand safety at the cost of mid-tier signal recall."
     }
   ]
 }
