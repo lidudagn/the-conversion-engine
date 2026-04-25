@@ -156,6 +156,33 @@ The challenge spec references "HubSpot MCP for every conversation event." This s
 
 The HubSpot MCP server wraps the same REST API. Using the SDK directly gives identical data fidelity, eliminates the MCP server dependency, and keeps the stack simpler for the challenge week. Every conversation event still writes to HubSpot — the transport layer is REST rather than MCP protocol.
 
+## Handoff Notes — Known Limitations & Suggested Next Steps
+
+A prioritised list for the next engineer picking this up.
+
+### Missing tests (highest priority)
+- **No unit tests** for `policy_engine.py`, `tone_guard.py`, or `composer.py`. These are the highest-risk paths: a logic regression here silently sends wrong outreach.
+- **No integration test** covering the full `enrich → policy → compose → tone_guard → send` pipeline end-to-end against a fixture company.
+- **Probe library is manual** (`probes/probe_library.md`). Probes run by hand; there is no `pytest` suite that executes them automatically on CI.
+
+### Scaling assumptions (break before 10k companies/day)
+- `EnrichmentPipeline.load_data()` loads all 1,001 Crunchbase companies into memory. Fine at this scale; will need chunking or a database at 10k+.
+- `competitor_gap.py` iterates up to 15 sector peers per prospect in-process. At high concurrency this multiplies API calls linearly — add a sector cache keyed on `(sector, date)`.
+- `JobPostScraper` is backed by a frozen JSON dataset. Live scraping via Playwright is sequential (concurrency=1 enforced by robots.txt courtesy). Do not increase concurrency without per-domain rate limiting.
+
+### Brittle integrations
+- **OpenRouter model string** — `qwen/qwen3-next-80b-a3b-thinking` resolves to a versioned alias (`-2509` suffix). Model routing changes on OpenRouter without notice; pin to a versioned model ID and add a health-check in `config.py`.
+- **Resend API** — email delivery uses `resend` SDK v1. The `Emails.send()` call signature changed in v2; pin `resend==1.*` in `requirements.txt`.
+- **Africa's Talking SMS** — `send_sms()` has no delivery receipt polling. Failed sends (wrong number, country block) return HTTP 200 with a `status: Failed` body that the current handler does not check.
+- **HubSpot property sync** — custom properties (`icp_segment`, `ai_maturity_score`) must be pre-created in HubSpot before first use. There is no auto-provisioning step; missing properties cause silent data loss.
+
+### Suggested next steps (in order)
+1. Add `pytest` tests for policy engine and tone guard — 30 min, highest risk reduction.
+2. Wire probes into CI (`pytest probes/` via a lightweight harness) so regressions surface automatically.
+3. Replace frozen Crunchbase CSV with a nightly S3 sync or Crunchbase Basic API call to keep funding dates fresh.
+4. Add Africa's Talking delivery receipt webhook handler in `server.py` (`/webhook/sms/receipt`) and update HubSpot activity on failure.
+5. Hand-label 20–30 Tenacious past prospects to calibrate `AIMaturityScorer` precision/recall before enabling live mode.
+
 ## Key Design Decisions
 
 1. **Policy Engine before LLM** — Deterministic rules control what the agent can say. The LLM follows policies, not intuition.

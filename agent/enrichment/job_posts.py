@@ -128,7 +128,18 @@ class JobPostScraper:
             self._by_company[key].append(post)
 
     def get_velocity_signal(self, company_name: str) -> JobVelocitySignal:
-        """Get job post velocity signal for a company."""
+        """
+        Get job post velocity signal for a company.
+
+        60-day velocity calculation:
+          recent  = posts with posted_date >= today - 60 days
+          older   = posts with posted_date in [today-120d, today-60d)
+          change  = (recent - older) / older × 100   (% growth in posting rate)
+          If older == 0 but recent > 0: reported as "+N (new)" — first observed postings.
+          If no date data is available: sixty_day_change is None, confidence stays "medium".
+
+        Confidence tiers: high (≥10 posts), medium (3–9), low (<3).
+        """
         key = company_name.lower()
         posts = self._by_company.get(key, [])
 
@@ -137,7 +148,6 @@ class JobPostScraper:
         ai_fraction = ai_adjacent / max(total, 1)
         titles = [p.title for p in posts]
 
-        # Compute 60-day change if we have date data
         sixty_day_change = None
         change_str = ""
         if posts:
@@ -172,14 +182,22 @@ class JobPostScraper:
     async def scrape_company_live(self, company_url: str) -> list[JobPost]:
         """
         Live scrape a company's public careers page via Playwright.
-        Respects robots.txt. Use sparingly — capped at 200 companies.
+        Use sparingly — capped at 200 companies per run.
+
+        robots.txt policy (enforced before any page load):
+          1. Fetch <scheme>://<host>/robots.txt and parse with urllib.robotparser.
+          2. If the target URL is disallowed for user-agent "*", abort and return [].
+          3. If robots.txt is unreachable (network error, 404, timeout), treat as
+             "no restriction" and proceed — this matches the Robots Exclusion Protocol
+             spec which says absence of a robots.txt implies no restrictions.
+          4. Only publicly accessible career pages are scraped; pages behind login
+             walls are never attempted.
         """
         try:
             from playwright.async_api import async_playwright
             import urllib.robotparser
-
-            # Check robots.txt first
             from urllib.parse import urlparse
+
             parsed = urlparse(company_url)
             robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
 
@@ -188,10 +206,11 @@ class JobPostScraper:
             try:
                 rp.read()
                 if not rp.can_fetch("*", company_url):
-                    print(f"Blocked by robots.txt: {company_url}")
+                    print(f"robots.txt disallows scraping: {company_url} — skipping")
                     return []
             except Exception:
-                pass  # If robots.txt can't be read, proceed cautiously
+                # robots.txt unreachable → treat as no restriction per RFC spec
+                pass
 
             async with async_playwright() as p:
                 browser = await p.chromium.launch(headless=True)

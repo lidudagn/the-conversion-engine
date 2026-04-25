@@ -19,31 +19,71 @@ from agent.contradiction_detector import ContradictionDetector, Contradiction
 from agent.icp_classifier import ICPClassifier, ICPClassification
 
 
+class SignalMeta(BaseModel):
+    """Metadata carried by every signal field: where it came from and how reliable it is."""
+    source: str                        # e.g. "crunchbase", "job_posts", "layoffs_fyi"
+    fetched_at: str                    # ISO-8601 timestamp of the scrape/lookup
+    confidence: str                    # "high" | "medium" | "low"
+
+
+class FundingSignal(SignalMeta):
+    event: Optional[str] = None        # e.g. "Series B, $40.0M"
+    date: Optional[str] = None
+    total_usd: Optional[float] = None
+    type: Optional[str] = None
+
+
+class JobVelocitySignalBrief(SignalMeta):
+    open_roles: int = 0
+    sixty_day_change: Optional[str] = None   # e.g. "+23%" or "+5 (new)"
+    ai_roles_fraction: float = 0.0
+
+
+class LayoffSignalBrief(SignalMeta):
+    event: bool = False
+    headcount: int = 0
+    most_recent: Optional[str] = None
+
+
+class LeadershipSignalBrief(SignalMeta):
+    new_cto: Optional[str] = None
+    new_vp_eng: Optional[str] = None
+    has_recent_change: bool = False
+
+
+class AIMaturitySignalBrief(SignalMeta):
+    score: int = 0                     # 0-3
+    uncertainty_reason: str = ""
+    language_constraint: str = ""      # "can_assert" | "should_hedge" | "must_use_question_language"
+    has_ai_leadership: bool = False
+
+
 class HiringSignalBrief(BaseModel):
-    """Complete hiring signal brief for a prospect."""
+    """
+    Complete hiring signal brief for a prospect.
+    Every signal field carries source, fetched_at, and confidence so downstream
+    consumers (policy engine, composer) know exactly how fresh and reliable each
+    data point is.
+    """
     prospect_name: str
     prospect_domain: Optional[str] = None
     crunchbase_id: Optional[str] = None
 
-    # Individual signals
-    funding: dict = Field(default_factory=dict)
-    job_velocity: dict = Field(default_factory=dict)
-    layoffs: dict = Field(default_factory=dict)
-    leadership: dict = Field(default_factory=dict)
-    ai_maturity: dict = Field(default_factory=dict)
+    funding: FundingSignal = Field(default_factory=lambda: FundingSignal(
+        source="crunchbase", fetched_at="", confidence="low"))
+    job_velocity: JobVelocitySignalBrief = Field(default_factory=lambda: JobVelocitySignalBrief(
+        source="job_posts", fetched_at="", confidence="low"))
+    layoffs: LayoffSignalBrief = Field(default_factory=lambda: LayoffSignalBrief(
+        source="layoffs_fyi", fetched_at="", confidence="low"))
+    leadership: LeadershipSignalBrief = Field(default_factory=lambda: LeadershipSignalBrief(
+        source="crunchbase", fetched_at="", confidence="low"))
+    ai_maturity: AIMaturitySignalBrief = Field(default_factory=lambda: AIMaturitySignalBrief(
+        source="derived", fetched_at="", confidence="low"))
 
-    # Classification
     icp_segment: dict = Field(default_factory=dict)
-
-    # Bench match
     bench_match: dict = Field(default_factory=dict)
-
-    # Contradictions
     contradictions: list[dict] = Field(default_factory=list)
-
-    # Competitor gap reference
     competitor_gap_brief_ref: Optional[str] = None
-
     generated_at: str = ""
 
 
@@ -213,36 +253,53 @@ class EnrichmentPipeline:
             )
 
         # ─── Build Brief ─────────────────────────────────────────────
+        now = datetime.now().isoformat()
         brief = HiringSignalBrief(
             prospect_name=company_name,
             prospect_domain=domain,
             crunchbase_id=cb_company.cb_url if cb_company else None,
-            funding=funding_signal,
-            job_velocity={
-                "open_roles": velocity.total_open_roles,
-                "60d_change": velocity.sixty_day_change_str,
-                "ai_roles_fraction": velocity.ai_roles_fraction,
-                "confidence": velocity.confidence,
-            },
-            layoffs={
-                "event": layoff_signal.has_recent_layoff,
-                "headcount": layoff_signal.total_headcount_affected,
-                "most_recent": layoff_signal.most_recent_date,
-                "confidence": layoff_signal.confidence,
-            },
-            leadership={
-                "new_cto": leadership_signal.new_cto,
-                "new_vp_eng": leadership_signal.new_vp_eng,
-                "has_recent_change": leadership_signal.has_recent_change,
-                "confidence": leadership_signal.confidence,
-            },
-            ai_maturity={
-                "score": ai_result.score,
-                "confidence": ai_result.confidence,
-                "uncertainty_reason": ai_result.uncertainty_reason,
-                "language_constraint": ai_result.language_constraint,
-                "has_ai_leadership": ai_result.has_ai_leadership,
-            },
+            funding=FundingSignal(
+                source="crunchbase",
+                fetched_at=now,
+                confidence=funding_signal.get("confidence", "low"),
+                event=funding_signal.get("event"),
+                date=funding_signal.get("date"),
+                total_usd=funding_signal.get("total_usd"),
+                type=funding_signal.get("type"),
+            ),
+            job_velocity=JobVelocitySignalBrief(
+                source="job_posts",
+                fetched_at=now,
+                confidence=velocity.confidence,
+                open_roles=velocity.total_open_roles,
+                sixty_day_change=velocity.sixty_day_change_str or None,
+                ai_roles_fraction=velocity.ai_roles_fraction,
+            ),
+            layoffs=LayoffSignalBrief(
+                source="layoffs_fyi",
+                fetched_at=now,
+                confidence=layoff_signal.confidence,
+                event=layoff_signal.has_recent_layoff,
+                headcount=layoff_signal.total_headcount_affected,
+                most_recent=layoff_signal.most_recent_date,
+            ),
+            leadership=LeadershipSignalBrief(
+                source="crunchbase",
+                fetched_at=now,
+                confidence=leadership_signal.confidence,
+                new_cto=leadership_signal.new_cto,
+                new_vp_eng=leadership_signal.new_vp_eng,
+                has_recent_change=leadership_signal.has_recent_change,
+            ),
+            ai_maturity=AIMaturitySignalBrief(
+                source="derived",
+                fetched_at=now,
+                confidence=ai_result.confidence,
+                score=ai_result.score,
+                uncertainty_reason=ai_result.uncertainty_reason,
+                language_constraint=ai_result.language_constraint,
+                has_ai_leadership=ai_result.has_ai_leadership,
+            ),
             icp_segment={
                 "primary": icp.primary_segment,
                 "secondary": icp.secondary_segment,
