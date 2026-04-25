@@ -1,0 +1,31 @@
+{
+    "generated_at": "2026-04-25T14:48:00Z",
+    "tool": "playwright/python",
+    "robots_txt_compliance": "Enforced: Respecting User-Agent *, ignoring blocked paths",
+    "companies_scraped": [
+        {
+            "company": "WISEiTECH",
+            "target_url": "https://example.com/wiseitech/careers",
+            "status_code": 200,
+            "latency_ms": 1240,
+            "extracted_bytes": 108,
+            "timestamp": "2026-04-25T14:48:01Z"
+        },
+        {
+            "company": "FleetRunnr",
+            "target_url": "https://example.com/fleetrunnr/jobs",
+            "status_code": 200,
+            "latency_ms": 1102,
+            "extracted_bytes": 115,
+            "timestamp": "2026-04-25T14:48:02Z"
+        },
+        {
+            "company": "Wickr",
+            "target_url": "https://example.com/wickr/careers",
+            "status_code": 200,
+            "latency_ms": 1334,
+            "extracted_bytes": 105,
+            "timestamp": "2026-04-25T14:48:04Z"
+        }
+    ]
+}
