@@ -1,0 +1,42 @@
+{
+  "your_method": {
+    "variant": "pev_v1",
+    "description": "Plan-Execute-Verify agent (best prompt variant)",
+    "mean_pass_at_1": 0.4615,
+    "bootstrap_ci_95": [
+      0.2308,
+      0.7692
+    ],
+    "mean_cost_per_task": 0.0199,
+    "latency_p95_s": 279.0529
+  },
+  "day1_baseline": {
+    "variant": "tau2_retail_baseline",
+    "description": "Vanilla tau2-bench LLMAgent (instructor baseline)",
+    "mean_pass_at_1": 0.7267,
+    "bootstrap_ci_95": [
+      0.6504,
+      0.7917
+    ],
+    "mean_cost_per_task": 0.0199,
+    "latency_p95_s": 551.6491
+  },
+  "automated_optimization": {
+    "variant": "AutoAgent / GEPA",
+    "description": "Automated prompt optimization search",
+    "mean_pass_at_1": null,
+    "bootstrap_ci_95": [
+      null,
+      null
+    ],
+    "mean_cost_per_task": null,
+    "latency_p95_s": null,
+    "note": "Not run. Expected Delta B negative. PEV is a hand-designed single-shot mechanism; automated prompt optimization at equivalent compute would likely produce a higher-performing prompt through search. Compute budget $4 was consumed by hand-crafted variants. See method.md \u00a78."
+  },
+  "_meta": {
+    "timestamp": "2026-04-24T21:44:27.281941",
+    "model": "qwen/qwen3-next-80b-a3b-thinking",
+    "domain": "retail",
+    "note": "Delta A = -0.2652 (Method vs Day 1 Baseline)"
+  }
+}

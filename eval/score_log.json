@@ -32,5 +32,119 @@
     "p95_latency_seconds": 214.46,
     "avg_agent_cost": 0.0,
     "note": "Scores extracted from per-task reward_info.reward in simulation JSONs. Cost is 0.0 because qwen3-235b-a22b is not in LiteLLM price table; estimated ~$0.30 from OpenRouter billing."
+  },
+  {
+    "experiment": "act4_pev_held_out",
+    "timestamp": "2026-04-24T20:50:41.737763",
+    "agent_name": "pev_v1",
+    "model": "qwen/qwen3-next-80b-a3b-thinking",
+    "domain": "retail",
+    "task_split": "test",
+    "num_trials": 1,
+    "total_tasks_scored": 13,
+    "passed": 6,
+    "mean_pass_at_1": 0.4615,
+    "bootstrap_ci_95": [
+      0.2308,
+      0.7692
+    ],
+    "delta_a_vs_baseline": -0.2652,
+    "delta_a_t_stat": null,
+    "delta_a_p_value_one_sided": null,
+    "trial_summaries": [
+      {
+        "trial": 1,
+        "scores": [
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        "mean": 0.4615,
+        "passed": 6
+      }
+    ],
+    "scores": [
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "mean_turns_per_task": 12.4,
+    "mean_cost_per_task": 0.0,
+    "latency_p50_s": 166.12502877299994,
+    "latency_p95_s": 279.05288523700034,
+    "termination_dist": {
+      "TerminationReason.INFRASTRUCTURE_ERROR": 7,
+      "TerminationReason.USER_STOP": 13
+    },
+    "note": "Primary CI: bootstrap over task-level scores (n_boot=2000). Secondary: one-sided z-test (normal approx; see method.md \u00a75 for t-test i.i.d. caveat). agent_cost=0.0 because qwen3-235b-a22b not in LiteLLM price table; estimate from OpenRouter billing.",
+    "baseline_pass_at_1": 0.7267,
+    "baseline_model": "qwen/qwen3-next-80b-a3b-thinking",
+    "baseline_source": "instructor-provided",
+    "note_infra_errors": "7/20 tasks failed with INFRASTRUCTURE_ERROR (auth retries exhausted); scored on 13/20"
+  },
+  {
+    "experiment": "act4_pev_held_out",
+    "timestamp": "2026-04-24T22:55:35.312784",
+    "agent_name": "pev_v3",
+    "model": "qwen/qwen3-next-80b-a3b-thinking",
+    "domain": "retail",
+    "task_split": "test",
+    "num_trials": 1,
+    "total_tasks_scored": 3,
+    "passed": 1,
+    "mean_pass_at_1": 0.3333,
+    "bootstrap_ci_95": [
+      0.0,
+      1.0
+    ],
+    "delta_a_vs_baseline": 0.0546,
+    "delta_a_t_stat": null,
+    "delta_a_p_value_one_sided": null,
+    "trial_summaries": [
+      {
+        "trial": 1,
+        "scores": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.3333,
+        "passed": 1
+      }
+    ],
+    "scores": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "mean_turns_per_task": 2.7,
+    "mean_cost_per_task": 0.0,
+    "latency_p50_s": 165.2991974530014,
+    "latency_p95_s": 194.86291853949987,
+    "termination_dist": {
+      "TerminationReason.INFRASTRUCTURE_ERROR": 17,
+      "TerminationReason.USER_STOP": 3
+    },
+    "note": "Primary CI: bootstrap over task-level scores (n_boot=2000). Secondary: one-sided z-test (normal approx; see method.md \u00a75 for t-test i.i.d. caveat). agent_cost=0.0 because qwen3-235b-a22b not in LiteLLM price table; estimate from OpenRouter billing."
   }
 ]

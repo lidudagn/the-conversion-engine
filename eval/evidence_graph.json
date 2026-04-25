@@ -1,0 +1,137 @@
+{
+  "_meta": {
+    "purpose": "Maps every numeric claim in the submission to its authoritative source file and field.",
+    "generated": "2026-04-24",
+    "project": "the-conversion-engine"
+  },
+  "claims": [
+    {
+      "claim_id": "C01",
+      "claim": "Instructor-provided baseline pass@1 = 0.7267",
+      "value": 0.7267,
+      "source_file": "eval/score_log.json",
+      "source_path": "[0].pass_at_1",
+      "provenance": "Provided by instructor (git commit d11a97072c49d093f7b5a3e4fe9da95b490d43ba). 150 simulations, 5 trials × 30 tasks, model=openrouter/qwen/qwen3-next-80b-a3b-thinking."
+    },
+    {
+      "claim_id": "C02",
+      "claim": "Baseline 95% CI = [0.6504, 0.7917]",
+      "value": [0.6504, 0.7917],
+      "source_file": "eval/score_log.json",
+      "source_path": "[0].pass_at_1_ci_95",
+      "provenance": "Bootstrap CI from instructor run."
+    },
+    {
+      "claim_id": "C03",
+      "claim": "Baseline avg agent cost = $0.0199/task",
+      "value": 0.0199,
+      "source_file": "eval/score_log.json",
+      "source_path": "[0].avg_agent_cost",
+      "provenance": "OpenRouter billing, qwen3-next-80b-a3b-thinking."
+    },
+    {
+      "claim_id": "C04",
+      "claim": "V1 ablation pass@1 = 0.5789, n=19/30",
+      "value": 0.5789,
+      "source_file": "eval/method.md",
+      "source_path": "§9 Ablation table",
+      "provenance": "Train split, 1 trial, qwen3-next-80b-a3b-thinking. 11/30 INFRASTRUCTURE_ERROR (OpenRouter auth); scores from 19/30 tasks."
+    },
+    {
+      "claim_id": "C05",
+      "claim": "V1 ablation 95% CI = [0.3684, 0.7895]",
+      "value": [0.3684, 0.7895],
+      "source_file": "eval/method.md",
+      "source_path": "§9 Ablation table",
+      "provenance": "Bootstrap CI, 2000 resamples, n=19."
+    },
+    {
+      "claim_id": "C06",
+      "claim": "V2 ablation pass@1 = 0.5263, n=19/30",
+      "value": 0.5263,
+      "source_file": "eval/method.md",
+      "source_path": "§9 Ablation table",
+      "provenance": "Train split, 1 trial, qwen3-next-80b-a3b-thinking. 11/30 INFRASTRUCTURE_ERROR."
+    },
+    {
+      "claim_id": "C07",
+      "claim": "V1 held-out pass@1 = 0.4615, n=13/20",
+      "value": 0.4615,
+      "source_file": "eval/score_log.json",
+      "source_path": "[2].mean_pass_at_1",
+      "provenance": "Test split, 1 trial, pev_v1 agent. 7/20 INFRASTRUCTURE_ERROR (OpenRouter weekly key limit exhausted)."
+    },
+    {
+      "claim_id": "C08",
+      "claim": "V1 held-out 95% CI = [0.2308, 0.7692]",
+      "value": [0.2308, 0.7692],
+      "source_file": "eval/score_log.json",
+      "source_path": "[2].bootstrap_ci_95",
+      "provenance": "Bootstrap CI, 2000 resamples, n=13."
+    },
+    {
+      "claim_id": "C09",
+      "claim": "Delta A (V1) = −0.2652",
+      "value": -0.2652,
+      "source_file": "eval/score_log.json",
+      "source_path": "[2].delta_a_vs_baseline",
+      "provenance": "0.4615 − 0.7267 = −0.2652. Negative result; see method.md §9 for diagnosis."
+    },
+    {
+      "claim_id": "C10",
+      "claim": "V3 held-out pass@1 = 0.3333, n=3/20 (unreliable)",
+      "value": 0.3333,
+      "source_file": "eval/score_log.json",
+      "source_path": "[3].mean_pass_at_1",
+      "provenance": "Test split, 1 trial, pev_v3 agent. 17/20 HTTP 402 (insufficient credits on new OpenRouter key). n=3 is statistically meaningless; CI=[0.0, 1.0]."
+    },
+    {
+      "claim_id": "C11",
+      "claim": "Probe suite: 63 probes, 100% pass rate",
+      "value": {"total": 63, "passed": 63, "pass_rate": 1.0},
+      "source_file": "probes/probe_results.json",
+      "source_path": "root.total_probes / root.passed / root.pass_rate",
+      "provenance": "Automated probe runner 2026-04-24T15:36:15. 5 hard_fails_correctly_triggered."
+    },
+    {
+      "claim_id": "C12",
+      "claim": "Layoffs dataset: 4360 rows",
+      "value": 4360,
+      "source_file": "data/layoffs/layoffs.csv",
+      "source_path": "row count (header + 4360 data rows)",
+      "provenance": "Full layoffs.fyi dataset, schema: Company,Location_HQ,Industry,Laid_Off_Count,Percentage,Date,Source,Country,Stage,Funds_Raised_USD."
+    },
+    {
+      "claim_id": "C13",
+      "claim": "E2E batch: 25 prospects processed, 25 successful",
+      "value": {"n_prospects": 25, "n_successful": 25},
+      "source_file": "outputs/e2e_batch_results.json",
+      "source_path": "root.n_prospects / root.n_successful",
+      "provenance": "Full pipeline run 2026-04-23T20:43:10. Kill-switch active; emails routed to sink."
+    },
+    {
+      "claim_id": "C14",
+      "claim": "E2E pipeline latency: p50=1535ms, p95=1913ms",
+      "value": {"p50_ms": 1535.0, "p95_ms": 1913.4},
+      "source_file": "outputs/e2e_batch_results.json",
+      "source_path": "root.p50_latency_ms / root.p95_latency_ms",
+      "provenance": "Wall-clock latency for enrichment+policy+compose+tone_guard. LLM path adds ~2–8s (template fallback used for batch run)."
+    },
+    {
+      "claim_id": "C15",
+      "claim": "5 integrations verified (Resend, AT, HubSpot, Cal.com, Langfuse)",
+      "value": 5,
+      "source_file": "verify_integrations.py",
+      "source_path": "verify_integrations() all checks pass",
+      "provenance": "Run 2026-04-24. Resend: email sent. AT: SMS queued. HubSpot: contact created/updated. Cal.com: slots fetched. Langfuse: trace created."
+    },
+    {
+      "claim_id": "C16",
+      "claim": "Total evaluation budget spent: ~$0.86",
+      "value": 0.86,
+      "source_file": "eval/method.md",
+      "source_path": "§10 Cost Budget table",
+      "provenance": "V1+V2 ablation ~$0.60, V1 held-out ~$0.20, V3 held-out ~$0.06, probes ~$0.002."
+    }
+  ]
+}
