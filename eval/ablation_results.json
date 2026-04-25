@@ -1,42 +1,112 @@
 {
-  "your_method": {
-    "variant": "pev_v1",
-    "description": "Plan-Execute-Verify agent (best prompt variant)",
-    "mean_pass_at_1": 0.4615,
-    "bootstrap_ci_95": [
-      0.2308,
-      0.7692
-    ],
-    "mean_cost_per_task": 0.0199,
-    "latency_p95_s": 279.0529
-  },
   "day1_baseline": {
-    "variant": "tau2_retail_baseline",
-    "description": "Vanilla tau2-bench LLMAgent (instructor baseline)",
+    "variant": "V0",
+    "agent_name": "llm_agent",
+    "description": "Baseline — original LLMAgent, no sequencing guidance (instructor-provided)",
+    "split": "test",
+    "instruction_tokens_approx": 60,
+    "num_tasks": 20,
+    "tasks_scored": 20,
+    "passed": 17,
     "mean_pass_at_1": 0.7267,
-    "bootstrap_ci_95": [
-      0.6504,
-      0.7917
-    ],
+    "bootstrap_ci_95": [0.6504, 0.7917],
     "mean_cost_per_task": 0.0199,
-    "latency_p95_s": 551.6491
+    "latency_p50_s": 105.9521,
+    "latency_p95_s": 551.6491,
+    "source": "instructor-provided; git commit d11a97072c49d093f7b5a3e4fe9da95b490d43ba; 150 sims, 5 trials x 30 tasks"
+  },
+  "ablation_dev": {
+    "split": "train",
+    "num_tasks_per_variant": 30,
+    "trials_per_variant": 1,
+    "model": "qwen/qwen3-next-80b-a3b-thinking",
+    "variants": {
+      "V1": {
+        "variant": "V1",
+        "agent_name": "pev_v1",
+        "description": "Verify-only — adds read-before-write + per-step confirmation",
+        "instruction_tokens_approx": 100,
+        "tasks_attempted": 30,
+        "tasks_scored": 19,
+        "infra_errors": 11,
+        "passed": 11,
+        "mean_pass_at_1": 0.5789,
+        "bootstrap_ci_95": [0.3684, 0.7895],
+        "mean_cost_per_task": 0.0199,
+        "latency_p95_s": null,
+        "note": "11/30 INFRASTRUCTURE_ERROR (OpenRouter 403 auth weekly limit)"
+      },
+      "V2": {
+        "variant": "V2",
+        "agent_name": "pev_v2",
+        "description": "Full PEV — adds UNDERSTAND/VERIFY/PLAN/EXECUTE/CONFIRM cycle",
+        "instruction_tokens_approx": 210,
+        "tasks_attempted": 30,
+        "tasks_scored": 19,
+        "infra_errors": 11,
+        "passed": 10,
+        "mean_pass_at_1": 0.5263,
+        "bootstrap_ci_95": [0.3158, 0.7368],
+        "mean_cost_per_task": 0.0199,
+        "latency_p95_s": null,
+        "note": "11/30 INFRASTRUCTURE_ERROR (OpenRouter 403 auth weekly limit)"
+      },
+      "V3": {
+        "variant": "V3",
+        "agent_name": "pev_v3",
+        "description": "Execute-first — fixes confirmation anti-pattern; execute on approval, verify internally",
+        "instruction_tokens_approx": 95,
+        "tasks_attempted": 30,
+        "tasks_scored": 2,
+        "infra_errors": 28,
+        "passed": 2,
+        "mean_pass_at_1": 1.0,
+        "bootstrap_ci_95": [0.0, 0.0],
+        "mean_cost_per_task": 0.0199,
+        "latency_p95_s": null,
+        "note": "28/30 INFRASTRUCTURE_ERROR — result unreliable (n=2)"
+      }
+    },
+    "best_variant": "V1",
+    "best_variant_rationale": "Higher mean pass@1 (0.5789 vs 0.5263) on dev; selected for held-out"
+  },
+  "your_method": {
+    "variant": "V1",
+    "agent_name": "pev_v1",
+    "description": "Plan-Execute-Verify agent — verify-only instruction, best dev ablation variant",
+    "split": "test",
+    "instruction_tokens_approx": 100,
+    "num_tasks": 20,
+    "tasks_scored": 13,
+    "infra_errors": 7,
+    "passed": 6,
+    "mean_pass_at_1": 0.4615,
+    "bootstrap_ci_95": [0.2308, 0.7692],
+    "scores": [0,1,0,1,1,1,0,0,0,0,1,0,1],
+    "mean_turns_per_task": 12.4,
+    "mean_cost_per_task": 0.0199,
+    "latency_p50_s": 166.125,
+    "latency_p95_s": 279.053,
+    "delta_a": -0.2652,
+    "delta_a_ci_separates": false,
+    "note": "Delta A negative. 7/20 INFRASTRUCTURE_ERROR. CI [0.23, 0.77] overlaps baseline CI [0.65, 0.79]. No statistically significant improvement. See method.md §9 for root cause and diagnosis."
   },
   "automated_optimization": {
-    "variant": "AutoAgent / GEPA",
-    "description": "Automated prompt optimization search",
+    "variant": "GEPA/AutoAgent",
+    "description": "Automated prompt optimization search (not run)",
+    "split": "test",
     "mean_pass_at_1": null,
-    "bootstrap_ci_95": [
-      null,
-      null
-    ],
+    "bootstrap_ci_95": [null, null],
     "mean_cost_per_task": null,
     "latency_p95_s": null,
-    "note": "Not run. Expected Delta B negative. PEV is a hand-designed single-shot mechanism; automated prompt optimization at equivalent compute would likely produce a higher-performing prompt through search. Compute budget $4 was consumed by hand-crafted variants. See method.md \u00a78."
+    "note": "Not run. PEV is a hand-designed single-shot mechanism. Expected Delta B negative: automated search at equivalent $4 compute budget would likely outperform hand-crafted variants through iterative search over ~50-100 candidates. Compute was consumed by V1/V2/V3 variants. See method.md §8."
   },
   "_meta": {
-    "timestamp": "2026-04-24T21:44:27.281941",
+    "timestamp": "2026-04-25",
     "model": "qwen/qwen3-next-80b-a3b-thinking",
     "domain": "retail",
-    "note": "Delta A = -0.2652 (Method vs Day 1 Baseline)"
+    "delta_a_summary": "Method (V1) pass@1=0.4615 vs baseline 0.7267 = -0.2652 (negative; CI overlap; mechanism did not beat baseline)",
+    "prompt_length_confound": "V0~60tok, V1~100tok, V2~210tok, V3~95tok. Not length-controlled. See method.md §4.2.",
+    "honest_assessment": "The PEV mechanism failed to improve on the baseline. Root cause: qwen3 thinking model already applies internal CoT. Infrastructure errors (35-85% failure rates) made evaluation unreliable. V3 could not be validated due to API credit exhaustion."
   }
 }
