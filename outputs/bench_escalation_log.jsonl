@@ -1,0 +1,5 @@
+{"timestamp": "2026-04-24T15:01:37.524859", "prospect": "Co", "thread_id": "", "reason": "bench_exceeded", "requested_capacity": 15, "bench_available": 12, "turn_count": 1}
+{"timestamp": "2026-04-24T15:06:46.244035", "prospect": "TestCo", "thread_id": "", "reason": "bench_exceeded", "requested_capacity": 200, "bench_available": 0, "turn_count": 1}
+{"timestamp": "2026-04-24T15:07:44.308810", "prospect": "InjectCo", "thread_id": "", "reason": "bench_exceeded", "requested_capacity": 1000, "bench_available": 12, "turn_count": 1}
+{"timestamp": "2026-04-24T15:29:22.116692", "prospect": "TestCo", "thread_id": "", "reason": "bench_exceeded", "requested_capacity": 200, "bench_available": 0, "turn_count": 1}
+{"timestamp": "2026-04-24T15:36:10.891751", "prospect": "TestCo", "thread_id": "", "reason": "bench_exceeded", "requested_capacity": 200, "bench_available": 0, "turn_count": 1}

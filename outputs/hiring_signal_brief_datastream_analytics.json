@@ -1,18 +1,15 @@
 {
-  "prospect_name": "WISEiTECH",
-  "prospect_domain": "wisetech.io",
-  "crunchbase_id": "https://www.crunchbase.com/organization/wiseitech",
+  "prospect_name": "DataStream Analytics",
+  "prospect_domain": null,
+  "crunchbase_id": null,
   "funding": {
     "event": null,
-    "date": "",
-    "total_usd": null,
-    "type": "",
     "confidence": "low",
     "source": "crunchbase"
   },
   "job_velocity": {
     "open_roles": 10,
-    "60d_change": "-40%",
+    "60d_change": "+50%",
     "ai_roles_fraction": 0.6,
     "confidence": "high"
   },
@@ -57,6 +54,6 @@
       "segment_override": null
     }
   ],
-  "competitor_gap_brief_ref": "competitor_gap_brief.json",
-  "generated_at": "2026-04-25T10:50:08.690640"
+  "competitor_gap_brief_ref": null,
+  "generated_at": "2026-04-24T14:27:45.878276"
 }

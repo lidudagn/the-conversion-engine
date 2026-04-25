@@ -1,0 +1,69 @@
+{
+  "_meta": {
+    "purpose": "Cost breakdown for all API spending in the project",
+    "generated": "2026-04-24",
+    "currency": "USD"
+  },
+  "pipeline_cost_per_lead": {
+    "model": "qwen/qwen3-next-80b-a3b-thinking via OpenRouter",
+    "cost_per_email_usd": 0.002,
+    "note": "Template fallback used for batch run (cost efficiency). LLM composer path adds ~$0.002–0.010 per email depending on signal complexity.",
+    "batch_run_total_prospects": 25,
+    "batch_run_estimated_total_usd": 0.05
+  },
+  "evaluation_costs": {
+    "instructor_baseline": {
+      "run": "instructor-provided (not our spend)",
+      "tasks": 150,
+      "cost_usd": null
+    },
+    "v1_ablation_dev": {
+      "run": "pev_v1, train split, 1 trial × 30 tasks",
+      "tasks_attempted": 30,
+      "tasks_scored": 19,
+      "infra_errors": 11,
+      "cost_per_task_usd": 0.0199,
+      "estimated_total_usd": 0.38,
+      "note": "Only scored tasks billed; infra errors (OpenRouter 403 auth) consumed retries without full model response."
+    },
+    "v2_ablation_dev": {
+      "run": "pev_v2, train split, 1 trial × 30 tasks",
+      "tasks_attempted": 30,
+      "tasks_scored": 19,
+      "infra_errors": 11,
+      "cost_per_task_usd": 0.0199,
+      "estimated_total_usd": 0.38,
+      "note": "Same infrastructure conditions as V1 ablation."
+    },
+    "v1_held_out": {
+      "run": "pev_v1, test split, 1 trial × 20 tasks",
+      "tasks_attempted": 20,
+      "tasks_scored": 13,
+      "infra_errors": 7,
+      "cost_per_task_usd": 0.0199,
+      "estimated_total_usd": 0.26,
+      "note": "OpenRouter weekly key limit exhausted mid-run."
+    },
+    "v3_held_out": {
+      "run": "pev_v3, test split, 1 trial × 20 tasks",
+      "tasks_attempted": 20,
+      "tasks_scored": 3,
+      "infra_errors": 17,
+      "cost_per_task_usd": 0.0199,
+      "estimated_total_usd": 0.06,
+      "note": "New OpenRouter API key had ~$0.16 credits remaining. HTTP 402 insufficient-credits errors on 17/20 tasks."
+    },
+    "toneguard_probes": {
+      "run": "63 adversarial probes via probe_runner.py",
+      "estimated_total_usd": 0.002,
+      "note": "Minimal LLM calls; most probes use rule-based checks."
+    }
+  },
+  "totals": {
+    "evaluation_total_usd": 0.86,
+    "pipeline_batch_usd": 0.05,
+    "grand_total_usd": 0.91,
+    "budget_limit_usd": 10.00,
+    "budget_used_pct": 9.1
+  }
+}
