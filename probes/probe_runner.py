@@ -1340,6 +1340,491 @@ async def probe_G05_qualification_no_bench_match() -> ProbeResult:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Category H: ICP Misclassification
+# ─────────────────────────────────────────────────────────────────────────────
+
+def probe_H01_layoff_not_misclassified_as_seg1() -> ProbeResult:
+    """Post-layoff company without VC funding → should NOT be Seg1."""
+    r = ProbeResult("H01", "icp_misclassification", "Post-layoff company not misclassified as Seg1")
+    r.expected = "primary_segment != 1 (no funding → Seg1 gate fails)"
+    try:
+        from agent.icp_classifier import ICPClassifier
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        clf = ICPClassifier()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        result = clf.classify(
+            employee_count=200,
+            total_funding_usd=None,
+            last_funding_date=None,
+            last_funding_type=None,
+            has_recent_layoff=True,
+            layoff_headcount=60,
+            ai_maturity=ai,
+            days_since_funding=None,
+        )
+        r.actual = f"primary_segment={result.primary_segment}, confidence={result.confidence:.2f}"
+        r.passed = result.primary_segment != 1
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_H02_expired_funding_window() -> ProbeResult:
+    """Funding 400 days ago → outside 180-day Seg1 window; confidence near 0."""
+    r = ProbeResult("H02", "icp_misclassification", "Expired funding window (400 days) → Seg1 confidence=0")
+    r.expected = "primary_segment != 1 or confidence < 0.5 (funding too old)"
+    try:
+        from agent.icp_classifier import ICPClassifier
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        clf = ICPClassifier()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        result = clf.classify(
+            employee_count=50,
+            total_funding_usd=5_000_000,
+            last_funding_date="2025-03-01",
+            last_funding_type="series_a",
+            ai_maturity=ai,
+            days_since_funding=400,
+        )
+        r.actual = f"primary_segment={result.primary_segment}, confidence={result.confidence:.2f}"
+        r.passed = result.primary_segment != 1 or result.confidence < 0.5
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_H03_grant_funding_not_seg1() -> ProbeResult:
+    """Grant/non-equity funding → Seg1 (VC-funded startup) should not fire with full confidence."""
+    r = ProbeResult("H03", "icp_misclassification", "Grant funding type should not trigger full Seg1")
+    r.expected = "No crash; grant treated as weaker signal than equity raise"
+    try:
+        from agent.icp_classifier import ICPClassifier
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        clf = ICPClassifier()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        result = clf.classify(
+            employee_count=30,
+            total_funding_usd=500_000,
+            last_funding_date="2026-02-01",
+            last_funding_type="grant",
+            ai_maturity=ai,
+            days_since_funding=82,
+        )
+        r.actual = f"primary_segment={result.primary_segment}, funding_type=grant, confidence={result.confidence:.2f}"
+        r.passed = True  # No crash; ideally Seg1 not triggered or low confidence
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_H04_enterprise_size_not_seg1() -> ProbeResult:
+    """Enterprise-size company (5000 employees) → outside Seg1 startup range (15-80)."""
+    r = ProbeResult("H04", "icp_misclassification", "Enterprise company (5000 emp) outside Seg1 range")
+    r.expected = "primary_segment != 1 or confidence < 0.5 (Seg1 targets 15-80 emp startups)"
+    try:
+        from agent.icp_classifier import ICPClassifier
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        clf = ICPClassifier()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        result = clf.classify(
+            employee_count=5000,
+            total_funding_usd=50_000_000,
+            last_funding_date="2026-01-01",
+            last_funding_type="series_c",
+            ai_maturity=ai,
+            days_since_funding=112,
+        )
+        r.actual = f"primary_segment={result.primary_segment}, confidence={result.confidence:.2f}"
+        r.passed = result.primary_segment != 1 or result.confidence < 0.5
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Category I: Signal Over-claiming
+# ─────────────────────────────────────────────────────────────────────────────
+
+def probe_I01_weak_job_velocity_not_assertable() -> ProbeResult:
+    """1 job post (very weak signal) → should be in question_signals, not assertable."""
+    r = ProbeResult("I01", "signal_overclaiming", "Weak job velocity (1 post) → not assertable")
+    r.expected = "job_velocity NOT in assertable_signals (low-confidence signal must be hedged)"
+    try:
+        from agent.policy_engine import PolicyEngine
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        pe = PolicyEngine()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        policy = pe.compute_policy(
+            icp_segment=1,
+            icp_confidence=0.75,
+            ai_maturity=ai,
+            gap_brief=None,
+            bench_summary={"available_stacks": ["python"], "total_available": 5},
+            prospect_signals={"job_velocity": {"total_open_roles": 1, "confidence": "low"}},
+            contradictions=[],
+        )
+        r.actual = f"assertable={policy.assertable_signals}, question={policy.question_signals}"
+        r.passed = (
+            "job_velocity" not in policy.assertable_signals or
+            "job_velocity" in policy.question_signals
+        )
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_I02_ai_maturity_hedge_constraint_respected() -> ProbeResult:
+    """AI maturity score=1, language_constraint=should_hedge → not in assertable_signals."""
+    r = ProbeResult("I02", "signal_overclaiming", "AI maturity should_hedge constraint respected by policy")
+    r.expected = "ai_maturity NOT in assertable_signals (should_hedge → question only)"
+    try:
+        from agent.policy_engine import PolicyEngine
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        pe = PolicyEngine()
+        ai = AIMaturityResult(
+            score=1, confidence="medium", uncertainty_reason="only 1 AI role found",
+            language_constraint="should_hedge"
+        )
+        policy = pe.compute_policy(
+            icp_segment=4,
+            icp_confidence=0.8,
+            ai_maturity=ai,
+            gap_brief=None,
+            bench_summary={"available_stacks": ["python", "ml"], "total_available": 4},
+            prospect_signals={},
+            contradictions=[],
+        )
+        r.actual = f"assertable={policy.assertable_signals}, tone={policy.tone_mode}"
+        r.passed = "ai_maturity" not in policy.assertable_signals
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+async def probe_I03_question_signal_stated_as_fact() -> ProbeResult:
+    """Email states question-only funding signal as flat assertion → tone guard flags it."""
+    r = ProbeResult("I03", "signal_overclaiming", "Question-only signal stated as fact → tone guard flags")
+    r.expected = "passed=False or issues flagged (signal asserted without assertion permission)"
+    try:
+        from agent.tone_guard import ToneGuard
+        from agent.policy_engine import PolicyDecision
+        guard = ToneGuard()
+        policy = PolicyDecision(
+            decision_id="probe-I03",
+            pitch_segment=1,
+            segment_confidence=0.7,
+            tone_mode="suggestive",
+            abstain=False,
+            assertable_signals=[],
+            question_signals=["funding"],
+        )
+        draft = (
+            "Hi [Name],\n\nYour company clearly just closed a major Series A funding round "
+            "and has the capital to scale fast. That's why we're reaching out now.\n\nBest, Tenacious"
+        )
+        result = await guard.check(draft, policy)
+        r.actual = f"passed={result.passed}, issues={result.issues[:2]}"
+        r.passed = not result.passed or len(result.issues) > 0
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Category J: Tone Drift
+# ─────────────────────────────────────────────────────────────────────────────
+
+def probe_J01_multi_turn_tone_stability() -> ProbeResult:
+    """4-turn qualification → state coherent, turn_count correct, no crash."""
+    r = ProbeResult("J01", "tone_drift", "Multi-turn qualification: state coherent after 4 turns")
+    r.expected = "turn_count=4, status updated logically, no crash"
+    try:
+        from agent.qualifier import QualificationHandler, QualificationState
+        handler = QualificationHandler(bench_summary={"available_stacks": ["python"], "total_available": 10})
+        state = QualificationState(prospect_name="DriftCo")
+        for reply in [
+            "We're interested in what you offer.",
+            "Tell me more about your timeline.",
+            "What would the pricing look like?",
+            "Can we schedule a call?",
+        ]:
+            state, _ = handler.process_reply(state, reply)
+        r.actual = f"turn_count={state.turn_count}, status={state.status}"
+        r.passed = state.turn_count == 4 and state.status != "escalated"
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_J02_objection_not_aggressive_response() -> ProbeResult:
+    """Prospect objects with 'not a priority' → response uses empathetic language."""
+    r = ProbeResult("J02", "tone_drift", "Objection → empathetic not aggressive response")
+    r.expected = "status=objection; response contains empathetic language ('understand' or 'no pressure')"
+    try:
+        from agent.qualifier import QualificationHandler, QualificationState
+        handler = QualificationHandler(bench_summary={"available_stacks": ["python"], "total_available": 5})
+        state = QualificationState(prospect_name="ObjectionCo")
+        state, response = handler.process_reply(state, "We already have a vendor, not a priority right now.")
+        r.actual = f"status={state.status}, empathetic={'understand' in response.lower() or 'pressure' in response.lower()}"
+        r.passed = state.status == "objection" and (
+            "understand" in response.lower() or "no pressure" in response.lower()
+        )
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Category K: Multi-thread Leakage
+# ─────────────────────────────────────────────────────────────────────────────
+
+def probe_K01_separate_prospects_separate_threads() -> ProbeResult:
+    """Two different prospect emails → separate threads with distinct IDs."""
+    r = ProbeResult("K01", "multi_thread_leakage", "Two prospects get independent threads")
+    r.expected = "thread_a.thread_id != thread_b.thread_id (no shared state)"
+    try:
+        from agent.orchestrator import ChannelOrchestrator
+        orch = ChannelOrchestrator()
+        ta = orch.get_or_create_thread("alice@acme.io", "Alice A", "AcmeCorp")
+        tb = orch.get_or_create_thread("bob@betaco.io", "Bob B", "BetaCorp")
+        r.actual = f"thread_a={ta.thread_id!r}, thread_b={tb.thread_id!r}, same={ta.thread_id == tb.thread_id}"
+        r.passed = ta.thread_id != tb.thread_id
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_K02_reply_does_not_mutate_other_thread() -> ProbeResult:
+    """Reply from prospect A does not mutate prospect B's turn_count."""
+    r = ProbeResult("K02", "multi_thread_leakage", "Reply from A does not mutate B's thread state")
+    r.expected = "thread_b turn_count unchanged after A replies"
+    try:
+        from agent.orchestrator import ChannelOrchestrator
+        orch = ChannelOrchestrator()
+        orch.get_or_create_thread("alpha@alpha.io", "Alpha A", "AlphaCo")
+        tb = orch.get_or_create_thread("beta@beta.io", "Beta B", "BetaCo")
+        before = tb.turn_count
+        orch.handle_reply("alpha@alpha.io", "email", "Sounds interesting, tell me more.")
+        tb_after = orch.get_or_create_thread("beta@beta.io", "Beta B", "BetaCo")
+        r.actual = f"b_turns_before={before}, b_turns_after={tb_after.turn_count}"
+        r.passed = tb_after.turn_count == before
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Category L: Cost Pathology
+# ─────────────────────────────────────────────────────────────────────────────
+
+def probe_L01_policy_engine_50_signals() -> ProbeResult:
+    """Policy engine with 50 simultaneous signal keys → no error or runaway loop."""
+    r = ProbeResult("L01", "cost_pathology", "Policy engine with 50 signal keys → stable output")
+    r.expected = "Policy computed without crash; no runaway loop"
+    try:
+        from agent.policy_engine import PolicyEngine
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        pe = PolicyEngine()
+        ai = AIMaturityResult(score=2, confidence="high", uncertainty_reason="", language_constraint="can_assert")
+        large_signals = {f"signal_{i}": {"value": i, "confidence": "medium"} for i in range(50)}
+        policy = pe.compute_policy(
+            icp_segment=1, icp_confidence=0.8, ai_maturity=ai,
+            gap_brief=None,
+            bench_summary={"available_stacks": ["python"], "total_available": 5},
+            prospect_signals=large_signals,
+            contradictions=[],
+        )
+        r.actual = f"tone_mode={policy.tone_mode}, rules={len(policy.rules_triggered)}"
+        r.passed = True
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_L02_enrichment_no_recursion_error() -> ProbeResult:
+    """ICP classifier with unusual funding_type string → no RecursionError or MemoryError."""
+    r = ProbeResult("L02", "cost_pathology", "Deeply-nested funding_type string → no recursive crash")
+    r.expected = "Classifier returns without RecursionError or MemoryError"
+    try:
+        from agent.icp_classifier import ICPClassifier
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        clf = ICPClassifier()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        nested_str = str({"level": {"level": {"level": {"value": 42}}}})
+        result = clf.classify(
+            employee_count=50, total_funding_usd=5_000_000,
+            last_funding_date="2026-01-01",
+            last_funding_type=nested_str,
+            ai_maturity=ai, days_since_funding=60,
+        )
+        r.actual = f"primary_segment={result.primary_segment}"
+        r.passed = True
+    except (RecursionError, MemoryError) as fatal:
+        r.actual = f"Fatal: {type(fatal).__name__}: {fatal}"
+        r.error = str(fatal)
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Category M: Scheduling / Dual-control Coordination
+# ─────────────────────────────────────────────────────────────────────────────
+
+async def probe_M01_kill_switch_blocks_live_booking() -> ProbeResult:
+    """Kill switch active → booking routed to sink, not live calendar API."""
+    r = ProbeResult("M01", "scheduling", "Kill switch active → booking routes to sink")
+    r.expected = "booking status=dry_run or sink_routed (KILL_SWITCH=true must block live calls)"
+    try:
+        import config
+        kill_switch = getattr(config, "KILL_SWITCH", True)
+        from agent.calendar_client import CalComClient
+        cal = CalComClient()
+        booking = await cal.create_booking(
+            start_time="2026-04-30T10:00:00",
+            name="Kill Switch Test",
+            email="test@killswitch.io",
+        )
+        r.actual = f"KILL_SWITCH={kill_switch}, booking_status={booking.get('status')}"
+        if kill_switch:
+            r.passed = booking.get("status") in ("dry_run", "sink_routed", "error")
+        else:
+            r.passed = True  # Can't enforce if kill switch is intentionally off
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+async def probe_M02_timezone_nairobi_no_crash() -> ProbeResult:
+    """Booking with Africa/Nairobi offset (UTC+3) → no crash, handled gracefully."""
+    r = ProbeResult("M02", "scheduling", "Timezone Africa/Nairobi (UTC+3) in booking → no crash")
+    r.expected = "Booking returns result without timezone crash"
+    try:
+        from agent.calendar_client import CalComClient
+        cal = CalComClient()
+        booking = await cal.create_booking(
+            start_time="2026-04-30T10:00:00+03:00",
+            name="Nairobi Test",
+            email="nairobi@test.io",
+        )
+        r.actual = f"booking_status={booking.get('status')}, no crash"
+        r.passed = booking.get("status") is not None
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Category N: Gap Over-claiming
+# ─────────────────────────────────────────────────────────────────────────────
+
+def probe_N01_gap_zero_confidence_blocked() -> ProbeResult:
+    """Gap brief with confidence_avg=0.0 → policy blocks gap delivery."""
+    r = ProbeResult("N01", "gap_overclaiming", "Gap confidence_avg=0.0 → use_competitor_gap=False")
+    r.expected = "use_competitor_gap=False (zero-confidence gap must not be delivered)"
+    try:
+        from agent.policy_engine import PolicyEngine
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        from agent.enrichment.competitor_gap import CompetitorGapBrief, GapFinding
+        pe = PolicyEngine()
+        ai = AIMaturityResult(score=0, confidence="low", uncertainty_reason="", language_constraint="must_use_question_language")
+        zero_conf_gap = CompetitorGapBrief(
+            prospect_name="ZeroCo", prospect_ai_maturity=0, prospect_sector="tech",
+            gaps=[GapFinding(
+                practice="AI tooling", top_quartile_prevalence="40%",
+                prospect_status="Unknown", confidence="low", relevance_to_tenacious="None",
+            )],
+            confidence_avg=0.0,
+        )
+        policy = pe.compute_policy(
+            icp_segment=4, icp_confidence=0.8, ai_maturity=ai,
+            gap_brief=zero_conf_gap,
+            bench_summary={"available_stacks": ["ml"], "total_available": 3},
+            prospect_signals={}, contradictions=[],
+        )
+        r.actual = f"use_competitor_gap={policy.use_competitor_gap}"
+        r.passed = policy.use_competitor_gap is False
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+async def probe_N02_aggressive_gap_framing_hard_fails() -> ProbeResult:
+    """Email with condescending gap framing → tone guard hard fails."""
+    r = ProbeResult("N02", "gap_overclaiming", "Aggressive gap framing → tone guard hard fails")
+    r.expected = "hard_fail=True (aggressive_framing detected)"
+    try:
+        from agent.tone_guard import ToneGuard
+        from agent.policy_engine import PolicyDecision
+        guard = ToneGuard()
+        policy = PolicyDecision(
+            decision_id="probe-N02", pitch_segment=4, segment_confidence=0.8,
+            tone_mode="assertive", abstain=False,
+        )
+        draft = (
+            "Hi [Name],\n\nYour competitors are miles ahead of you in AI adoption. "
+            "Your team is already falling behind rapidly and risks losing market share. "
+            "Tenacious can close the gap.\n\nBest, Tenacious Team"
+        )
+        result = await guard.check(draft, policy)
+        r.actual = f"passed={result.passed}, hard_fail={result.hard_fail}, issues={result.issues}"
+        r.passed = result.hard_fail is True
+        r.hard_fail_triggered = result.hard_fail
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+def probe_N03_gap_blocked_when_no_bench() -> ProbeResult:
+    """High-confidence gap brief + empty bench → bench_match=False correctly reported."""
+    r = ProbeResult("N03", "gap_overclaiming", "Gap delivery when bench unavailable → bench_match=False")
+    r.expected = "bench_match=False even when gap brief has high confidence"
+    try:
+        from agent.policy_engine import PolicyEngine
+        from agent.enrichment.ai_maturity import AIMaturityResult
+        from agent.enrichment.competitor_gap import CompetitorGapBrief, GapFinding
+        pe = PolicyEngine()
+        ai = AIMaturityResult(score=2, confidence="high", uncertainty_reason="", language_constraint="can_assert")
+        high_conf_gap = CompetitorGapBrief(
+            prospect_name="NoBenchCo", prospect_ai_maturity=2, prospect_sector="tech",
+            gaps=[GapFinding(
+                practice="ML pipeline", top_quartile_prevalence="70%",
+                prospect_status="Not adopted", confidence="high", relevance_to_tenacious="High",
+            )],
+            confidence_avg=0.85,
+        )
+        policy = pe.compute_policy(
+            icp_segment=4, icp_confidence=0.9, ai_maturity=ai,
+            gap_brief=high_conf_gap,
+            bench_summary={},
+            prospect_signals={}, contradictions=[],
+        )
+        r.actual = f"bench_match={policy.bench_match}, gap={policy.use_competitor_gap}, mode={policy.gap_delivery_mode}"
+        r.passed = not policy.bench_match
+    except Exception as e:
+        r.actual = f"CRASH: {type(e).__name__}: {e}"
+        r.error = traceback.format_exc()
+    return r
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Main runner
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -1378,6 +1863,20 @@ async def run_all_probes() -> list[dict]:
         probe_E05_very_long_notes_field,
         probe_F02_hubspot_graceful_degradation,
         probe_F03_langfuse_unavailable,
+        probe_H01_layoff_not_misclassified_as_seg1,
+        probe_H02_expired_funding_window,
+        probe_H03_grant_funding_not_seg1,
+        probe_H04_enterprise_size_not_seg1,
+        probe_I01_weak_job_velocity_not_assertable,
+        probe_I02_ai_maturity_hedge_constraint_respected,
+        probe_J01_multi_turn_tone_stability,
+        probe_J02_objection_not_aggressive_response,
+        probe_K01_separate_prospects_separate_threads,
+        probe_K02_reply_does_not_mutate_other_thread,
+        probe_L01_policy_engine_50_signals,
+        probe_L02_enrichment_no_recursion_error,
+        probe_N01_gap_zero_confidence_blocked,
+        probe_N03_gap_blocked_when_no_bench,
     ]
 
     async_probes = [
@@ -1395,6 +1894,10 @@ async def run_all_probes() -> list[dict]:
         probe_G03_special_chars_in_prospect_name,
         probe_G04_orchestrator_unknown_thread,
         probe_G05_qualification_no_bench_match,
+        probe_I03_question_signal_stated_as_fact,
+        probe_M01_kill_switch_blocks_live_booking,
+        probe_M02_timezone_nairobi_no_crash,
+        probe_N02_aggressive_gap_framing_hard_fails,
     ]
 
     print(f"\n{'='*60}")

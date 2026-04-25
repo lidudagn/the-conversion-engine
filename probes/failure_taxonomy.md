@@ -1,121 +1,248 @@
 # Act III — Failure Taxonomy
 
-**Derived from:** 45-probe adversarial run on 2026-04-23  
-**Bugs found:** 3  
-**Failure classes:** 5
-
-This taxonomy organizes the failure modes discovered by the probe library into classes by root cause, impact, and recoverability. It drives the target failure mode selection in `target_failure_mode.md`.
+**Compiled:** 2026-04-24  
+**Source:** 63 adversarial probes across 10 categories, plus 11 manual adversarial steps
 
 ---
 
-## Class 1 — Unsafe Input Handling (Safety)
+## Overview
 
-**Root cause:** Input from untrusted sources (company names, job post titles, enrichment field values) reaches downstream components without sanitization.
+Failures are grouped by the system layer where they originate. Each category includes a business-cost derivation expressed in Tenacious operational terms.
 
-**Impact:** Path traversal / `FileNotFoundError` from HTML characters in filenames; silent data corruption if input reaches LLM context without escaping.
-
-**Probes that triggered this class:** E01, E02, E04 (bug-fixed)
-
-**Before fix (E04):** Company name `<script>alert('xss')</script> Corp` caused a crash because `_save_brief()` used the raw name as a file path component. The resulting path `outputs/hiring_signal_brief_<script>alert('xss')</script>_corp.json` is invalid on all OSes.
-
-**After fix:** `_safe_filename()` strips all non-alphanumeric characters before file path construction.
-
-**Residual risk:** If enrichment data is later passed to an LLM prompt (e.g., in `EmailComposer`), prompt injection via job post titles or funding descriptions is possible unless the LLM is instruction-tuned to ignore embedded directives. The deterministic enrichment layer is safe; the LLM composition layer is the risk surface.
-
-**Severity:** High — crash + potential security issue  
-**Recoverability:** Fixed in this run  
-**Likelihood in production:** Medium (Crunchbase data is structured; free-text fields like job post descriptions are higher risk)
+Business cost tiers used throughout:
+- **CRITICAL** — immediate deal loss, compliance incident, or brand damage that cannot be undone
+- **HIGH** — deal delay, pipeline erosion, or trust damage requiring recovery effort
+- **MEDIUM** — efficiency loss, increased ops overhead, or partial feature degradation
+- **LOW** — minor accuracy/ergonomics issue with no external customer impact
 
 ---
 
-## Class 2 — Defensive Coding Gaps (Robustness)
+## Category 1 — ICP Misclassification
 
-**Root cause:** Internal code assumes well-formed dicts from other modules but doesn't guard missing keys.
+**Layer:** `agent/icp_classifier.py`  
+**What fails:** Company assigned to wrong segment (or to no segment when signal exists).
 
-**Impact:** `KeyError` crashes when contradiction dicts from `ContradictionDetector` don't include a `'name'` key (e.g., future edge cases, manually constructed test data, or version drift between modules).
+### Business cost derivation
 
-**Probes that triggered this class:** C06 (bug-fixed)
+Tenacious sells four segment-specific services (Seg1: rapid scaling, Seg2: right-sizing, Seg3: leadership transition support, Seg4: AI capability build). Sending a Seg1 "growth sprint" pitch to a company mid-layoff (Seg2) is not just irrelevant — it signals Tenacious did not read the room. Prospects respond with "not the right time" and close the door permanently.
 
-**Before fix:** `policy_engine.py:184` did `c['name'].upper()` without `.get()` — any dict without a `'name'` key raised `KeyError` and crashed the entire pipeline run.
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Layoff company misclassified as Seg1 | Funding check fires; layoff signal not overriding | HIGH — tone-deaf pitch, deal killed in Turn 1 |
+| Expired funding window still scoring Seg1 | days_since_funding > 180 but score not zeroed | HIGH — "congrats on your funding" 13 months late = credibility damage |
+| Grant treated as equity raise | funding_type="grant" passes VC gate | MEDIUM — wrong buyer persona; grant companies don't have deployment capital |
+| Enterprise company in Seg1 funnel | employee_count=5000 passes 15-80 emp gate | HIGH — enterprise prospect expects AE, not automated sequence; trust eroded |
+| ICP confidence below abstain gate, email sent anyway | 0.499 confidence not caught | CRITICAL — assertive claim on an uncertain classification = false premise |
 
-**After fix:** `c.get("name", "unknown").upper()` — the contradiction is logged as "unknown" type and the pipeline continues.
-
-**Severity:** High — silent crash with no fallback  
-**Recoverability:** Fixed in this run  
-**Likelihood in production:** Low-medium (only triggered by dicts from new contradiction rules or test harness that don't include the 'name' field)
-
----
-
-## Class 3 — Tone Guard Coverage Gap (Compliance)
-
-**Root cause:** The rule-based fallback in `ToneGuard._rule_based_check()` had no patterns for the five hard-fail categories: guarantee language, fabricated superlatives, bench overcommitment by count, explicit pricing, and competitor attacks.
-
-**Impact:** When `ToneGuard` is initialized without an `llm_client` (the common case in tests and batch runs without LLM keys), every email — including emails with "We guarantee 3x revenue", "$15,000/month per engineer", and "#1 ranked firm" — would be marked `passed=True` and dispatched.
-
-**Probes that triggered this class:** D01, D02, D03, D04, D07 (all pre-fix failures; post-fix all pass with hard-fails triggered)
-
-**Before fix:**
-- `passed=True` for: guarantee language, bench overcommitment (500+ engineers), explicit pricing, competitor attacks, fabricated rankings.
-
-**After fix:** Five new keyword pattern groups added:
-1. **Guarantee language** — "we guarantee", "guaranteed", "100% success", "without exception", "every time"
-2. **Superlatives** — "#1 ranked", "number one", "best in africa", inflated NPS claims
-3. **Bench overcommitment** — regex `\b([1-9]\d{2,})\s+engineers?\b` → count ≥ 100 → hard fail
-4. **Explicit pricing** — regex `\$[\d,]+(?:\.\d+)?(?:\s*/\s*(?:month|year|engineer))` → hard fail
-5. **Competitor attacks** — known competitor name + attack qualifier → hard fail
-
-**Severity:** Critical — compliance and brand risk  
-**Recoverability:** Fixed in this run  
-**Likelihood in production:** High — LLM sometimes generates guarantee/superlative language even when not asked; rule-based guard is the last line of defense
+### Key probes: B01, B02, B03, H01, H02, H03, H04
 
 ---
 
-## Class 4 — Semantic Alignment Gap (Quality, Not Fixed)
+## Category 2 — Signal Over-claiming
 
-**Root cause:** The rule-based tone guard cannot detect *semantic* misalignment between email content and the active policy — e.g., a Segment 1 pitch (recently-funded startup language) sent under a Segment 2 policy (restructuring/cost-discipline language).
+**Layer:** `agent/policy_engine.py` + `agent/tone_guard.py`  
+**What fails:** Low-confidence or question-only signals promoted to assertable facts in the email.
 
-**Impact:** Segment pitch mismatch lands wrong with the prospect. A CTO navigating a painful restructuring receives enthusiastic "congrats on your Series A" language — brand damage and low conversion.
+### Business cost derivation
 
-**Probes that triggered this class:** D06 (probe passes because system doesn't crash, but misalignment isn't caught)
+Cold outreach credibility rests on signal specificity. "You closed a Series A" stated as fact to a bootstrapped company, or "your team is aggressively hiring" stated about a company with one open role, immediately reveals that the signal source is unreliable. Prospects will not accept a meeting with a vendor who demonstrably has wrong data.
 
-**Root cause detail:** Keyword matching can't detect semantic incompatibility. Knowing that "recently closed a round" is Seg1 language and "cost discipline" is Seg2 language requires understanding both; no phrase pattern bridges them.
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| 1 job post → "aggressive hiring" assertion | job_velocity confidence=low, but not gated out of assertable | CRITICAL — easily disprovable false claim |
+| AI maturity=1 (should_hedge) asserted as fact | language_constraint not propagated to policy decision | HIGH — "we see your AI team" to company with no AI practice = wrong pitch |
+| Question-only signal stated without hedge | Tone guard does not catch assertive-on-question | HIGH — prospect corrects factual error; trust drops to zero |
+| Gap brief confidence < 0.6 still delivered | Gate check not enforced | CRITICAL — unverified competitive claim, legal exposure |
+| Empty signal set composed into assertive email | Composer accepts abstain=False with no signals | HIGH — hallucinated signals inserted by LLM without grounding |
 
-**Severity:** Medium-High — affects conversion rate, not safety  
-**Recoverability:** Requires LLM-based tone check (already implemented in `ToneGuard._llm_check()`, active when llm_client provided)  
-**Likelihood in production:** Low-medium (policy engine selects segment from ICP classifier; mismatch requires classifier error upstream)
-
-**This is the target failure mode for Act IV.** See `target_failure_mode.md`.
-
----
-
-## Class 5 — Boundary / Edge Case Behavior (Correctness)
-
-**Root cause:** Classifiers and scorers at exact thresholds (0.5, 0.85), with zero/null inputs, or with contradictory multi-signal inputs produce stable but sometimes unexpected outputs.
-
-**Impact:** Mostly correct — the ICP classifier, policy engine, and AI maturity scorer all handle boundary inputs without crashing. Some behaviors are worth documenting:
-- ICP confidence = 0.499 → abstain (correct; 0.5 is the threshold)
-- Segment 4 with AI maturity = 0 → tone_mode=exploratory (correct; Seg4 requires maturity ≥ 2)
-- Negative funding → no Segment 1 (correct; amount-range gate not met)
-- All four segments simultaneously → primary_segment=1 (correct; highest score wins)
-
-**Probes that triggered this class:** A05, A06, A07, A08, B01, B02, B03, B04
-
-**Severity:** Low — boundary behaviors are correct after review  
-**Recoverability:** No fix needed  
-**Likelihood in production:** Low (real Crunchbase data rarely has negative funding or future dates)
+### Key probes: C04, C07, I01, I02, I03
 
 ---
 
-## Summary
+## Category 3 — Bench Over-commitment
 
-| Class | Description | Severity | Fixed? | Probes |
-|---|---|---|---|---|
-| 1 | Unsafe input handling (HTML in filenames) | High | ✅ Yes | E04 |
-| 2 | Defensive coding gap (KeyError in policy engine) | High | ✅ Yes | C06 |
-| 3 | Tone guard coverage gap (5 hard-fail patterns missed) | Critical | ✅ Yes | D01–D04, D07 |
-| 4 | Semantic alignment gap (wrong-segment pitch undetected) | Medium-High | ❌ No (LLM-only) | D06 |
-| 5 | Boundary / edge case behavior | Low | N/A (correct) | A05–A08, B01–B04 |
+**Layer:** `agent/qualifier.py:_parse_capacity_request` + `agent/tone_guard.py`  
+**What fails:** System commits specific engineering headcount without verifying bench availability.
 
-**Confirmed pre-fix failure rate:** 9 / 45 probes (20%)  
-**Post-fix failure rate:** 0 / 45 probes (0%)  
-**Remaining risk surface:** Class 4 (semantic alignment) is only fully mitigated when `llm_client` is provided to `ToneGuard`.
+### Business cost derivation
+
+Tenacious's operational capacity (the "bench") is a hard constraint. Promising "500 dedicated engineers" in a cold email creates a written record of a commitment that Tenacious cannot honor. If the prospect shows that email during contract negotiation, Tenacious is exposed. If the prospect accepts and Tenacious cannot staff — deal terminates with cause.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| "500 engineers ready to deploy" in cold email | Tone guard large-count pattern not detecting | CRITICAL — contractual exposure, immediate trust collapse |
+| capacity_requested > bench_available, not escalated | _parse_capacity_request regex misses modifier words ("10 ML engineers") | CRITICAL — over-commitment without escalation, ops breach |
+| bench_summary={} but capacity language used | Policy does not block commitment language when bench empty | CRITICAL — commitment without available staff |
+| Gap delivery implies capability without bench | No guard linking use_competitor_gap to bench_match | HIGH — "we can close this gap for you" without bench = broken promise |
+
+### Key probes: C03, D02, G05, N03
+
+**Root bug found and fixed:** `_parse_capacity_request` original regex `(\d+)\s*(engineer|...)` failed on "10 ML engineers" because the modifier "ML" sat between the number and the role keyword. Fixed with three-pattern approach.
+
+---
+
+## Category 4 — Tone Drift
+
+**Layer:** `agent/tone_guard.py`  
+**What fails:** Email tone escalates beyond signal support, or adopts aggressive/condescending framing.
+
+### Business cost derivation
+
+A single aggressively-framed email can permanently close a prospect. In B2B outreach, the relationship starts with the cold email — if the first impression is "you're falling behind rapidly and will lose market share," the prospect immediately disqualifies the sender as a vendor who would be unpleasant to work with.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Guarantee language ("we guarantee 3x ROI") | No pattern in rule-based fallback | CRITICAL — FTC exposure + immediate trust loss |
+| Fabricated superlative ("#1 ranked") | No pattern in rule-based fallback | HIGH — easily disprovable; brand damage |
+| Aggressive competitor framing ("falling behind rapidly") | No aggressive_framing patterns in tone guard | CRITICAL — prospect experiences hostility, not partnership |
+| Condescending gap delivery ("miles ahead of you") | No prospect-directed attack patterns | CRITICAL — highest single-email rejection risk |
+| Multi-turn escalation drift (tone becomes assertive after N turns without new signals) | No turn-count-based tone check | HIGH — over-confident tone late in thread when no new signals justify it |
+| Wrong segment pitch not caught by rule-based | Semantic mismatch requires LLM, not keywords | HIGH — Seg1 growth pitch to restructuring company, tone misaligned with context |
+
+### Key probes: D01, D07, D08, J01, J02, N02
+
+**Root gap confirmed in Act III:** Original `_rule_based_check` had no patterns for guarantee language, superlatives, competitor attacks, or aggressive framing. All five categories now patched.
+
+**Remaining gap (Act IV target):** Semantic wrong-segment detection (D06) requires LLM semantic understanding. Rule-based catch rate for this sub-category: 0%.
+
+---
+
+## Category 5 — Multi-thread Leakage
+
+**Layer:** `agent/orchestrator.py:ChannelOrchestrator`  
+**What fails:** One prospect's context bleeds into another prospect's thread, or reply routing sends response to wrong thread.
+
+### Business cost derivation
+
+Two simultaneous failures when this occurs: (1) Prospect A receives an email referencing Prospect B's company context — instantly reveals AI-generated mass outreach, deal killed and likely shared publicly. (2) GDPR/data residency violation if the two prospects are in different jurisdictions.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Two prospects sharing a thread_id | Thread key collision in orchestrator state | CRITICAL — GDPR incident + both deals lost |
+| Reply from A increments B's turn_count | Shared mutable state in orchestrator | CRITICAL — wrong turn-count → wrong next action for B |
+| Reply routed to wrong thread | Email address lookup bug | CRITICAL — wrong prospect receives reply context |
+
+### Key probes: K01, K02
+
+---
+
+## Category 6 — Cost Pathology
+
+**Layer:** Enrichment pipeline, policy engine, tone guard  
+**What fails:** Unbounded input sizes or recursive structures inflate compute cost, cause timeouts, or crash the system.
+
+### Business cost derivation
+
+Tenacious's per-run budget target is $4 (Days 1-4). A single runaway inference call (15K token prompt instead of 1K) inflates cost 15x. At scale across 1,000 prospects per week, a cost pathology bug turns a $0.004/prospect cost into $0.06/prospect — a 15x overage that exceeds the unit economics of the outreach.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| 15,000-char notes field passed to LLM | No truncation gate before LLM call | MEDIUM — 15x token cost; breaks cost-per-contact budget |
+| 50 signal keys cause policy engine loop | No circuit breaker on signal iteration | MEDIUM — O(n²) behavior at scale crashes workers |
+| Nested data structure causes RecursionError | Recursive dict traversal without depth limit | MEDIUM — single malformed prospect crashes entire batch |
+
+### Key probes: E05, L01, L02
+
+---
+
+## Category 7 — Dual-control Coordination
+
+**Layer:** `agent/calendar_client.py`, `agent/hubspot_client.py`, `agent/langfuse_wrapper.py`, `config.py:KILL_SWITCH`  
+**What fails:** Live external API calls made without kill-switch gate, or graceful degradation missing on integration failure.
+
+### Business cost derivation
+
+The kill switch (`KILL_SWITCH=True`) is the authorization gate for all live outbound actions. A bypass means Tenacious sends real calendar invites, real emails, or writes real CRM records without human approval. This is a compliance incident by definition and could generate prospect spam complaints or regulatory inquiry.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Kill switch bypassed → live booking made | Calendar client missing kill-switch check | CRITICAL — unauthorized live invite sent to real prospect |
+| HubSpot write attempted with no token | Missing token not caught gracefully | HIGH — CRM write silently fails; deal tracking broken |
+| Langfuse tracing crash propagates | Exception not suppressed in tracing layer | MEDIUM — single tracing failure crashes the enrichment pipeline |
+| Cal.com invalid event type not handled | 4xx response not caught → exception propagates | HIGH — booking attempt failure crashes qualification flow |
+
+### Key probes: F01, F02, F03, M01
+
+---
+
+## Category 8 — Scheduling Edge Cases
+
+**Layer:** `agent/calendar_client.py`  
+**What fails:** Timezone formatting, datetime edge cases, or calendar API quirks cause booking failures or silent errors.
+
+### Business cost derivation
+
+Tenacious's primary market is Nairobi (UTC+3). A timezone-unaware booking system either (a) schedules calls at 3 AM Nairobi time when prospect said "10 AM," or (b) crashes entirely when given a `+03:00` offset. Both outcomes lose the meeting.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Africa/Nairobi UTC+3 not handled | datetime.fromisoformat fails on `+03:00` suffix in Python < 3.7 | MEDIUM — Nairobi prospect's meeting scheduled wrong or booking crashes |
+| Kill switch not checked before scheduling | Authorization gate missing | CRITICAL — live booking sent without approval |
+| Invalid time string crashes booking | No datetime validation before API call | MEDIUM — booking attempt kills qualification flow state |
+
+### Key probes: M01, M02
+
+---
+
+## Category 9 — Signal Reliability
+
+**Layer:** `agent/enrichment/pipeline.py`, `agent/enrichment/ai_maturity.py`  
+**What fails:** Degenerate, adversarially crafted, or malformed input signals corrupt enrichment output.
+
+### Business cost derivation
+
+Enrichment data comes from external sources (Crunchbase, HubSpot CSVs, job board scrapes). Any of these can contain malformed, injected, or adversarially crafted data. The enrichment pipeline is the first line of defense; if it crashes or outputs wrong data, every downstream component (ICP, policy, composer) operates on garbage.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Empty company name crashes pipeline | No guard on empty string before file I/O | HIGH — batch import with one blank row crashes entire run |
+| Unicode/emoji in name causes UnicodeError | File path construction not encoding-safe | MEDIUM — international prospect names are common in Tenacious's market |
+| SQL injection in company name | Company name passed to string operations | HIGH — if company name ever reaches a real DB query, injection executes |
+| Prompt injection in company name bypasses policy | Name passed to LLM enrichment prompt | CRITICAL — injected instruction escalates tone without signal basis |
+| HTML/XSS in prospect name → path traversal | Filename construction without sanitization | HIGH — malformed filename causes FileNotFoundError; XSS in log viewer |
+
+### Key probes: A01, A03, A04, A09, A10, E01, E02, E04
+
+---
+
+## Category 10 — Gap Over-claiming
+
+**Layer:** `agent/policy_engine.py:use_competitor_gap` + `agent/tone_guard.py`  
+**What fails:** Competitor gap analysis delivered without sufficient confidence, or framed in a way that positions Tenacious as attacking the prospect.
+
+### Business cost derivation
+
+Gap insights are Tenacious's sharpest differentiation: "companies like yours that adopted X saw Y% improvement." When the gap is fabricated (confidence=0) or framed aggressively ("your competitors are miles ahead of you"), the effect is the opposite of the intent: the prospect feels attacked, not informed, and rejects the sender.
+
+| Failure mode | Mechanism | Business cost |
+|---|---|---|
+| Gap delivered with confidence=0 | Gate only checks < 0.6; zero must also be blocked | CRITICAL — fabricated competitive claim exposed by prospect = brand damage |
+| Aggressive framing in gap delivery | No aggressive_framing pattern in tone guard | CRITICAL — "falling behind rapidly" = deal-killing in first sentence |
+| Gap delivered without matching bench | Capability implied without capacity to deliver | HIGH — prospect accepts; Tenacious can't staff; contract breach |
+| Gap asserted when confidence between 0.4-0.6 | Low-confidence gap stated as certainty | HIGH — over-claiming on uncertain data |
+
+### Key probes: N01, N02, N03, C04
+
+---
+
+## Cross-cutting Pattern: Rule-based vs Semantic Detection Gap
+
+The most systemic gap across all categories is the **rule-based detection ceiling**:
+
+The `_rule_based_check` fallback in `ToneGuard` operates on keyword matching. It catches:
+- ✓ Exact guarantee phrases ("we guarantee")
+- ✓ Fabricated superlatives ("#1 ranked")
+- ✓ Named competitor + attack qualifier ("Accenture" + "overpriced")
+- ✓ Specific pricing disclosure ($X per month)
+- ✓ Large bench count claims (≥100 engineers)
+- ✓ Aggressive prospect-directed framing ("falling behind rapidly") — **added in Act III**
+
+It **cannot** catch:
+- ✗ Semantic wrong-segment pitch (Seg1 growth language in Seg2 restructuring context)
+- ✗ Subtle assertion language that implies strong claims without explicit words
+- ✗ Tone drift across multi-turn threads that reads as appropriate in isolation
+
+Catch rate for keyword-detectable hard fails: **100%** (post-fix)  
+Catch rate for semantic hard fails: **0%** (requires LLM check)
+
+This gap is the designated **Act IV target failure mode**. See `target_failure_mode.md` for full derivation.

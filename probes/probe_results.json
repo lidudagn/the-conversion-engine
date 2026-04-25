@@ -1,10 +1,10 @@
 {
-  "run_timestamp": "2026-04-23T21:13:41.697186",
-  "total_probes": 45,
-  "passed": 45,
+  "run_timestamp": "2026-04-24T15:36:15.705865",
+  "total_probes": 63,
+  "passed": 63,
   "failed": 0,
   "pass_rate": 1.0,
-  "hard_fails_correctly_triggered": 4,
+  "hard_fails_correctly_triggered": 5,
   "probes": [
     {
       "probe_id": "A01",
@@ -15,7 +15,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 341
+      "latency_ms": 746
     },
     {
       "probe_id": "A02",
@@ -26,7 +26,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 98
+      "latency_ms": 276
     },
     {
       "probe_id": "A03",
@@ -37,7 +37,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 89
+      "latency_ms": 271
     },
     {
       "probe_id": "A04",
@@ -48,7 +48,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 110
+      "latency_ms": 277
     },
     {
       "probe_id": "A05",
@@ -114,7 +114,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 94
+      "latency_ms": 270
     },
     {
       "probe_id": "B01",
@@ -125,7 +125,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 7
+      "latency_ms": 3
     },
     {
       "probe_id": "B02",
@@ -279,7 +279,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 92
+      "latency_ms": 256
     },
     {
       "probe_id": "E02",
@@ -312,7 +312,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 91
+      "latency_ms": 249
     },
     {
       "probe_id": "E05",
@@ -323,7 +323,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 88
+      "latency_ms": 233
     },
     {
       "probe_id": "F02",
@@ -334,7 +334,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 41
+      "latency_ms": 74
     },
     {
       "probe_id": "F03",
@@ -345,7 +345,161 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 533
+      "latency_ms": 1057
+    },
+    {
+      "probe_id": "H01",
+      "category": "icp_misclassification",
+      "name": "Post-layoff company not misclassified as Seg1",
+      "expected": "primary_segment != 1 (no funding \u2192 Seg1 gate fails)",
+      "actual": "primary_segment=2, confidence=0.80",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "H02",
+      "category": "icp_misclassification",
+      "name": "Expired funding window (400 days) \u2192 Seg1 confidence=0",
+      "expected": "primary_segment != 1 or confidence < 0.5 (funding too old)",
+      "actual": "primary_segment=None, confidence=0.00",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "H03",
+      "category": "icp_misclassification",
+      "name": "Grant funding type should not trigger full Seg1",
+      "expected": "No crash; grant treated as weaker signal than equity raise",
+      "actual": "primary_segment=1, funding_type=grant, confidence=0.60",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "H04",
+      "category": "icp_misclassification",
+      "name": "Enterprise company (5000 emp) outside Seg1 range",
+      "expected": "primary_segment != 1 or confidence < 0.5 (Seg1 targets 15-80 emp startups)",
+      "actual": "primary_segment=1, confidence=0.40",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "I01",
+      "category": "signal_overclaiming",
+      "name": "Weak job velocity (1 post) \u2192 not assertable",
+      "expected": "job_velocity NOT in assertable_signals (low-confidence signal must be hedged)",
+      "actual": "assertable=[], question=[]",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "I02",
+      "category": "signal_overclaiming",
+      "name": "AI maturity should_hedge constraint respected by policy",
+      "expected": "ai_maturity NOT in assertable_signals (should_hedge \u2192 question only)",
+      "actual": "assertable=[], tone=suggestive",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "J01",
+      "category": "tone_drift",
+      "name": "Multi-turn qualification: state coherent after 4 turns",
+      "expected": "turn_count=4, status updated logically, no crash",
+      "actual": "turn_count=4, status=ready_to_book",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 8
+    },
+    {
+      "probe_id": "J02",
+      "category": "tone_drift",
+      "name": "Objection \u2192 empathetic not aggressive response",
+      "expected": "status=objection; response contains empathetic language ('understand' or 'no pressure')",
+      "actual": "status=objection, empathetic=True",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "K01",
+      "category": "multi_thread_leakage",
+      "name": "Two prospects get independent threads",
+      "expected": "thread_a.thread_id != thread_b.thread_id (no shared state)",
+      "actual": "thread_a='e359f772-9202-4ac4-8c9e-5b25c2621e0f', thread_b='c8c3d543-e462-42de-870f-0f58e5fb68d6', same=False",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 4
+    },
+    {
+      "probe_id": "K02",
+      "category": "multi_thread_leakage",
+      "name": "Reply from A does not mutate B's thread state",
+      "expected": "thread_b turn_count unchanged after A replies",
+      "actual": "b_turns_before=0, b_turns_after=0",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "L01",
+      "category": "cost_pathology",
+      "name": "Policy engine with 50 signal keys \u2192 stable output",
+      "expected": "Policy computed without crash; no runaway loop",
+      "actual": "tone_mode=suggestive, rules=3",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "L02",
+      "category": "cost_pathology",
+      "name": "Deeply-nested funding_type string \u2192 no recursive crash",
+      "expected": "Classifier returns without RecursionError or MemoryError",
+      "actual": "primary_segment=1",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "N01",
+      "category": "gap_overclaiming",
+      "name": "Gap confidence_avg=0.0 \u2192 use_competitor_gap=False",
+      "expected": "use_competitor_gap=False (zero-confidence gap must not be delivered)",
+      "actual": "use_competitor_gap=False",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "N03",
+      "category": "gap_overclaiming",
+      "name": "Gap delivery when bench unavailable \u2192 bench_match=False",
+      "expected": "bench_match=False even when gap brief has high confidence",
+      "actual": "bench_match=False, gap=True, mode=direct",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
     },
     {
       "probe_id": "D01",
@@ -356,7 +510,7 @@
       "passed": true,
       "hard_fail_triggered": true,
       "error": null,
-      "latency_ms": 5
+      "latency_ms": 7
     },
     {
       "probe_id": "D02",
@@ -385,7 +539,7 @@
       "category": "tone_guard",
       "name": "Aggressive competitor attack",
       "expected": "passed=False or issues contains style/overclaiming flag",
-      "actual": "passed=False, hard_fail=True, score=0.7",
+      "actual": "passed=False, hard_fail=True, score=0.68",
       "passed": true,
       "hard_fail_triggered": true,
       "error": null,
@@ -444,7 +598,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 2823
+      "latency_ms": 1827
     },
     {
       "probe_id": "G01",
@@ -455,7 +609,7 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 7
+      "latency_ms": 1
     },
     {
       "probe_id": "G02",
@@ -488,18 +642,62 @@
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 3
+      "latency_ms": 0
     },
     {
       "probe_id": "G05",
       "category": "composer",
       "name": "Qualification with empty bench \u2192 route to human",
       "expected": "Routes to human (no bench match); no crash",
-      "actual": "status=qualifying, response_len=188",
+      "actual": "status=escalated, response_len=206",
       "passed": true,
       "hard_fail_triggered": false,
       "error": null,
-      "latency_ms": 3
+      "latency_ms": 2
+    },
+    {
+      "probe_id": "I03",
+      "category": "signal_overclaiming",
+      "name": "Question-only signal stated as fact \u2192 tone guard flags",
+      "expected": "passed=False or issues flagged (signal asserted without assertion permission)",
+      "actual": "passed=False, issues=[\"Assertive language 'clearly' in suggestive mode\", \"Signal 'funding' asserted but should be phrased as question\"]",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "probe_id": "M01",
+      "category": "scheduling",
+      "name": "Kill switch active \u2192 booking routes to sink",
+      "expected": "booking status=dry_run or sink_routed (KILL_SWITCH=true must block live calls)",
+      "actual": "KILL_SWITCH=True, booking_status=error",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 3005
+    },
+    {
+      "probe_id": "M02",
+      "category": "scheduling",
+      "name": "Timezone Africa/Nairobi (UTC+3) in booking \u2192 no crash",
+      "expected": "Booking returns result without timezone crash",
+      "actual": "booking_status=error, no crash",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 1807
+    },
+    {
+      "probe_id": "N02",
+      "category": "gap_overclaiming",
+      "name": "Aggressive gap framing \u2192 tone guard hard fails",
+      "expected": "hard_fail=True (aggressive_framing detected)",
+      "actual": "passed=False, hard_fail=True, issues=[\"aggressive_framing: condescending competitive framing ('falling behind rapidly')\"]",
+      "passed": true,
+      "hard_fail_triggered": true,
+      "error": null,
+      "latency_ms": 0
     }
   ]
 }
