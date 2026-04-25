@@ -93,7 +93,14 @@ class ToneGuard:
 STYLE GUIDE:
 {self.style_guide}
 
+PITCH SEGMENT DEFINITIONS (Contexts that Tenacious pitches to):
+- Segment 1: Recently funded / High growth.
+- Segment 2: Restructuring / Downsizing / Cost cutting.
+- Segment 3: New engineering leadership / Strategic pivot.
+- Segment 4: AI/ML infrastructure maturity.
+
 POLICY CONSTRAINTS:
+- Assigned Pitch Segment: {policy.pitch_segment} (critical: the email MUST align with this segment's context)
 - Tone mode: {policy.tone_mode}
 - Assertable signals (can state as fact): {policy.assertable_signals}
 - Must-question signals (phrase as questions): {policy.question_signals}
@@ -105,6 +112,8 @@ DRAFT EMAIL:
 {draft}
 
 Score 0-1 on each dimension. Flag specific issues.
+CRITICAL: If the draft email is pitching a value proposition that fundamentally misaligns with the Assigned Pitch Segment (e.g., if it pitches rapid scaling/growth to a company in Segment 2 restructuring, or pitches ML/AI infrastructure to a company with no AI function), you MUST include the exact string "wrong_segment_pitch" in the issues list. This is a severe compliance violation.
+
 Return JSON:
 {{
   "overall_score": 0.0-1.0,
@@ -115,7 +124,7 @@ Return JSON:
     "signal_compliance": 0.0-1.0,
     "gap_delivery": 0.0-1.0
   }},
-  "issues": ["issue description"],
+  "issues": ["issue description", "wrong_segment_pitch (if applicable)"],
   "rewrite_suggestion": "rewritten email if score < {self.REGEN_THRESHOLD}"
 }}"""
 

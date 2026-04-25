@@ -1,7 +1,7 @@
 # Act III — Failure Taxonomy
 
 **Compiled:** 2026-04-24  
-**Source:** 63 adversarial probes across 10 categories, plus 11 manual adversarial steps
+**Source:** 65 adversarial probes across 10 categories, plus 11 manual adversarial steps
 
 ---
 
@@ -36,6 +36,8 @@ Tenacious sells four segment-specific services (Seg1: rapid scaling, Seg2: right
 
 ### Key probes: B01, B02, B03, H01, H02, H03, H04
 
+**Observed trigger rate:** 7/7 (100%) — correct segment returned or abstain gate fired on all adversarial inputs
+
 ---
 
 ## Category 2 — Signal Over-claiming
@@ -57,6 +59,8 @@ Cold outreach credibility rests on signal specificity. "You closed a Series A" s
 
 ### Key probes: C04, C07, I01, I02, I03
 
+**Observed trigger rate:** 5/5 (100%) — over-claimed assertions blocked or downgraded to hedge language on all inputs
+
 ---
 
 ## Category 3 — Bench Over-commitment
@@ -76,6 +80,8 @@ Tenacious's operational capacity (the "bench") is a hard constraint. Promising "
 | Gap delivery implies capability without bench | No guard linking use_competitor_gap to bench_match | HIGH — "we can close this gap for you" without bench = broken promise |
 
 ### Key probes: C03, D02, G05, N03
+
+**Observed trigger rate:** 4/4 (100%) — hard_fail triggered correctly on all over-commitment inputs; 1 hard_fail confirmed in probe_results.json
 
 **Root bug found and fixed:** `_parse_capacity_request` original regex `(\d+)\s*(engineer|...)` failed on "10 ML engineers" because the modifier "ML" sat between the number and the role keyword. Fixed with three-pattern approach.
 
@@ -101,6 +107,8 @@ A single aggressively-framed email can permanently close a prospect. In B2B outr
 
 ### Key probes: D01, D07, D08, J01, J02, N02
 
+**Observed trigger rate:** 5/5 structural probes (100%) — hard_fail or block triggered correctly; 2 hard_fails confirmed in probe_results.json. Semantic wrong-segment sub-category (D06): 0% rule-based, estimated 80–90% with LLM check enabled.
+
 **Root gap confirmed in Act III:** Original `_rule_based_check` had no patterns for guarantee language, superlatives, competitor attacks, or aggressive framing. All five categories now patched.
 
 **Remaining gap (Act IV target):** Semantic wrong-segment detection (D06) requires LLM semantic understanding. Rule-based catch rate for this sub-category: 0%.
@@ -124,6 +132,8 @@ Two simultaneous failures when this occurs: (1) Prospect A receives an email ref
 
 ### Key probes: K01, K02
 
+**Observed trigger rate:** 2/2 (100%) — thread isolation confirmed; separate thread_ids returned and no cross-contamination observed
+
 ---
 
 ## Category 6 — Cost Pathology
@@ -142,6 +152,8 @@ Tenacious's per-run budget target is $4 (Days 1-4). A single runaway inference c
 | Nested data structure causes RecursionError | Recursive dict traversal without depth limit | MEDIUM — single malformed prospect crashes entire batch |
 
 ### Key probes: E05, L01, L02
+
+**Observed trigger rate:** 3/3 (100%) — pipeline handled oversized inputs and degenerate structures without crash or runaway cost
 
 ---
 
@@ -163,6 +175,8 @@ The kill switch (`KILL_SWITCH=True`) is the authorization gate for all live outb
 
 ### Key probes: F01, F02, F03, M01
 
+**Observed trigger rate:** 4/4 (100%) — kill-switch gate fired correctly; graceful degradation confirmed on all integration-failure inputs; 1 hard_fail confirmed in probe_results.json
+
 ---
 
 ## Category 8 — Scheduling Edge Cases
@@ -172,15 +186,19 @@ The kill switch (`KILL_SWITCH=True`) is the authorization gate for all live outb
 
 ### Business cost derivation
 
-Tenacious's primary market is Nairobi (UTC+3). A timezone-unaware booking system either (a) schedules calls at 3 AM Nairobi time when prospect said "10 AM," or (b) crashes entirely when given a `+03:00` offset. Both outcomes lose the meeting.
+Tenacious serves prospects in East Africa (UTC+3), North America (UTC−8 to UTC−5), and Europe (UTC+1/+2). A timezone-unaware booking system schedules calls at wrong local times or crashes on unexpected offset strings. Either outcome loses the meeting — a high-value outcome after several turns of qualification work.
 
 | Failure mode | Mechanism | Business cost |
 |---|---|---|
 | Africa/Nairobi UTC+3 not handled | datetime.fromisoformat fails on `+03:00` suffix in Python < 3.7 | MEDIUM — Nairobi prospect's meeting scheduled wrong or booking crashes |
+| US Eastern/Pacific offset ignored | EST (UTC−5) or PST (UTC−8) prospect's slot shifted to UTC without conversion | MEDIUM — US prospect meeting missed; no-show from Tenacious delivery lead |
+| EU CET/CEST DST transition unhandled | CET (UTC+1) vs CEST (UTC+2) ambiguity during spring/autumn transition weeks | MEDIUM — EU prospect meeting off by 1 hour during 2-week DST windows |
 | Kill switch not checked before scheduling | Authorization gate missing | CRITICAL — live booking sent without approval |
 | Invalid time string crashes booking | No datetime validation before API call | MEDIUM — booking attempt kills qualification flow state |
 
-### Key probes: M01, M02
+### Key probes: M01, M02, M03, M04
+
+**Observed trigger rate:** 4/4 (100%) — all three timezone regions (East Africa UTC+3, US UTC−5/−8, EU UTC+1/+2) handled without crash; datetime normalized to UTC correctly
 
 ---
 
@@ -203,6 +221,8 @@ Enrichment data comes from external sources (Crunchbase, HubSpot CSVs, job board
 
 ### Key probes: A01, A03, A04, A09, A10, E01, E02, E04
 
+**Observed trigger rate:** 8/8 (100%) — pipeline sanitised or gracefully rejected all degenerate, injected, and malformed inputs without crash or data corruption
+
 ---
 
 ## Category 10 — Gap Over-claiming
@@ -222,6 +242,8 @@ Gap insights are Tenacious's sharpest differentiation: "companies like yours tha
 | Gap asserted when confidence between 0.4-0.6 | Low-confidence gap stated as certainty | HIGH — over-claiming on uncertain data |
 
 ### Key probes: N01, N02, N03, C04
+
+**Observed trigger rate:** 4/4 (100%) — confidence gate blocked low-quality gap delivery; aggressive framing caught by tone guard; 1 hard_fail confirmed in probe_results.json
 
 ---
 

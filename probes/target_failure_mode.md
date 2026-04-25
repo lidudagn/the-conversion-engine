@@ -29,7 +29,7 @@ This is distinct from the keyword-detectable hard fails (D01–D05, D07) which a
 
 **2. Severity per occurrence.** A wrong-segment email does more damage than a no-email. The prospect reads "congratulations on your funding" six weeks after announcing 15% workforce cuts, forms a strong negative impression ("this company doesn't do its homework"), and the prospect is closed permanently. This is worse than silence: silence is ignorable; a wrong-segment pitch creates an active negative record.
 
-**3. Business cost per lost deal.** Tenacious's ACV target is $36,000–$120,000 (3–10 engineers at $3,000–$4,000/month × 3-month minimum). A single wrong-segment email killing a Segment 2 deal costs $36,000–$120,000 in forgone ACV plus the prospect relationship. Across 10 wrong-segment emails/week: $360,000–$1.2M in forgone pipeline per quarter if not addressed.
+**3. Business cost per lost deal.** Tenacious's talent-outsourcing ACV is $240K–$720K (Tenacious internal, last 4 quarters). A single wrong-segment email permanently closing a Segment 2 prospect costs $240K–$720K in forgone ACV. Across 10 wrong-segment emails/week at even the minimum conversion rate: $2.4M–$7.2M in forgone pipeline per quarter if not addressed.
 
 **4. Invisibility.** The tone guard currently does not log or flag wrong-segment pitches in the rule-based path. They appear as `passed=True` in the tone result. There is no signal to the operator that a wrong-segment email was sent. The failure is silent.
 
@@ -42,8 +42,8 @@ This is distinct from the keyword-detectable hard fails (D01–D05, D07) which a
 | Current keyword detection rate | 0% |
 | LLM check detection rate (when configured) | Estimated 80–90% (semantic check active) |
 | Frequency at scale (200 prospects/week, 5% mismatch) | ~10 wrong-segment emails/week |
-| Cost per wrong-segment email (forgone deal) | $36K–$120K ACV |
-| Quarterly forgone pipeline (uncorrected, 5% rate) | $360K–$1.2M |
+| Cost per wrong-segment email (forgone deal) | $240K–$720K ACV (Tenacious internal, talent outsourcing) |
+| Quarterly forgone pipeline (uncorrected, 5% rate) | $2.4M–$7.2M |
 | Fix mechanism available | Yes — `llm_client` configured → `_llm_check()` activates |
 | Investment to activate | OpenRouter API key in `config.py` |
 

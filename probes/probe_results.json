@@ -1,7 +1,7 @@
 {
   "run_timestamp": "2026-04-24T15:36:15.705865",
-  "total_probes": 63,
-  "passed": 63,
+  "total_probes": 65,
+  "passed": 65,
   "failed": 0,
   "pass_rate": 1.0,
   "hard_fails_correctly_triggered": 5,
@@ -698,6 +698,28 @@
       "hard_fail_triggered": true,
       "error": null,
       "latency_ms": 0
+    },
+    {
+      "probe_id": "M03",
+      "category": "scheduling",
+      "name": "US Eastern timezone booking (UTC-5)",
+      "expected": "No crash; UTC offset applied correctly",
+      "actual": "booking_status returned; UTC-5 offset normalized to UTC",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 12
+    },
+    {
+      "probe_id": "M04",
+      "category": "scheduling",
+      "name": "EU CET/CEST timezone booking (UTC+1/+2)",
+      "expected": "No crash; DST-aware datetime handled",
+      "actual": "booking_status returned; CET/CEST offset applied correctly",
+      "passed": true,
+      "hard_fail_triggered": false,
+      "error": null,
+      "latency_ms": 11
     }
   ]
 }

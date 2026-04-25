@@ -1,0 +1,215 @@
+{
+  "timestamp": "2026-04-25T17:51:20.004800",
+  "model": "meta-llama/llama-3.3-70b-instruct:free",
+  "total_probes": 15,
+  "correct": 5,
+  "accuracy": 0.3333,
+  "wrong_segment_probes": 10,
+  "true_positives": 0,
+  "false_negatives": 10,
+  "correct_pitch_probes": 5,
+  "true_negatives": 5,
+  "false_positives": 0,
+  "precision": 0,
+  "recall": 0.0,
+  "f1": 0,
+  "catch_rate_semantic": "0/10 (0.0%)",
+  "false_positive_rate": "0/5 (0.0%)",
+  "per_probe": [
+    {
+      "id": "SEM-01",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Seg1 growth pitch to a company that should get Seg2 restructuring pitch"
+    },
+    {
+      "id": "SEM-02",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Growth/hiring language to restructuring company"
+    },
+    {
+      "id": "SEM-03",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128660000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Growth narrative sent to cost-cutting company"
+    },
+    {
+      "id": "SEM-04",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128660000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Restructuring/cost-cutting pitch to freshly funded startup"
+    },
+    {
+      "id": "SEM-05",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128660000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Post-layoff language to a company that just raised Series A"
+    },
+    {
+      "id": "SEM-06",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128660000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "ML platform migration pitch to company with no AI function"
+    },
+    {
+      "id": "SEM-07",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128660000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Advanced AI pitch to company being restructured with no AI signals"
+    },
+    {
+      "id": "SEM-08",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128660000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Leadership transition pitch to a freshly funded company (no leadership change signal)"
+    },
+    {
+      "id": "SEM-09",
+      "category": "correct_pitch",
+      "expected_fail": false,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": true,
+      "why": "Correct Seg1 pitch to Seg1 context"
+    },
+    {
+      "id": "SEM-10",
+      "category": "correct_pitch",
+      "expected_fail": false,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": true,
+      "why": "Correct Seg2 pitch to Seg2 context"
+    },
+    {
+      "id": "SEM-11",
+      "category": "correct_pitch",
+      "expected_fail": false,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": true,
+      "why": "Correct Seg3 pitch to Seg3 context"
+    },
+    {
+      "id": "SEM-12",
+      "category": "correct_pitch",
+      "expected_fail": false,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128720000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": true,
+      "why": "Correct Seg4 pitch to high-AI-maturity Seg4 context"
+    },
+    {
+      "id": "SEM-13",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128720000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Subtle: growth/hiring enthusiasm sent to restructuring company"
+    },
+    {
+      "id": "SEM-14",
+      "category": "wrong_segment_pitch",
+      "expected_fail": true,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128720000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": false,
+      "why": "Cost-cutting/offshore language to a freshly funded startup"
+    },
+    {
+      "id": "SEM-15",
+      "category": "correct_pitch",
+      "expected_fail": false,
+      "actual_hard_fail": false,
+      "hard_fail_reason": null,
+      "score": 0.88,
+      "issues": [
+        "LLM fallback triggered: LLM check failed: Error code: 429 - {'error': {'message': 'Rate limit exceeded: limit_rpm/meta-llama/llama-3.3-70b-instruct/839b2e30-a1b4-4974-b980-3e534b5873b1. High demand for meta-llama/llama-3.3-70b-instruct:free on OpenRouter - limited to 8 requests per minute. Please retry shortly.', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '8', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777128720000'}, 'provider_name': None}}, 'user_id': 'user_3CqfLLqJGpsGBCQWgA17NeQU2SV'}"
+      ],
+      "correct": true,
+      "why": "Generic exploratory email \u2014 should pass in any context"
+    }
+  ]
+}
