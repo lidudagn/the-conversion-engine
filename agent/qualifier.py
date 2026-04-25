@@ -118,11 +118,55 @@ class QualificationHandler:
         return state, response
 
     def _parse_capacity_request(self, text: str) -> Optional[dict]:
-        """Parse a capacity request from reply text."""
+        """Parse a capacity request from reply text.
+
+        Priority order (preserve specificity first, then fallback):
+          1. number + role  — highest precision, retains role type
+          2. team of N      — structured idiom
+          3. verb + number  — fallback only, role inferred as 'engineer'
+        """
         import re
-        numbers = re.findall(r'(\d+)\s*(engineer|developer|people|person|team)', text.lower())
-        if numbers:
-            return {"count": int(numbers[0][0]), "role_type": numbers[0][1]}
+
+        _ROLE_NORM = {
+            'engineer': 'engineer',   'engineers': 'engineer',
+            'ml engineer': 'engineer', 'ml engineers': 'engineer',
+            'developer': 'developer', 'developers': 'developer',
+            'dev': 'developer',       'devs': 'developer',
+            'people': 'general',      'person': 'general',
+            'persons': 'general',     'resource': 'general',
+            'resources': 'general',   'team': 'general',
+        }
+
+        lower = text.lower()
+
+        # 1. number + up to 2 modifier words + role keyword
+        #    Handles: "10 engineers", "10 ML engineers", "10 senior developers",
+        #             "10 ML-engineers", "10 senior ML engineers"
+        role_pat = (
+            r'ml[\s\-]engineer(?:s)?'
+            r'|engineer(?:s)?'
+            r'|developer(?:s)?'
+            r'|dev(?:s)?'
+            r'|people|person(?:s)?'
+            r'|resource(?:s)?'
+        )
+        m = re.search(rf'(\d+)\s+(?:[\w\-]+\s+){{0,2}}({role_pat})', lower)
+        if m:
+            raw = m.group(2).replace('-', ' ').strip()
+            return {'count': int(m.group(1)), 'role_type': _ROLE_NORM.get(raw, 'engineer')}
+
+        # 2. "team of N" idiom  →  role normalised to 'general'
+        #    Handles: "team of 15", "a team of 10"
+        m = re.search(r'team\s+of\s+(\d+)', lower)
+        if m:
+            return {'count': int(m.group(1)), 'role_type': 'general'}
+
+        # 3. action verb + bare number (fallback — role type inferred)
+        #    Handles: "can you provide 10", "send us 8", "hire 5"
+        m = re.search(r'(?:provide|send|hire|onboard)\s+(\d+)', lower)
+        if m:
+            return {'count': int(m.group(1)), 'role_type': 'engineer'}
+
         return None
 
     def _escalate_to_human(self, state: QualificationState) -> str:

@@ -75,48 +75,57 @@ class LayoffsParser:
         print(f"Loaded {len(events)} layoff events")
         return events
 
+    @staticmethod
+    def _get(row: dict, *keys: str, default: str = "") -> str:
+        """Case-insensitive multi-key lookup for CSV rows."""
+        for k in keys:
+            v = row.get(k) or row.get(k.lower()) or row.get(k.upper()) or row.get(k.capitalize())
+            if v is not None:
+                return str(v).strip()
+        return default
+
     def _parse_csv_row(self, row: dict) -> Optional[LayoffEvent]:
-        """Parse a CSV row into a LayoffEvent."""
+        """Parse a CSV row into a LayoffEvent (handles both schema variants)."""
         try:
-            company = (row.get("company") or "").strip()
+            company = self._get(row, "company", "Company")
             if not company:
                 return None
 
             total = None
-            total_raw = row.get("total_laid_off", row.get("laid_off_count", ""))
+            total_raw = self._get(row, "total_laid_off", "Laid_Off_Count", "laid_off_count")
             if total_raw:
                 try:
-                    total = int(str(total_raw).replace(",", ""))
+                    total = int(total_raw.replace(",", ""))
                 except (ValueError, TypeError):
                     pass
 
             pct = None
-            pct_raw = row.get("percentage_laid_off", row.get("percentage", ""))
+            pct_raw = self._get(row, "percentage_laid_off", "Percentage", "percentage")
             if pct_raw:
                 try:
-                    pct = float(str(pct_raw).replace("%", ""))
+                    pct = float(pct_raw.replace("%", ""))
                 except (ValueError, TypeError):
                     pass
 
             funds = None
-            funds_raw = row.get("funds_raised", row.get("funds_raised_millions", ""))
+            funds_raw = self._get(row, "funds_raised", "Funds_Raised_USD", "funds_raised_millions")
             if funds_raw:
                 try:
-                    funds = float(str(funds_raw).replace(",", "").replace("$", ""))
+                    funds = float(funds_raw.replace(",", "").replace("$", ""))
                 except (ValueError, TypeError):
                     pass
 
             return LayoffEvent(
                 company=company,
-                date=row.get("date", row.get("Date_layoffs", "")),
+                date=self._get(row, "date", "Date", "Date_layoffs"),
                 total_laid_off=total,
                 percentage=pct,
-                industry=row.get("industry", row.get("Industry", "")),
-                location=row.get("location_hq", row.get("location", "")),
-                country=row.get("country", row.get("Country", "")),
+                industry=self._get(row, "industry", "Industry"),
+                location=self._get(row, "location_hq", "Location_HQ", "location"),
+                country=self._get(row, "country", "Country"),
                 funds_raised=funds,
-                stage=row.get("stage", row.get("Stage", "")),
-                source=row.get("source", row.get("Source", "")),
+                stage=self._get(row, "stage", "Stage"),
+                source=self._get(row, "source", "Source"),
             )
         except Exception:
             return None

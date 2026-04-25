@@ -9,6 +9,7 @@ Contradiction framings injected when detected.
 
 import json
 from typing import Optional
+import config
 
 from agent.policy_engine import PolicyDecision
 from agent.enrichment.pipeline import HiringSignalBrief
@@ -249,7 +250,7 @@ RULES:
 """
         try:
             response = await self.llm_client.chat.completions.create(
-                model="qwen/qwen3-235b-a22b",
+                model=config.DEV_MODEL,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
             )

@@ -16,7 +16,7 @@ KILL_SWITCH = os.getenv("CONVERSION_ENGINE_LIVE", "false").lower() != "true"
 # ─── LLM ───────────────────────────────────────────────────────────────────────
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-DEV_MODEL = "qwen/qwen3-235b-a22b"       # Acts I-IV, budget target <$4
+DEV_MODEL = "meta-llama/llama-3.3-70b-instruct:free"  # Free model for demo recording to bypass credit limits
 EVAL_MODEL = "anthropic/claude-sonnet-4"  # Act IV sealed eval, budget <$12
 
 # ─── Email (Resend) ────────────────────────────────────────────────────────────

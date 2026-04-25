@@ -14,6 +14,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field
 
+import config
 from agent.policy_engine import PolicyDecision
 
 
@@ -45,6 +46,8 @@ class ToneGuard:
         "wrong_segment_pitch",
         "bench_overcommitment",
         "unauthorized_pricing",
+        "competitor_attack",
+        "aggressive_framing",
     ]
 
     def __init__(self, style_guide: str = "", llm_client=None):
@@ -66,7 +69,14 @@ class ToneGuard:
 
         if self.llm_client:
             # Use LLM for sophisticated tone checking
-            result = await self._llm_check(prompt)
+            try:
+                result = await self._llm_check(prompt)
+                if not result.passed and any("LLM check failed" in i for i in result.issues):
+                    raise Exception(result.issues[0])
+            except Exception as e:
+                # LLM failed (rate limit, etc), fallback to rule-based gracefully
+                result = self._rule_based_check(draft, policy)
+                result.issues.append(f"LLM fallback triggered: {str(e)}")
         else:
             # Rule-based fallback
             result = self._rule_based_check(draft, policy)
@@ -207,9 +217,26 @@ Return JSON:
             if comp in draft_lower:
                 for qualifier in attack_qualifiers:
                     if qualifier in draft_lower:
-                        issues.append(f"overclaiming: competitor attack ('{comp}' + '{qualifier}')")
-                        scores["overclaiming"] = 0.1
+                        issues.append(f"competitor_attack: named competitor attack ('{comp}' + '{qualifier}')")
+                        scores["overclaiming"] = 0.0
                         break
+
+        # Hard-fail: aggressive/condescending competitive framing (prospect-directed)
+        aggressive_framing_phrases = [
+            "falling behind rapidly", "falling behind in",
+            "clearly lagging behind", "lagging behind your competitors",
+            "miles behind", "left in the dust",
+            "losing market share", "will lose market share",
+            "competitors are eating", "eating your lunch",
+            "your team is already behind", "miles ahead of you",
+            "getting left behind", "your competitors are winning",
+            "rapidly losing ground", "dangerously behind",
+        ]
+        for phrase in aggressive_framing_phrases:
+            if phrase in draft_lower:
+                issues.append(f"aggressive_framing: condescending competitive framing ('{phrase}')")
+                scores["overclaiming"] = 0.0
+                break
 
         # Check for bench overcommitment (bench_match=False path)
         commitment_phrases = [
@@ -251,7 +278,7 @@ Return JSON:
         """LLM-based tone check (when client available)."""
         try:
             response = await self.llm_client.chat.completions.create(
-                model="qwen/qwen3-235b-a22b",
+                model=config.DEV_MODEL,
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"},
                 temperature=0.1,
@@ -289,7 +316,7 @@ Return JSON:
         return any(hf in issue_lower for hf in [
             "overclaim", "omitted signal", "bench commitment",
             "violates_signal", "wrong_segment", "bench overcommit",
-            "unauthorized_pricing"
+            "unauthorized_pricing", "competitor_attack", "aggressive_framing"
         ])
 
     def _get_signal_keywords(self, signal: str) -> list[str]:
