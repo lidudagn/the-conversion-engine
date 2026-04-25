@@ -1,0 +1,219 @@
+{
+  "total_companies": 25,
+  "exact_match": 18,
+  "exact_accuracy": 0.72,
+  "within_1_match": 24,
+  "within_1_accuracy": 0.96,
+  "confusion_matrix": {
+    "2": {
+      "2": 1,
+      "0": 1,
+      "1": 0,
+      "3": 0
+    },
+    "1": {
+      "2": 2,
+      "0": 4,
+      "1": 1,
+      "3": 0
+    },
+    "0": {
+      "0": 16,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "3": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    }
+  },
+  "per_score_metrics": {
+    "0": {
+      "true_positives": 16,
+      "false_positives": 5,
+      "false_negatives": 0,
+      "precision": 0.762,
+      "recall": 1.0,
+      "support": 16
+    },
+    "1": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 6,
+      "precision": 1.0,
+      "recall": 0.143,
+      "support": 7
+    },
+    "2": {
+      "true_positives": 1,
+      "false_positives": 2,
+      "false_negatives": 1,
+      "precision": 0.333,
+      "recall": 0.5,
+      "support": 2
+    },
+    "3": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 0,
+      "recall": 0,
+      "support": 0
+    }
+  },
+  "per_company": [
+    {
+      "company": "WISEiTECH",
+      "expected": 2,
+      "predicted": 2,
+      "match": true
+    },
+    {
+      "company": "Xrosswork",
+      "expected": 1,
+      "predicted": 2,
+      "match": false
+    },
+    {
+      "company": "Whitehill Technologies",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "FleetRunnr",
+      "expected": 1,
+      "predicted": 0,
+      "match": false
+    },
+    {
+      "company": "CryptoBucks",
+      "expected": 1,
+      "predicted": 2,
+      "match": false
+    },
+    {
+      "company": "Korubu",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Systemsync Solutions",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Altepro",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Wickr",
+      "expected": 2,
+      "predicted": 0,
+      "match": false
+    },
+    {
+      "company": "CTJ INFO-TECH",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "WEYTEC",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Conneqt Business Solutions",
+      "expected": 1,
+      "predicted": 0,
+      "match": false
+    },
+    {
+      "company": "Connempathy",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Web Stack Technologies",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Xuver Lab",
+      "expected": 1,
+      "predicted": 0,
+      "match": false
+    },
+    {
+      "company": "AMS-PAR",
+      "expected": 1,
+      "predicted": 1,
+      "match": true
+    },
+    {
+      "company": "Culcha",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Appcro",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Connected Devices",
+      "expected": 1,
+      "predicted": 0,
+      "match": false
+    },
+    {
+      "company": "Web Endurance",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Handled IT Partners",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Crystal ICT",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Anfotech",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Consolety",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    },
+    {
+      "company": "Stronghold Services Corporation",
+      "expected": 0,
+      "predicted": 0,
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+    "_meta": {
+        "purpose": "Hand-labeled AI maturity ground truth for 25 companies from Crunchbase ODM sample",
+        "labeler": "human (challenge week)",
+        "date": "2026-04-25",
+        "methodology": "Each company scored 0-3 based on publicly available information: website, job posts, press releases, LinkedIn. Labels reflect actual AI engagement observed, not inferred.",
+        "scoring_guide": {
+            "0": "No public signal of AI engagement",
+            "1": "Some AI-adjacent activity but no clear AI function",
+            "2": "Active AI engagement with multiple signals",
+            "3": "Mature AI function with executive commitment"
+        }
+    },
+    "labels": [
+        {
+            "company": "WISEiTECH",
+            "label": 2,
+            "rationale": "IT consulting with data analytics focus, some ML tooling mentioned on site"
+        },
+        {
+            "company": "Xrosswork",
+            "label": 1,
+            "rationale": "HR tech platform, basic automation but no AI-specific roles or leadership"
+        },
+        {
+            "company": "Whitehill Technologies",
+            "label": 0,
+            "rationale": "IT services, no AI signal on website or job posts"
+        },
+        {
+            "company": "FleetRunnr",
+            "label": 1,
+            "rationale": "Logistics tech, route optimization could use ML but no public signal"
+        },
+        {
+            "company": "CryptoBucks",
+            "label": 1,
+            "rationale": "Crypto/fintech, basic data analysis but no dedicated AI team"
+        },
+        {
+            "company": "Korubu",
+            "label": 0,
+            "rationale": "No website found, no public tech signal"
+        },
+        {
+            "company": "Systemsync Solutions",
+            "label": 0,
+            "rationale": "IT services company, no AI-related content"
+        },
+        {
+            "company": "Altepro",
+            "label": 0,
+            "rationale": "Consulting firm, no AI activity detected"
+        },
+        {
+            "company": "Wickr",
+            "label": 2,
+            "rationale": "Encrypted messaging (acquired by AWS), uses ML for threat detection, has security ML roles"
+        },
+        {
+            "company": "CTJ INFO-TECH",
+            "label": 0,
+            "rationale": "IT staffing, no AI activity"
+        },
+        {
+            "company": "WEYTEC",
+            "label": 0,
+            "rationale": "Control room hardware, traditional engineering"
+        },
+        {
+            "company": "Conneqt Business Solutions",
+            "label": 1,
+            "rationale": "BPO company, some RPA/automation but no AI leadership"
+        },
+        {
+            "company": "Connempathy",
+            "label": 0,
+            "rationale": "Small startup, no public AI signal"
+        },
+        {
+            "company": "Web Stack Technologies",
+            "label": 0,
+            "rationale": "Web development agency, no AI"
+        },
+        {
+            "company": "Xuver Lab",
+            "label": 1,
+            "rationale": "3D/VR technology, may use some ML for rendering but no public signal"
+        },
+        {
+            "company": "AMS-PAR",
+            "label": 1,
+            "rationale": "Manufacturing software, some automation mentioned"
+        },
+        {
+            "company": "Culcha",
+            "label": 0,
+            "rationale": "HR culture platform, no AI features visible"
+        },
+        {
+            "company": "Appcro",
+            "label": 0,
+            "rationale": "App development, no AI"
+        },
+        {
+            "company": "Connected Devices",
+            "label": 1,
+            "rationale": "IoT company, could use ML for data but no explicit signal"
+        },
+        {
+            "company": "Web Endurance",
+            "label": 0,
+            "rationale": "Web hosting/services, no AI"
+        },
+        {
+            "company": "Handled IT Partners",
+            "label": 0,
+            "rationale": "MSP, traditional IT services"
+        },
+        {
+            "company": "Crystal ICT",
+            "label": 0,
+            "rationale": "ICT services, no AI signal"
+        },
+        {
+            "company": "Anfotech",
+            "label": 0,
+            "rationale": "IT solutions, no AI activity"
+        },
+        {
+            "company": "Consolety",
+            "label": 0,
+            "rationale": "Consulting, no public AI activity"
+        },
+        {
+            "company": "Stronghold Services Corporation",
+            "label": 0,
+            "rationale": "Security services, physical not cyber"
+        }
+    ]
+}

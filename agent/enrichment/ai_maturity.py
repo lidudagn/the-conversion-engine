@@ -2,6 +2,15 @@
 Enrichment Pipeline — AI Maturity Scorer
 Scores companies 0-3 on AI readiness with explicit uncertainty modeling.
 language_constraint enforced by policy engine.
+
+Known error modes (not yet calibrated against labelled data):
+  False positive: company posts AI thought leadership but has no production deployments.
+    Scores 2-3 from exec_commentary/strategic_comms; agent pitches Seg4 to a company
+    without a data layer. Mitigation: language_constraint="should_hedge" on medium confidence.
+  False negative: stealth AI startup keeps repos private; scores 0 despite active AI work.
+    Agent sends exploratory email, misses Seg4 pitch opportunity.
+  Recommended: hand-label 20-30 Tenacious past prospects to compute precision/recall before
+    production deployment.
 """
 
 from typing import Optional
