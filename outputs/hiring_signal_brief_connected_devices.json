@@ -12,7 +12,7 @@
   },
   "job_velocity": {
     "open_roles": 5,
-    "60d_change": "+50%",
+    "60d_change": "-33%",
     "ai_roles_fraction": 0.0,
     "confidence": "medium"
   },
@@ -47,5 +47,5 @@
   },
   "contradictions": [],
   "competitor_gap_brief_ref": "competitor_gap_brief.json",
-  "generated_at": "2026-04-23T20:43:01.294833"
+  "generated_at": "2026-04-25T17:35:38.938417"
 }

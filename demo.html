@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Conversion Engine - Tenacious Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #1e1b4b, var(--bg));
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: float 10s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(30px) scale(1.1);
+            }
+        }
+
+        .panel {
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2 span {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-radius: 999px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        input,
+        textarea {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--surface-border);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--accent);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loader {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .log-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 1rem;
+            flex: 1;
+            overflow-y: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #a78bfa;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        .log-box.active {
+            display: block;
+        }
+
+        .email-preview {
+            background: white;
+            color: #1e293b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 4px solid var(--primary);
+            display: none;
+            margin-bottom: 1rem;
+        }
+
+        .step-container {
+            opacity: 0.4;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .step-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--surface-border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tab {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: none;
+            justify-content: flex-start;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            transform: none;
+        }
+
+        .tab.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* JSON syntax highlighting */
+        .json-key {
+            color: #f472b6;
+        }
+
+        .json-val {
+            color: #34d399;
+        }
+
+        .json-str {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Left Panel -->
+    <div class="panel">
+        <div style="margin-bottom: 1rem;">
+            <h1
+                style="font-size: 1.75rem; font-weight: 700; background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                The Conversion Engine</h1>
+        </div>
+
+        <div class="step-container active" id="step1">
+            <h2>Step 1: Signal-Grounded Outreach <span>LLM</span></h2>
+            <div class="form-group">
+                <label>Prospect Email</label>
+                <input type="email" id="outreachEmail" value="lidyadagnew7@gmail.com">
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Prospect Name</label>
+                    <input type="text" id="outreachName" value="Jane">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Company / Domain</label>
+                    <input type="text" id="outreachCompany" value="WISEiTECH">
+                </div>
+            </div>
+            <button onclick="triggerOutreach()" id="btnOutreach">
+                <div class="loader" id="loaderOutreach"></div>Launch Outreach
+            </button>
+        </div>
+
+        <div class="step-container" id="step2">
+            <h2>Step 2: Prospect Reply <span>Qualify</span></h2>
+            <div class="form-group">
+                <label>Simulated Inbound Reply</label>
+                <textarea id="replyText"
+                    rows="3">Thanks for reaching out. Yes, we are actively looking to scale our Python backend team next quarter. Can we chat on Tuesday?</textarea>
+            </div>
+            <button onclick="triggerQualify()" id="btnQualify">
+                <div class="loader" id="loaderQualify"></div>Process Reply & Qualify
+            </button>
+        </div>
+
+        <div class="step-container" id="step3">
+            <h2>Step 3: Discovery Call <span>Cal.com + HubSpot</span></h2>
+            <button onclick="triggerBook()" id="btnBook">
+                <div class="loader" id="loaderBook"></div>Lock in Booking
+            </button>
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="panel">
+        <h2 style="justify-content: space-between;">Observability
+            <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; display:none;" id="statusLive">LIVE</span>
+        </h2>
+
+        <div class="email-preview" id="emailDraft"></div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('logs')">Server Logs</button>
+            <button class="tab" onclick="switchTab('hiring')">Hiring Signal Brief</button>
+            <button class="tab" onclick="switchTab('gap')">Competitor Gaps</button>
+        </div>
+
+        <div class="log-box active" id="tab-logs">// Waiting for execution...</div>
+        <div class="log-box" id="tab-hiring">// Run Outreach to generate Hiring Signals...</div>
+        <div class="log-box" id="tab-gap">// Run Outreach to generate Competitor Gap Analysis...</div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:8000';
+        let currentThreadId = 'demo-thread-' + Date.now();
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.log-box').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') json = JSON.stringify(json, undefined, 2);
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-val';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) { cls = 'json-key'; }
+                    else { cls = 'json-str'; }
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        function log(msg, data = null) {
+            const logs = document.getElementById('tab-logs');
+            let ds = data ? '\n' + JSON.stringify(data, null, 2) : '';
+            logs.innerHTML += `> ${msg}${ds}\n\n`;
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        function renderSignals(brief) {
+            let html = '<div style="display: flex; flex-direction: column; gap: 1rem;">';
+            for (const [key, data] of Object.entries(brief)) {
+                if (typeof data !== 'object' || !data.confidence) continue;
+
+                let confColor = data.confidence === 'high' ? 'var(--success)' :
+                    (data.confidence === 'medium' ? '#fbbf24' : '#ef4444');
+
+                let title = key.replace('_', ' ').toUpperCase();
+
+                html += `
+                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; border: 1px solid var(--surface-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <strong style="color: #60a5fa;">${title}</strong>
+                        <span style="background: ${confColor}22; color: ${confColor}; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Confidence: ${data.confidence}</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">${data.summary || data.contradiction_notes || 'Signal registered.'}</p>
+                </div>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function renderGaps(gapBrief) {
+            let html = '<div style="display: flex; flex-direction: column; gap: 1rem;">';
+            if (gapBrief.top_quartile_companies && gapBrief.top_quartile_companies.length > 0) {
+                const confList = gapBrief.top_quartile_companies.slice(0, 5).map(c => {
+                    let confColor = c.ai_maturity_confidence === 'high' ? 'var(--success)' :
+                        (c.ai_maturity_confidence === 'medium' ? '#fbbf24' : '#ef4444');
+                    return `
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; border: 1px solid var(--surface-border);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <strong style="color: #60a5fa;">${c.name}</strong>
+                            <span style="background: ${confColor}22; color: ${confColor}; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Confidence: ${c.ai_maturity_confidence || 'N/A'}</span>
+                        </div>
+                    </div>`;
+                }).join('');
+                html += confList;
+            } else {
+                html += `<div style="color: var(--text-muted);">No gap data generated.</div>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        async function triggerOutreach() {
+            const btn = document.getElementById('btnOutreach');
+            const loader = document.getElementById('loaderOutreach');
+            btn.disabled = true; loader.style.display = 'block';
+            document.getElementById('statusLive').style.display = 'flex';
+
+            const payload = {
+                company_name: document.getElementById('outreachCompany').value,
+                domain: 'wisetech.io',
+                prospect_email: document.getElementById('outreachEmail').value,
+                prospect_name: document.getElementById('outreachName').value,
+                sender_name: "Surjoyday Talukdar"
+            };
+
+            log('Initiating /outreach request...', payload);
+            document.getElementById('tab-hiring').innerHTML = "Generating Signals...";
+            document.getElementById('tab-gap').innerHTML = "Analyzing Competitors...";
+
+            try {
+                const res = await fetch(`${BASE_URL}/outreach`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                // Show logs
+                const cleanData = { ...data }; delete cleanData.brief; delete cleanData.gap_brief;
+                log('Outreach Response Received:', cleanData);
+
+                if (data.status === 'sent' || data.status === 'needs_regen') {
+                    // Update Email Preview
+                    const draftBox = document.getElementById('emailDraft');
+                    draftBox.style.display = 'block';
+                    draftBox.innerHTML = `<strong>Sent to:</strong> ${payload.prospect_email} <br><strong>Score:</strong> ${data.tone_score}/1.0<br><br>` + (data.draft || "Email generated!").replace(/\n/g, '<br>');
+
+                    // Populate Tabs
+                    if (data.brief) document.getElementById('tab-hiring').innerHTML = renderSignals(data.brief);
+                    if (data.gap_brief) document.getElementById('tab-gap').innerHTML = renderGaps(data.gap_brief);
+
+                    // Unlock next step
+                    document.getElementById('step2').classList.add('active');
+                }
+            } catch (err) {
+                log('Error during outreach:', err.message);
+            } finally {
+                btn.disabled = false; loader.style.display = 'none';
+            }
+        }
+
+        async function triggerQualify() {
+            const btn = document.getElementById('btnQualify');
+            const loader = document.getElementById('loaderQualify');
+            btn.disabled = true; loader.style.display = 'block';
+
+            const payload = {
+                prospect_name: document.getElementById('outreachName').value,
+                prospect_email: document.getElementById('outreachEmail').value,
+                thread_id: currentThreadId,
+                reply_text: document.getElementById('replyText').value
+            };
+
+            log('Processing inbound reply...', payload);
+
+            try {
+                const res = await fetch(`${BASE_URL}/qualify`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                log('Qualification Engine Result:', data);
+
+                if (data.next_action === 'send_sms_scheduling' || data.status === 'qualifying') {
+                    document.getElementById('step3').classList.add('active');
+                }
+            } catch (err) {
+                log('Error during qualification:', err.message);
+            } finally {
+                btn.disabled = false; loader.style.display = 'none';
+            }
+        }
+
+        async function triggerBook() {
+            const btn = document.getElementById('btnBook');
+            const loader = document.getElementById('loaderBook');
+            btn.disabled = true; loader.style.display = 'block';
+
+            const payload = {
+                prospect_name: document.getElementById('outreachName').value,
+                prospect_email: document.getElementById('outreachEmail').value,
+                company_name: document.getElementById('outreachCompany').value
+            };
+
+            log('Triggering Cal.com & HubSpot sync...', payload);
+
+            try {
+                const res = await fetch(`${BASE_URL}/book`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                log('Booking Confirmed!', data);
+                btn.innerHTML = '✅ Booking Locked In!';
+            } catch (err) {
+                log('Error during booking:', err.message);
+            } finally {
+                btn.disabled = false; loader.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import config
@@ -30,6 +31,14 @@ app = FastAPI(
     title="The Conversion Engine",
     description="Automated Lead Generation & Conversion System for Tenacious",
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ─── Load Seed Data ──────────────────────────────────────────────────────────
@@ -278,7 +287,10 @@ async def generate_outreach(req: OutreachRequest):
             "email": send_result,
             "hubspot": hs_result,
             "policy_decision_id": policy.decision_id,
+            "brief": brief.model_dump(),
+            "gap_brief": gap_brief.model_dump(),
             "draft_variant": draft.variant,
+            "draft": draft.body,
             "tone_score": tone_result.overall_score,
             "signals_used": draft.signals_used,
             "latency_ms": latency_ms,

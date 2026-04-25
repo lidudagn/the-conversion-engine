@@ -496,6 +496,8 @@ def _run_via_python_api(
         num_tasks=num_tasks,
         num_trials=num_trials,
         max_concurrency=max_concurrency,
+        max_steps=30,
+        timeout=180,
         save_to=save_to or f"pev_{agent_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
         log_level="WARNING",
     )
@@ -726,6 +728,7 @@ def run_pev_held_out(
             task_split="test",
             num_tasks=num_tasks,
             num_trials=1,
+            max_concurrency=1,
             save_to=f"held_out_{agent_name}_t{t+1}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
         )
         trial_scores = raw["scores"]

@@ -112,6 +112,10 @@ python eval/tau2_harness.py --domain retail --trials 5
 └── .env.example
 ```
 
+## Data Handling Policy
+
+All data handling rules — scope, PII constraints, kill-switch requirements, rate limits, and incident reporting — are documented in [`data/policy/data_handling_policy.md`](data/policy/data_handling_policy.md). Read before enabling live mode or running against real prospects.
+
 ## Kill-Switch
 
 **Default: ON (safe mode).** All outbound email/SMS routes to staff sink addresses.
@@ -119,6 +123,11 @@ python eval/tau2_harness.py --domain retail --trials 5
 ```python
 # config.py
 KILL_SWITCH = os.getenv("CONVERSION_ENGINE_LIVE", "false").lower() != "true"
+```
+
+To verify kill-switch is active before any run:
+```bash
+bash smoke_test.sh   # exits 0 if kill-switch ON, exits 1 if live mode accidentally enabled
 ```
 
 To enable live mode (requires Tenacious CEO approval):

@@ -1,6 +1,6 @@
 {
   "prospect_name": "Consolety",
-  "prospect_domain": "consolety.net",
+  "prospect_domain": null,
   "crunchbase_id": "https://www.crunchbase.com/organization/consolety",
   "funding": {
     "event": null,
@@ -47,5 +47,5 @@
   },
   "contradictions": [],
   "competitor_gap_brief_ref": "competitor_gap_brief.json",
-  "generated_at": "2026-04-23T20:45:45.386473"
+  "generated_at": "2026-04-25T17:35:38.953358"
 }

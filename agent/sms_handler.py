@@ -61,29 +61,34 @@ class SMSHandler:
             result["note"] = "No AT client available — dry run"
             return result
 
-        try:
-            response = self._client.send(
-                message=message[:160],
-                recipients=[actual_to],
-                sender_id=sender_id,
-            )
-            result["at_response"] = str(response)
-            # Parse AT response to determine delivery status
-            at_recipients = []
-            if isinstance(response, dict):
-                at_recipients = response.get("SMSMessageData", {}).get("Recipients", [])
-            at_status = at_recipients[0].get("status", "") if at_recipients else ""
-            if at_status in ("Success", ""):
-                result["status"] = "sent"
-            else:
-                # AT returned a non-success status (e.g. InsufficientBalance in sandbox)
-                result["status"] = "at_sandbox_queued"
-                result["at_status"] = at_status
-                result["note"] = "AT sandbox: message queued; status reflects sandbox limits not delivery failure"
-        except Exception as e:
-            result["status"] = "error"
-            result["error"] = str(e)
+        import time
+        last_error = None
+        for attempt in range(3):
+            try:
+                response = self._client.send(
+                    message=message[:160],
+                    recipients=[actual_to],
+                    sender_id=sender_id,
+                )
+                result["at_response"] = str(response)
+                at_recipients = []
+                if isinstance(response, dict):
+                    at_recipients = response.get("SMSMessageData", {}).get("Recipients", [])
+                at_status = at_recipients[0].get("status", "") if at_recipients else ""
+                if at_status in ("Success", ""):
+                    result["status"] = "sent"
+                else:
+                    result["status"] = "at_sandbox_queued"
+                    result["at_status"] = at_status
+                    result["note"] = "AT sandbox: message queued; status reflects sandbox limits not delivery failure"
+                return result
+            except Exception as e:
+                last_error = e
+                if attempt < 2:
+                    time.sleep(2 ** attempt)  # 1s, 2s backoff
 
+        result["status"] = "error"
+        result["error"] = str(last_error)
         return result
 
     def process_webhook(self, payload: dict) -> dict:

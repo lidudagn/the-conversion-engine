@@ -1,6 +1,6 @@
 {
   "prospect_name": "WISEiTECH",
-  "prospect_domain": "wisetech.io",
+  "prospect_domain": null,
   "crunchbase_id": "https://www.crunchbase.com/organization/wiseitech",
   "funding": {
     "event": null,
@@ -58,5 +58,5 @@
     }
   ],
   "competitor_gap_brief_ref": "competitor_gap_brief.json",
-  "generated_at": "2026-04-25T10:50:08.690640"
+  "generated_at": "2026-04-25T17:35:38.884737"
 }

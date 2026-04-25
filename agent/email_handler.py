@@ -62,25 +62,32 @@ class EmailHandler:
             result["note"] = "No Resend client available — dry run"
             return result
 
-        try:
-            params = {
-                "from": from_email or config.RESEND_FROM_EMAIL,
-                "to": [actual_to],
-                "subject": f"[DRAFT] {subject}" if config.KILL_SWITCH else subject,
-                "text": body,
-            }
-            if reply_to:
-                params["reply_to"] = reply_to
-            if tags:
-                params["tags"] = [{"name": k, "value": str(v)} for k, v in tags.items()]
+        params = {
+            "from": from_email or config.RESEND_FROM_EMAIL,
+            "to": [actual_to],
+            "subject": f"[DRAFT] {subject}" if config.KILL_SWITCH else subject,
+            "text": body,
+        }
+        if reply_to:
+            params["reply_to"] = reply_to
+        if tags:
+            params["tags"] = [{"name": k, "value": str(v)} for k, v in tags.items()]
 
-            response = self._client.Emails.send(params)
-            result["status"] = "sent"
-            result["resend_id"] = getattr(response, "id", str(response))
-        except Exception as e:
-            result["status"] = "error"
-            result["error"] = str(e)
+        import time
+        last_error = None
+        for attempt in range(3):
+            try:
+                response = self._client.Emails.send(params)
+                result["status"] = "sent"
+                result["resend_id"] = getattr(response, "id", str(response))
+                return result
+            except Exception as e:
+                last_error = e
+                if attempt < 2:
+                    time.sleep(2 ** attempt)  # 1s, 2s backoff
 
+        result["status"] = "error"
+        result["error"] = str(last_error)
         return result
 
     def process_webhook(self, payload: dict) -> dict:
