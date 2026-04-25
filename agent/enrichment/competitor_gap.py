@@ -40,6 +40,7 @@ class CompetitorGapBrief(BaseModel):
     top_quartile_companies: list[CompetitorProfile] = Field(default_factory=list)
     gaps: list[GapFinding] = Field(default_factory=list)
     confidence_avg: float = 0.0    # Average confidence across gaps
+    data_quality: str = "high"     # "high" or "sparse"
     generated_at: str = ""
 
 
@@ -129,6 +130,20 @@ class CompetitorGapAnalyzer:
         else:
             conf_avg = 0.0
 
+        # Sparse data fallback
+        data_quality = "high"
+        if len(sector_companies) < 5:
+            data_quality = "sparse"
+            if not gaps:
+                gaps.append(GapFinding(
+                    practice="Sector-wide AI adoption",
+                    top_quartile_prevalence="Emerging",
+                    prospect_status="Early-stage opportunity",
+                    confidence="low",
+                    relevance_to_tenacious="Pioneer market advantage consulting"
+                ))
+                conf_avg = 0.3
+
         return CompetitorGapBrief(
             prospect_name=prospect_name,
             prospect_ai_maturity=prospect_ai_maturity.score,
@@ -137,6 +152,7 @@ class CompetitorGapAnalyzer:
             top_quartile_companies=top_quartile,
             gaps=gaps,
             confidence_avg=round(conf_avg, 2),
+            data_quality=data_quality,
             generated_at=datetime.now().isoformat()
         )
 
@@ -189,10 +205,14 @@ class CompetitorGapAnalyzer:
             "Modern ML/AI tooling stack": ("ml_stack", "ML platform migration consulting"),
         }
 
+        # top_quartile_prevalence = count of top-quartile companies showing this practice
+        # divided by total top-quartile companies. E.g. 7/10 TQ companies with AI hiring → "70%".
+        # Only surfaces as a gap if: (a) prevalence >= 30% in TQ and (b) prospect lacks the practice.
+        # Confidence maps: prevalence >= 60% → high, >= 40% → medium, else low.
         for practice, count in sorted(practice_counts.items(), key=lambda x: -x[1]):
             prevalence = count / total_tq
             if prevalence < 0.3:
-                continue  # Not prevalent enough to be meaningful
+                continue  # Not prevalent enough in TQ to be a meaningful benchmark
 
             signal_name, relevance = gap_mappings.get(practice, (None, "Consulting engagement"))
             prospect_has = signal_name in prospect_practices if signal_name else False
@@ -207,4 +227,7 @@ class CompetitorGapAnalyzer:
                     relevance_to_tenacious=relevance
                 ))
 
-        return gaps[:3]  # Cap at 3 most relevant gaps
+        # When gaps is empty it means: either the prospect already matches the TQ, or the entire
+        # sector scores 0 (no company in the sector has detectable AI practices). In both cases
+        # confidence_avg will be 0.0 and the policy engine will suppress gap delivery (gate: >= 0.6).
+        return gaps[:3]  # Cap at 3 most relevant gaps to keep the brief scannable

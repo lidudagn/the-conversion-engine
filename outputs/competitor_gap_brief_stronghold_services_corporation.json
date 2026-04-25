@@ -9,7 +9,16 @@
     "count": 1
   },
   "top_quartile_companies": [],
-  "gaps": [],
-  "confidence_avg": 0.0,
-  "generated_at": "2026-04-23T20:43:09.765031"
+  "gaps": [
+    {
+      "practice": "Sector-wide AI adoption",
+      "top_quartile_prevalence": "Emerging",
+      "prospect_status": "Early-stage opportunity",
+      "confidence": "low",
+      "relevance_to_tenacious": "Pioneer market advantage consulting"
+    }
+  ],
+  "confidence_avg": 0.3,
+  "data_quality": "sparse",
+  "generated_at": "2026-04-25T17:55:57.799607"
 }
