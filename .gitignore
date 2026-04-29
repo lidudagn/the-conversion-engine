@@ -18,3 +18,14 @@ outputs/hiring_signal_brief_unknown.json
 outputs/hiring_signal_brief_.json
 outputs/ignore_all*
 outputs/hiring_signal_brief_aaa*
+
+# Sealed held-out partition
+eval/tenacious_bench/pilot_50/splits/held_out.jsonl
+
+# Python environment
+w11_venv/
+
+# Temporary models/checkpoints
+models/
+*.safetensors
+*.bin
