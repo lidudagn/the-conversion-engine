@@ -96,10 +96,34 @@ python eval/tau2_harness.py --domain retail --trials 5
 │   ├── langfuse_wrapper.py  # Per-trace cost
 │   └── server.py            # FastAPI backend
 ├── eval/
-│   ├── tau2_harness.py      # τ²-Bench wrapper
+│   ├── tau2_harness.py      # τ²-Bench wrapper (Week 10 baseline)
 │   ├── score_log.json       # Baseline results
-│   ├── trace_log.jsonl      # Eval traces
-│   └── baseline.md          # 400-word report
+│   ├── trace_log.jsonl      # Eval traces (Week 10)
+│   ├── baseline.md          # 400-word report
+│   └── tenacious_bench/     # ★ Week 11 benchmark
+│       ├── schema.json          # 10-category task schema
+│       ├── scoring_evaluator.py # 4-layer deterministic evaluator
+│       ├── datasheet.md         # Gebru + Pushkarna documentation
+│       ├── inter_rater_agreement.md
+│       ├── style_guide_v2.md
+│       ├── examples/            # 3 hand-built example tasks
+│       └── pilot_50/
+│           └── splits/          # train.jsonl / dev.jsonl / held_out.jsonl
+├── scripts/                 # ★ Week 11 generation & contamination pipeline
+│   ├── generate_programmatic.py  # Combinatorial tasks (seed=42)
+│   ├── generate_synthetic.py     # LLM synthesis (GPT-4o-mini)
+│   ├── generate_supplemental.py  # Underrepresented category fill
+│   ├── hand_authored_adversarial.py
+│   ├── extract_traces.py
+│   ├── merge_and_partition.py    # Dedup + stratified split
+│   ├── contamination_check.py    # N-gram + embedding + time-shift
+│   └── test_evaluator.py         # Unit tests for scoring_evaluator
+├── synthesis_memos/         # ★ Week 11 paper memos
+│   ├── synthesis_memo_synthetic_data.md   # Liu et al. (COLM 2024)
+│   └── synthesis_memo_datasheets.md       # Gebru/Pushkarna
+├── memos/                   # ★ Week 11 paper memos (cont.)
+│   ├── contamination_survey.md            # Chen et al. (EMNLP 2025)
+│   └── llm_judge_survey.md                # Gu et al. (2024-2025)
 ├── data/
 │   ├── crunchbase/          # 1,001 company CSV
 │   ├── layoffs/             # layoffs.fyi data
@@ -107,6 +131,8 @@ python eval/tau2_harness.py --domain retail --trials 5
 ├── outputs/
 │   ├── policy_trace.jsonl   # Decision audit trail
 │   └── bench_escalation_log.jsonl
+├── audit_memo.md            # ★ Week 11 Act I gap analysis
+├── methodology.md           # ★ Week 11 Path B rationale + contamination log
 ├── config.py                # Kill-switch + API config
 ├── requirements.txt
 └── .env.example
