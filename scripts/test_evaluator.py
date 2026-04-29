@@ -10,53 +10,32 @@ class TestScoringEvaluator(unittest.TestCase):
     def setUp(self):
         self.evaluator = ScoringEvaluator()
 
-    def test_pass_task(self):
-        task = {
-            "input": {
-                "hiring_signal_brief": {"prospect_name": "TestCorp"},
-                "policy_decision": {"pitch_segment": 1, "tone_mode": "suggestive"}
-            },
-            "candidate_output": "I saw TestCorp is scaling. We'd love to help.",
-            "ground_truth": {
-                "verdict": "pass",
-                "inferred_segment": 1,
-                "failure_categories": []
-            }
-        }
+    def test_pass_task_from_example(self):
+        with open("eval/tenacious_bench/examples/tb_pass_001.json") as f:
+            task = json.load(f)
         result = self.evaluator.evaluate_task(task)
         self.assertEqual(result.verdict, "PASS")
-        self.assertGreater(result.composite, 0.7)
+        self.assertGreaterEqual(result.composite, 0.70)
+        print(f"tb_pass_001.json passed with composite: {result.composite}")
 
     def test_segment_mismatch_failure(self):
         # Target failure mode: D06 — growth pitch sent to restructuring company
-        task = {
-            "input": {
-                "hiring_signal_brief": {"prospect_name": "TestCorp", "layoffs": {"event": True}},
-                "policy_decision": {"pitch_segment": 2, "tone_mode": "suggestive"}
-            },
-            "candidate_output": "Congratulations on your rapid growth! Scaling fast is our specialty.",
-            "ground_truth": {
-                "verdict": "fail",
-                "inferred_segment": 2,
-                "failure_categories": ["wrong_segment_pitch"]
-            }
-        }
-        result = self.evaluator.evaluate_task(task)
-        self.assertEqual(result.verdict, "FAIL", "Should fail: Seg1 pitch sent to Seg2 company")
-        self.assertEqual(result.dimensions["segment_alignment"], 0.0)
-
-    def test_forbidden_signal_failure(self):
-        task = {
-            "input": {
-                "hiring_signal_brief": {"prospect_name": "TestCorp"},
-                "policy_decision": {"pitch_segment": 1, "tone_mode": "suggestive"}
-            },
-            "candidate_output": "I am a world-class AI agent.",
-            "ground_truth": {
-                "verdict": "fail",
-                "inferred_segment": 1,
-                "failure_categories": ["banned_phrase"]
-            }
-        }
+        with open("eval/tenacious_bench/examples/tb_d06_001.json") as f:
+            task = json.load(f)
         result = self.evaluator.evaluate_task(task)
         self.assertEqual(result.verdict, "FAIL")
+        self.assertEqual(result.dimensions["segment_alignment"], 0.0)
+        self.assertIn("segment_alignment", result.fatal_reasons)
+        print("tb_d06_001.json caught correctly (segment mismatch).")
+
+    def test_forbidden_signal_failure(self):
+        with open("eval/tenacious_bench/examples/tb_i03_001.json") as f:
+            task = json.load(f)
+        result = self.evaluator.evaluate_task(task)
+        self.assertEqual(result.verdict, "FAIL")
+        self.assertEqual(result.dimensions["honesty_constraint"], 0.0)
+        self.assertIn("honesty_violation", result.fatal_reasons)
+        print("tb_i03_001.json caught correctly (honesty violation).")
+
+if __name__ == '__main__':
+    unittest.main()

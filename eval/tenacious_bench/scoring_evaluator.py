@@ -130,6 +130,7 @@ class ScoringEvaluator:
         # ============================================================
         
         # 1a. Banned Phrase Check
+        # Calibration: 1.0 = Clean. 0.0 = Contains 1+ banned phrases (e.g. 'ninja', 'supercharge').
         banned_matches = self.banned_regex.findall(output)
         if banned_matches:
             fatal_flags.append(f"banned_phrase:{','.join(set(banned_matches))}")
@@ -137,6 +138,7 @@ class ScoringEvaluator:
         dimensions["banned_phrases"] = 0.0 if banned_matches else 1.0
 
         # 1b. Condescension Pattern Check
+        # Calibration: 1.0 = Professional/Equal footing. 0.3 = Uses condescending 'falling behind' phrases.
         condescension_score = 1.0
         if self.condescension_patterns.search(output):
             condescension_score = 0.3
@@ -166,6 +168,7 @@ class ScoringEvaluator:
         # ============================================================
         
         # 2a. Multi-ask detection
+        # Calibration: 1.0 = Clean single call to action. 0.0 = Cluttered with multiple asks (>1 'first/second' or >3 '?')
         ask_indicators = output.count("first,") + output.count("second,") + output.count("third,") + output.count("fourth,")
         question_marks = output.count("?")
         multi_ask = ask_indicators >= 2 or question_marks >= 4
@@ -182,6 +185,7 @@ class ScoringEvaluator:
         dimensions["no_attachment"] = 0.0 if has_attachment else 1.0
 
         # 2c. Overclaiming / Guarantees
+        # Calibration: 1.0 = Measured claims. 0.0 = Uses forbidden 'guarantee' or '#1 ranked' overclaims.
         overclaim_score = 1.0
         for kw in GUARANTEE_KWS:
             if kw in output:
@@ -196,6 +200,7 @@ class ScoringEvaluator:
         # ============================================================
         
         # 3a. Segment Alignment (D06 Proxy)
+        # Calibration: 1.0 = Matches ground truth inferred segment. 0.0 = Target segment mismatch (fatal).
         segment_counts = {seg: 0 for seg in self.segment_heuristics}
         for seg, keywords in self.segment_heuristics.items():
             for kw in keywords:
@@ -216,6 +221,7 @@ class ScoringEvaluator:
         dimensions["segment_alignment"] = seg_score
 
         # 3b. Honesty Constraints (I03 / Policy)
+        # Calibration: 1.0 = Clean. 0.0 = Exposed forbidden signal (e.g. non-public layoff news).
         honesty_score = 1.0
         forbidden = ground_truth.get("forbidden_signals", [])
         for signal in forbidden:
@@ -231,6 +237,7 @@ class ScoringEvaluator:
         # ============================================================
         
         # 4a. Signal Grounding
+        # Calibration: 1.0 = All required signals mentioned. Fractions (e.g. 0.5) if partially hit. 0.0 = Missed entirely.
         required = ground_truth.get("required_signals", [])
         signal_entities = self.signal_entity_regex.findall(output_raw)
         if not required:

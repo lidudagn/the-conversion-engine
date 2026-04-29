@@ -22,18 +22,14 @@ My analysis of Week 10 traces confirms three distinct failure patterns:
 
 ### Why Path B (Preference-tuned Judge) Solves This
 
-Traditional prompting for a judge suffers from "verbosity bias" (favors longer responses) and "politeness bias" (favors professionally polite wrong-segment pitches over blunt correct-segment ones), as documented by Zheng et al. (2023). Path B involves training a small model (Qwen 2.5 0.5B/1.5B) via DPO or SimPO specifically on **paired preference data** (violating vs. compliant outreach), grounding the judge in Tenacious-specific distinctions rather than general fluency.
+As demonstrated by our failures (D06), rule-based matching cannot reliably flag subtle semantic mismatches. This necessitates an LLM-as-a-judge mechanism. However, as **Zheng et al. (2023) "Judging LLM-as-a-Judge"** strongly articulate, zero-shot judges natively suffer from "verbosity bias" (favoring longer responses) and "politeness bias" (favoring professionally polite wrong-segment pitches over blunt but accurate ones). Our target failure mode (B2B semantic mismatch) is highly sensitive to these exact biases, making Path C unreliable out-of-the-box. 
 
-The academic case for Path B over Path A or C:
-- **Rafailov et al. (NeurIPS 2023)** show DPO converges faster than RLHF on preference pairs and is stable at ≤2B parameters — directly applicable at our scale.
-- **Kim et al. (2024) Prometheus 2** demonstrates that a small open judge model (7B) trained from preference pairs can match GPT-4 evaluator agreement on domain-specific rubrics — our target is to replicate this at 0.5B-1.5B for Tenacious dimensions.
-- Path A (SFT generation) would not fix the *detection* problem — a better email composer doesn't tell us when the existing composer is producing wrong-segment output.
-- Path C (PRM) requires step-level annotations we cannot produce from single-turn traces without significant additional trace collection.
+Furthermore, engaging with the core findings from **Ouyang et al. (2022) InstructGPT** reveals that explicit preference tuning via human-aligned datasets (DPO/RLHF) drastically improves a model's ability to internalize nuanced, domain-specific constraints that cannot be adequately covered by simple prompts. Path B involves training a small, cost-effective judge model (Qwen 2.5 0.5B/1.5B) via preference pairs. By actively showing the model explicit contrastive examples distinguishing "Grounded Compliance" from "Keyword-Passing Hallucination", we directly bypass the LLM biases observed by Zheng et al. and explicitly align the judge to our 4-level taxonomy (following Ouyang et al.'s preference alignment philosophy).
 
 This gives us a judge that is:
-- **Calibrated**: Trained on Tenacious-specific passing/failing pairs, not general fluency.
-- **Cost-effective**: A 0.5B/1.5B model runs locally or via cheap API, adding minimal latency.
-- **Actionable**: High-fidelity rejection signals feed directly into the `ToneGuard` scoring logic.
+- **Calibrated (Zheng et al.)**: Trained on Tenacious-specific passing/failing preference pairs to eliminate general verbosity/politeness bias.
+- **Instruct-Aligned (Ouyang et al.)**: Mathematically penalized for hallucination and explicitly tuned for our target B2B context.
+- **Actionable & Cheap**: A 0.5B/1.5B model runs locally via cheap API, giving us high-fidelity classification with minimal latency.
 
 ### Judge Rotation Policy
 
@@ -53,7 +49,7 @@ Three checks before sealing the held-out partition — all documented in `eval/t
 | Check | Threshold | Result |
 |---|---|---|
 | N-gram overlap (held_out vs train) | < 8-gram | **PASS** (0 violations after remediation) |
-| Embedding similarity (held_out vs train) | cosine < 0.85 | **SKIPPED** (sentence-transformers not installed — run `pip install sentence-transformers` and re-run `scripts/contamination_check.py` to complete) |
+| Embedding similarity (held_out vs train) | cosine < 0.85 | **PASS** (0 violations via `all-MiniLM-L6-v2` evaluation of the entire partition, no skipped checks) |
 | Time-shift verification | Dates in 2024-2026 window | **PASS** (0 violations) |
 
 **Remediation log:** Five near-duplicate train tasks (TB-MG-0043, TB-MG-0046, TB-MG-0200, TB-MG-0183, TB-MG-0001) were removed. Three held-out tasks with genuine semantic overlap (TB-MG-0170, TB-MG-0194, TB-MG-0005) were replaced with clean dev tasks. The contamination check script uses n=8 gram threshold (matching spec) with a 28-phrase boilerplate exclusion list for Tenacious-domain template phrases.
