@@ -6,6 +6,7 @@ from typing import Dict, List, Optional
 from pathlib import Path
 
 import random
+import re
 
 # Reproducibility seed
 random.seed(42)
@@ -16,6 +17,36 @@ try:
 except FileNotFoundError:
     print("Warning: eval/prompts/ingest_judge_prompt.md not found.")
     JUDGE_PROMPT = "{task_json}"
+
+# ============================================================
+# JUDGE FILTER THRESHOLDS (Ingest Pipeline)
+# Documentation of concrete score thresholds per dimension.
+# ============================================================
+INGEST_THRESHOLDS = {
+    "coherence": 4.0,     # Must solidly make sense without major logical leaps
+    "verifiability": 4.0, # Ground truth must be clearly derivable
+    "clarity": 4.0        # Rationale must be explicitly unambiguous
+}
+
+def _get_ngrams(text: str, n: int = 8) -> set:
+    words = re.findall(r'\w+', text.lower())
+    return {tuple(words[i:i+n]) for i in range(len(words) - n + 1)}
+
+def dedup_pool(tasks: List[dict], n: int = 8) -> Tuple[List[dict], List[dict]]:
+    """Pairwise n-gram deduplication to remove near-duplicate generations."""
+    kept, dropped = [], []
+    seen_ngrams = set()
+    for task in tasks:
+        output = task.get("candidate_output", "")
+        ngrams = _get_ngrams(output, n)
+        if ngrams and ngrams.isdisjoint(seen_ngrams):
+            kept.append(task)
+            seen_ngrams.update(ngrams)
+        elif not ngrams:
+            kept.append(task)
+        else:
+            dropped.append(task)
+    return kept, dropped
 
 class OpenRouterJudge:
     def __init__(self, model: str = "meta-llama/llama-3.1-70b-instruct"):
@@ -40,9 +71,14 @@ class OpenRouterJudge:
                 scores = json.loads(content)
                 
         quality_score = (scores["coherence"] + scores["verifiability"] + scores["clarity"]) / 3
+        
+        # Enforce dimension-specific explicit thresholds
+        passes_thresholds = all(scores.get(dim, 0) >= threshold for dim, threshold in INGEST_THRESHOLDS.items())
+        
         return {
             "judge_scores": scores,
             "quality_score": round(quality_score, 2),
+            "passes_thresholds": passes_thresholds,
             "judge_model": self.model
         }
 
@@ -83,22 +119,33 @@ class IngestPipeline:
             task_data["scoring"] = {**task_data.get("scoring", {}), **heuristic_result.dimensions}
             task_data["metadata"].update(judge_result)
             
-            # 4. Final Quality Filter
-            if judge_result["quality_score"] >= 4.0:
+            # Explicit Multi-model Rotation Guard (Forbid Self-Judging)
+            gen_model = task_data.get("metadata", {}).get("generation_model", "unknown").split("/")[0]
+            if gen_model != "unknown" and gen_model == self.judge.model.split("/")[0]:
+                print(f"  [REJECT] {task_id} - Model separation violation (self-judging): {gen_model}")
+                return False
+                
+            # 4. Final Quality Filter (Must pass concrete per-dimension thresholds AND quality score)
+            if judge_result["passes_thresholds"] and judge_result["quality_score"] >= 4.0:
                 print(f"  [PASS]  {task_id} - Score: {judge_result['quality_score']}")
                 self.results.append(task_data)
                 return True
             else:
-                print(f"  [REJECT] {task_id} - Score: {judge_result['quality_score']}")
+                print(f"  [REJECT] {task_id} - Score: {judge_result['quality_score']} (Failed per-dim thresholds: {not judge_result['passes_thresholds']})")
                 return False
         except Exception as e:
             print(f"  [ERROR] {task_id}: {str(e)}")
             return False
 
     def save_pool(self, output_path: str):
+        # Implement explicit pairwise dedup logic before final save
+        kept, dropped = dedup_pool(self.results)
+        print(f"\nDedup: Kept {len(kept)} tasks. Dropped {len(dropped)} near-duplicates.")
+        
         with open(output_path, "w") as f:
-            for task in self.results:
+            for task in kept:
                 f.write(json.dumps(task) + "\n")
+        self.results = kept
 
 async def main():
     evaluator = ScoringEvaluator()
