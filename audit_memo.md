@@ -2,58 +2,33 @@
 
 **Date:** 2026-04-28  
 **Subject:** Gap Analysis between τ²-Bench Baseline and Tenacious B2B Production Requirements  
-**Author:** Conversion Engine Audit Team  
 
 ## 1. Headline Finding
-τ²-Bench effectively measures multi-step sequencing and policy compliance in **retail customer service** (exchange, cancel, refund). However, it catastrophically fails to measure the **Semantic Alignment Gap** inherent in B2B outbound sales. For Tenacious Consulting, a 72.67% pass@1 on retail traces is a "vanity metric" that masks silent, deal-killing failures in brand representation.
+τ²-Bench effectively measures retail customer service tasks (exchange, cancel, refund), but catastrophically fails measuring B2B outbound sales capabilities. While Conversion Engine scores a 72.67% pass@1 on retail traces, this vanity metric masks silent, deal-killing failures in brand representation, grounding, and semantic alignment crucial for Tenacious Consulting.
 
-## 2. What τ²-Bench Covers (and What it Doesn't)
-The τ²-Bench baseline (documented in `eval/ablation_results.json`) confirms the Conversion Engine is competent at:
-- **Tool-call sequencing**: Correctly completing retail order lookups (`trace_log.jsonl` task_id 1, reward=1.0), confirming the benchmark rewards narrow retail mechanics — not B2B semantic judgment.
-- **Multi-step retail workflows**: `trace_log.jsonl` task_id 11 (FAIL, multi-step retail cancel) and task_id 34 (FAIL, partial-refund return) both fail on retail policy rules, demonstrating τ²-Bench's evaluation surface is entirely transactional and misses the consultative framing Tenacious requires.
-- **Grounding in structured data**: Validating input fields against schemas (as seen in `outputs/hiring_signal_brief_ams-par.json`).
+## 2. Retail Success Masks B2B Blind Spots
+τ²-Bench baseline validation confirms the Engine excels at retail multi-step workflows. For example, the agent correctly completes retail order lookups (Trace ID 1) and fails cleanly on retail policy bounds like multi-step retail cancels (Trace ID 11) and partial-refund returns (Trace ID 34). 
 
-However, τ²-Bench misses the entire **Tenacious Failure Taxonomy**:
-- **Enrichment edge cases (A01-A10)**: Non-retail domain specifics.
-- **Tone guard semantic alignment (D06)**: Context-aware category mismatch.
-- **Signal overclaiming (I01-I03)**: Turning low-confidence signals into assertive guarantees.
+However, τ²-Bench evaluates pure transactional correctness. It penalizes structured-domain process errors (Trace ID 76, order-modification) and multi-turn lookup flaws (Trace ID 92), but possesses no mechanism to evaluate B2B consultative judgment or signal qualification. When an agent recites policy verbatim but fails consultative synthesis (Trace ID 66), τ²-Bench correctly flags it as a failure in retail but entirely ignores the identical underlying pathology in B2B context sensing.
 
-### Additional Trace Evidence
-Three further retail failures illustrate the benchmark's B2B blind spots:
+## 3. The Tenacious Failure Taxonomy: Identified Gaps
 
-- `trace_log.jsonl` task_id 66 (FAIL, refund policy edge case): Agent recites policy verbatim but fails synthesis — τ²-Bench flags this as failure while an identically-structured wrong-segment pitch would pass.
-- `trace_log.jsonl` task_id 76 (FAIL, order-modification): τ²-Bench penalises structured-domain process errors yet awards no signal for open-ended B2B persuasive judgment.
-- `trace_log.jsonl` task_id 92 (FAIL, multi-turn lookup): τ²-Bench has no mechanism to distinguish transactional correctness from consultative semantic alignment.
+To measure actual business risk, we must assess four mutually distinct gaps ignored by τ²-Bench.
 
-## 3. The Critical Gap: D06 (Wrong-Segment Pitch)
-The single biggest risk identified during Phase 0 is **Probe D06**. This probe demonstrates a "Segment 1" growth pitch being sent to a "Segment 2" restructuring company.
+### Gap A: Semantic Alignment Gap (The D06 Failure)
+The most critical defect is Probe **D06**. It demonstrates a "Segment 1" growth pitch sent to a "Segment 2" restructuring company. Both pass keyword filters, but the context mismatch is a semantic failure. `ToneGuard` caught 0% of these. Probe **H01** reinforces this: a post-layoff firm without VC funding erroneously receives a Seg1 growth pitch about hypergrowth. This gap presents an estimated $2.4M–$7.2M quarterly pipeline risk.
 
-### Contrast Example:
-- **Correct (Seg2)**: "We understand you're optimizing engineering velocity during this restructuring period. Our bench helps maintain Q3 roadmap stability without increasing fixed headcount."
-- **Wrong (Failing D06)**: "Congratulations on your recent growth! Scaling fast is hard, and our team is here to help you accelerate your Series A roadmap."
-- **The Catch**: Both pass keyword filters (D01-D07). Only semantic understanding detects the context mismatch.
+### Gap B: Signal Overclaiming & Qualification
+τ²-Bench ignores evidence grounding. Probe **I01** exposes that a single job post is hallucinated into "your company is aggressively hiring". Probe **I03** shows a question-only funding signal stated as a factual assertion. Furthermore, Probe **C03** exposes bench over-commitment: sending "we can staff your team" without verifying the engineer pool. These failures unilaterally destroy prospect trust.
 
-### Evidence of Failure:
-- **Rule-based Invisibility**: `ToneGuard` (`agent/tone_guard.py`) has a **0% catch rate** on D06.
-- **AMS-PAR Trace**: `outputs/e2e_batch_results.json` AMS-PAR row: `tone_score=0.88` (PASS), yet system hallucinated Segment 4 AI maturity where none existed.
-- **Business Cost**: Average ACV $240K–$720K × D06 frequency = estimated **$2.4M–$7.2M quarterly pipeline risk**.
+### Gap C: Deeper Trajectory & Grounding Failures
+Beyond basic mismatches, the agent frequently struggles with complex trajectory constraints. Probe **B01** reveals the agent pushing assertive pitches despite borderline ICP confidence (0.499), violating the structural abstention policy. Probe **N02** highlights aggressive gap framing ungrounded in evidence ("falling behind rapidly"), while the AMS-PAR trace from Week 10 shows the agent completely hallucinating a Segment 4 AI maturity score ungrounded from the input brief.
 
-## 4. Quantitative Gap Analysis
+### Gap D: Systemic Coordination & Reliability
+Transactional tests miss multi-component pipeline edges. Probe **E04** demonstrates an HTML-injected company name causing an operational pipeline crash. Probe **M01** emphasizes that if a kill switch fails to intercept a scheduling attempt, it triggers an unauthorized real-world calendar invite. These flaws directly expose Tenacious to operational or legal risk.
 
-| Failure Category | IDs Cited | Catch Rate (Baseline) | Catch Rate (Target) |
-|---|---|---|---|
-| **Semantic Segment Gap** | **D06, H01-H10** | **0%** | **>80%** |
-| **Signal Assertiveness** | **I01-I03, J01-J04** | **20%** | **>90%** |
-| **Injection Resistance** | **E01-E05** | **60%** | **100%** |
-| **Enrichment Bounds** | **A01-A10** | **90%** | **100%** |
-| **Tone & Style Guard** | **F01-F03, D01-D05** | **15%** | **>90%** |
-
-## 5. Recommendation: The Tenacious-Bench v0.1
-To move from "capable bot" to "safe production asset," we must execute **Path B (Preference-tuned Judge)**.
-
-The audit team recommends:
-1. Author 200–300 B2B tasks using `schema.json` (Act I).
-2. Train DPO preference pairs distinguishing "Grounded Compliance" from "Keyword-Passing Hallucination."
-3. Close the 10-category taxonomy documented in Week 10 artifacts.
-
-Without this benchmark, Tenacious faces an estimated **$2.4M–$7.2M quarterly pipeline risk** from tone-deaf outbound.
+## 4. Recommendation: The Tenacious-Bench v0.1
+To bridge these gaps, Tenacious faces unacceptable risk without a custom evaluation suite. We must execute **Path B (Preference-tuned Judge)**:
+1. Develop a schema-compliant dataset of B2B tasks.
+2. Train a DPO model distinguishing "Grounded Compliance" from "Keyword-Passing Hallucination."
+3. Completely evaluate the Conversion Engine against Tenacious-Bench prior to deployment.

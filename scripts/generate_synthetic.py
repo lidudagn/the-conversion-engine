@@ -7,6 +7,49 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Tuple
 
+import random
+
+# Reproducibility seed
+random.seed(42)
+
+# Load Prompts from standalone markdown files
+PROMPTS_DIR = Path("eval/prompts")
+
+try:
+    JUDGE_PROMPT_TEMPLATE = (PROMPTS_DIR / "judge_filter_prompt.md").read_text()
+except FileNotFoundError:
+    print("Warning: eval/prompts/judge_filter_prompt.md not found.")
+    JUDGE_PROMPT_TEMPLATE = "{task_json}"
+
+try:
+    GEN_PROMPT = (PROMPTS_DIR / "generator_prompt.md").read_text()
+except FileNotFoundError:
+    print("Warning: eval/prompts/generator_prompt.md not found.")
+    GEN_PROMPT = ""
+
+# ============================================================
+# MULTI-LLM ROUTING POLICY
+# ============================================================
+# To prevent preference leakage, the generation model and the judge model
+# MUST belong to disjoint architectural families.
+ROUTING_POLICY = {
+    "generators": ["openai/gpt-4o-mini", "anthropic/claude-3-haiku"],
+    "judges": ["meta-llama/llama-3.1-70b-instruct", "mistralai/mixtral-8x7b-instruct"]
+}
+
+def validate_model_separation(gen_model: str, judge_model: str):
+    def get_family(m):
+        return m.split("/")[0]
+    
+    if get_family(gen_model) == get_family(judge_model):
+        raise ValueError(f"Model Separation Violation: Generator ({gen_model}) and Judge ({judge_model}) must not share the same lineage!")
+    
+    # Enforce declared roles
+    if not any(g in gen_model for g in ROUTING_POLICY["generators"]) and gen_model not in ROUTING_POLICY["generators"]:
+        print(f"Warning: Generator model {gen_model} is not in standard ROUTING_POLICY")
+    if not any(j in judge_model for j in ROUTING_POLICY["judges"]) and judge_model not in ROUTING_POLICY["judges"]:
+        print(f"Warning: Judge model {judge_model} is not in standard ROUTING_POLICY")
+
 # ============================================================
 # JUDGE FILTER THRESHOLDS
 # Applied by meta-llama/llama-3.1-70b-instruct after generation.
@@ -14,43 +57,11 @@ from typing import List, Dict, Tuple
 # any threshold are dropped before writing to the pool.
 # ============================================================
 JUDGE_FILTER_THRESHOLDS: Dict[str, float] = {
-    # The scenario is internally consistent: signals match the
-    # declared segment, and the output logically follows from the input.
     "coherence": 0.70,
-
-    # Claims in candidate_output are anchored in hiring_signal_brief
-    # fields (funding amount, layoff count, role titles, etc.).
-    # Fabricated or unsupported claims score below this threshold.
     "grounding": 0.60,
-
-    # The ground_truth failure category is unambiguous: a human
-    # reading only the task should reach the same verdict with high
-    # confidence. Borderline or dual-failure cases score below this.
     "rubric_clarity": 0.80,
-
-    # Task has all required schema fields:
-    # input.hiring_signal_brief, input.policy_decision,
-    # candidate_output, ground_truth.verdict, ground_truth.inferred_segment.
-    # This is a binary check: 1.0 = all present, 0.0 = any missing.
     "schema_validity": 1.00,
 }
-
-JUDGE_PROMPT_TEMPLATE = """
-You are a strict quality-control judge for a B2B sales evaluation dataset.
-
-Score the following task on four dimensions, each 0.0–1.0:
-
-1. coherence       — signals match declared segment; output logically follows input
-2. grounding       — output claims are anchored in provided hiring_signal_brief fields
-3. rubric_clarity  — failure category is unambiguous; no dual-failure ambiguity
-4. schema_validity — all required fields present (1.0) or at least one missing (0.0)
-
-Respond with JSON only:
-{{"coherence": <float>, "grounding": <float>, "rubric_clarity": <float>, "schema_validity": <float>}}
-
-TASK:
-{task_json}
-"""
 
 REQUIRED_SCHEMA_FIELDS = [
     ("input", "hiring_signal_brief"),
@@ -59,27 +70,6 @@ REQUIRED_SCHEMA_FIELDS = [
     ("ground_truth", "verdict"),
     ("ground_truth", "inferred_segment"),
 ]
-
-# Prompt for Seed Generation
-GEN_PROMPT = """
-You are a Senior B2B Sales Dataset Engineer. Generate 10 diverse B2B outreach scenarios for Tenacious Consulting.
-
-EACH SCENARIO MUST INCLUDE:
-1. A hiring_signal_brief (prospect_name, funding, layoffs, ai_maturity).
-2. A policy_decision (pitch_segment 1-4, tone_mode).
-3. A candidate_output (the email draft).
-4. A ground_truth (verdict, inferred_segment, rationale).
-
-The scenarios must target the 4 Tenacious segments:
-- Seg1: Growth
-- Seg2: Restructuring
-- Seg3: Enterprise
-- Seg4: AI Maturity
-
-Make at least 3 of these scenarios "Adversarial" or "Hard" where the tone subtly mismatches the business condition (e.g., calling a layoff 'exciting transformation').
-
-JSON OUTPUT ONLY (Array of objects):
-"""
 
 
 def _check_schema_validity(task: dict) -> float:
@@ -230,11 +220,20 @@ class SyntheticGenerator:
 
 async def main():
     api_key = os.getenv("OPENROUTER_API_KEY")
-    gen = SyntheticGenerator()
+    gen_model = "openai/gpt-4o-mini"
+    judge_model = "meta-llama/llama-3.1-70b-instruct"
+    
+    # Enforce routing policy before taking action
+    validate_model_separation(gen_model, judge_model)
+    
+    gen = SyntheticGenerator(model=gen_model)
     judge = JudgeFilter(api_key) if api_key else None
+    if judge:
+        judge.JUDGE_MODEL = judge_model
+        
     all_tasks: List[dict] = []
 
-    print("Starting Scale Synthesis (Batch Loop)...")
+    print(f"Starting Scale Synthesis (Batch Loop) with Generator: {gen_model}...")
     for i in range(10):  # 10 batches of 10 tasks = 100 tasks
         print(f"Batch {i+1}/10...")
         tasks = await gen.generate_batch()
