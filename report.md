@@ -14,30 +14,24 @@ This document reports on the dataset compilation, validation, and benchmarking s
 
 The final split reflects contamination remediation: 5 near-duplicate training tasks were removed, 3 held-out tasks with semantic overlap were swapped with clean dev tasks, and 4 adversarial tasks were added to secure the 200-task floor.
 
-**Taxonomy Category Distribution (10 dimensions):**
+**Integrated Bench Composition (Partition × Dimension × Mode):**
 
-| Category | Count | Primary Probe IDs |
-|---|---|---|
-| `tone_guard` | 126 | D01-D08, F01-F03 |
-| `composer` | 24 | J01-J04 |
-| `icp_boundary` | 8 | B01-B04, H01-H04 |
-| `signal_overclaiming` | 7 | I01-I03 |
-| `enrichment` | 7 | A01-A10 |
-| `integration` | 7 | M01-M04 |
-| `policy` | 7 | C01-C07 |
-| `tone_drift` | 6 | — |
-| `icp_misclassification` | 5 | — |
-| `injection` | 5 | E01-E05 |
-| **Total** | **202** | |
+| Category | Hand-Authored (Tr/Dv/Ho) | LLM Synthesis (Tr/Dv/Ho) | Programmatic (Tr/Dv/Ho) | Trace-Derived (Tr/Dv/Ho) | Total |
+|---|---|---|---|---|---|
+| `tone_guard` | 11 (5/0/6) | 97 (45/27/25) | 17 (13/2/2) | 1 (1/0/0) | **126** |
+| `signal_overclaiming` | 2 (2/0/0) | 0 (0/0/0) | 5 (3/0/2) | 0 (0/0/0) | **7** |
+| `enrichment` | 1 (1/0/0) | 0 (0/0/0) | 6 (3/2/1) | 0 (0/0/0) | **7** |
+| `composer` | 14 (5/6/3) | 0 (0/0/0) | 10 (6/1/3) | 0 (0/0/0) | **24** |
+| `icp_boundary` | 2 (0/1/1) | 0 (0/0/0) | 6 (3/2/1) | 0 (0/0/0) | **8** |
+| `integration` | 1 (0/1/0) | 0 (0/0/0) | 5 (2/2/1) | 1 (1/0/0) | **7** |
+| `policy` | 4 (3/0/1) | 0 (0/0/0) | 3 (1/2/0) | 0 (0/0/0) | **7** |
+| `injection` | 0 (0/0/0) | 0 (0/0/0) | 5 (2/0/3) | 0 (0/0/0) | **5** |
+| `icp_misclassification` | 3 (1/2/0) | 0 (0/0/0) | 2 (0/2/0) | 0 (0/0/0) | **5** |
+| `tone_drift` | 2 (1/0/1) | 0 (0/0/0) | 4 (4/0/0) | 0 (0/0/0) | **6** |
 
-**Authoring Mode Distribution:**
-
-| Mode | Count | Share | Notes |
-|---|---|---|---|
-| LLM Synthesis | 97 | 48.0% | GPT-4o-mini generates; Llama-3.1-70B judges (family-separated per Li et al. 2025) |
-| Programmatic | 63 | 31.2% | Combinatorial sweeps; `random.seed(42)` |
-| Hand-Authored Adversarial | 40 | 19.8% | Designed to defeat keyword-only filters |
-| Trace-Derived | 2 | 1.0% | Extracted from `eval/trace_log.jsonl`, trace IDs 11 and 34 |
+*Notes on Cross-Tabulation:*
+- Tr/Dv/Ho indicates split counts (Train / Dev / Held-out).
+- LLM Synthesis currently relies on GPT-4o-mini generation and Llama-3.1-70B judging (family-separated per Li et al. 2025). Programmatic tasks utilize combinatorial sweeps with explicitly surfaced `random.seed(42)`. Hand-authored tasks specifically target adversarial failure modes that defeat generic keyword filters. Trace-derived incorporates real failure telemetry.
 
 **Difficulty Distribution:** easy 11% | medium 64% | hard 11% | adversarial 14%
 
@@ -172,5 +166,8 @@ This is the D06 adversarial variant: the output simultaneously acknowledges the 
 **Day 5:** Run LoRA training via Unsloth on Colab T4 (free tier). Inject preference pairs; target D06 segment_alignment failure mode. Log training loss and validation curves. Cap at 90-minute wall time; kill and debug data if no convergence by 30 minutes.
 
 **Day 6:** Ablations — Delta A (trained vs Week 10 baseline on held-out), Delta B (trained vs prompt-engineered on same backbone, tests whether training beats prompting), cost-Pareto (per-task cost and latency delta). Write results to `ablations/ablation_results.json`. Install `sentence-transformers` and re-run `scripts/contamination_check.py` to complete the embedding check.
+
+**Eval-Tier Spending Reservation:**
+We have explicitly reserved exactly **$2.50** from the project's **$10.00 eval-tier spend envelope** to run high-fidelity API inference evaluation on the sealed 50-task held-out split against the OpenRouter `meta-llama/llama-3.1-70b-instruct` final evaluator instance on Day 6. This ensures rigorous validation without approaching the cap.
 
 **Day 7:** Publish to HuggingFace (dataset + LoRA adapter). Write technical blog post (1,200–2,000 words). Open GitHub issue on τ²-Bench repo presenting the Tenacious-specific gap finding. Finalize the two-page executive memo (`memo.pdf`).
