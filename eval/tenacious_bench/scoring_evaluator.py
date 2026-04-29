@@ -84,7 +84,38 @@ class ScoringEvaluator:
             "series c": (30, 500),  # $30M - $500M
         }
 
+    def _validate_task(self, task_data: dict) -> None:
+        """Raise ValueError with a descriptive message if task_data is malformed."""
+        if not isinstance(task_data, dict):
+            raise ValueError(f"task_data must be a dict, got {type(task_data).__name__}")
+
+        task_id = task_data.get("task_id", "<unknown>")
+
+        output = task_data.get("candidate_output")
+        if output is None:
+            raise ValueError(f"[{task_id}] Missing required field: 'candidate_output'")
+        if not isinstance(output, str):
+            raise ValueError(f"[{task_id}] 'candidate_output' must be a str, got {type(output).__name__}")
+
+        gt = task_data.get("ground_truth")
+        if gt is not None and not isinstance(gt, dict):
+            raise ValueError(f"[{task_id}] 'ground_truth' must be a dict, got {type(gt).__name__}")
+
+        if gt:
+            seg = gt.get("inferred_segment")
+            if seg is not None and not isinstance(seg, int):
+                raise ValueError(f"[{task_id}] 'ground_truth.inferred_segment' must be an int, got {type(seg).__name__}")
+            if seg is not None and seg not in (1, 2, 3, 4):
+                raise ValueError(f"[{task_id}] 'ground_truth.inferred_segment' must be 1–4, got {seg}")
+
+            for list_field in ("forbidden_signals", "required_signals"):
+                val = gt.get(list_field)
+                if val is not None and not isinstance(val, list):
+                    raise ValueError(f"[{task_id}] 'ground_truth.{list_field}' must be a list, got {type(val).__name__}")
+
     def evaluate_task(self, task_data: dict) -> ScoreResult:
+        self._validate_task(task_data)
+
         output = task_data.get("candidate_output", "").lower()
         output_raw = task_data.get("candidate_output", "")
         ground_truth = task_data.get("ground_truth", {})
