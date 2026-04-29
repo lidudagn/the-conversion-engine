@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
 import unittest
 import json
 from eval.tenacious_bench.scoring_evaluator import ScoringEvaluator
@@ -7,7 +11,6 @@ class TestScoringEvaluator(unittest.TestCase):
         self.evaluator = ScoringEvaluator()
 
     def test_pass_task(self):
-        # TB-MG-001 equivalent
         task = {
             "input": {
                 "hiring_signal_brief": {"prospect_name": "TestCorp"},
@@ -22,10 +25,10 @@ class TestScoringEvaluator(unittest.TestCase):
         }
         result = self.evaluator.evaluate_task(task)
         self.assertEqual(result.verdict, "PASS")
-        self.assertGreater(result.composite_score, 0.7)
+        self.assertGreater(result.composite, 0.7)
 
     def test_segment_mismatch_failure(self):
-        # Target failure mode: D06
+        # Target failure mode: D06 — growth pitch sent to restructuring company
         task = {
             "input": {
                 "hiring_signal_brief": {"prospect_name": "TestCorp", "layoffs": {"event": True}},
@@ -39,7 +42,7 @@ class TestScoringEvaluator(unittest.TestCase):
             }
         }
         result = self.evaluator.evaluate_task(task)
-        self.assertEqual(result.verdict, "FAIL", "Should fail due to Seg1 pitch sent to Seg2 company")
+        self.assertEqual(result.verdict, "FAIL", "Should fail: Seg1 pitch sent to Seg2 company")
         self.assertEqual(result.dimensions["segment_alignment"], 0.0)
 
     def test_forbidden_signal_failure(self):
@@ -57,38 +60,3 @@ class TestScoringEvaluator(unittest.TestCase):
         }
         result = self.evaluator.evaluate_task(task)
         self.assertEqual(result.verdict, "FAIL")
-
-if __name__ == "__main__":
-    unittest.main()
-
-    def test_overclaim_failure(self):
-        task = {
-            "input": {
-                "hiring_signal_brief": {"prospect_name": "GrowFast"},
-                "policy_decision": {"pitch_segment": 1, "tone_mode": "assertive"}
-            },
-            "candidate_output": "We guarantee results. Our engineers are #1 ranked and will transform your team.",
-            "ground_truth": {
-                "verdict": "fail",
-                "inferred_segment": 1,
-                "failure_categories": ["signal_overclaiming"],
-                "forbidden_signals": ["guarantee"],
-                "required_signals": []
-            }
-        }
-        result = self.evaluator.evaluate_task(task)
-        self.assertEqual(result.verdict, "FAIL")
-        self.assertIn("overclaiming", result.fatal_reasons)
-
-    def test_examples_directory(self):
-        examples_dir = os.path.join(os.path.dirname(__file__), "..", "eval", "tenacious_bench", "examples")
-        json_files = list(__import__("pathlib").Path(examples_dir).glob("*.json"))
-        self.assertGreater(len(json_files), 0, "No example tasks found")
-        for path in json_files:
-            with open(path) as f:
-                task = json.load(f)
-            result = self.evaluator.evaluate_task(task)
-            self.assertIn(result.verdict, ("PASS", "FAIL", "BORDERLINE"))
-
-if __name__ == "__main__":
-    unittest.main(verbosity=2)

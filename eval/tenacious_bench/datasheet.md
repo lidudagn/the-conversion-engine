@@ -10,7 +10,7 @@
 
 ## Telescopic Summary (Pushkarna et al. — top-level overview)
 
-Tenacious-Bench v0.1 is a 198-task evaluation dataset for B2B outbound sales AI. It targets ten failure categories specific to Tenacious Consulting's four-segment ICP model (Growth, Restructuring, Enterprise, AI Maturity). The benchmark is designed so that a generic τ²-Bench-tuned agent cannot achieve competitive scores — tasks are adversarially constructed to defeat keyword-matching and tool-sequencing evaluators. All tasks are scored deterministically via `scoring_evaluator.py`.
+Tenacious-Bench v0.1 is a 202-task evaluation dataset for B2B outbound sales AI. It targets ten failure categories specific to Tenacious Consulting's four-segment ICP model (Growth, Restructuring, Enterprise, AI Maturity). The benchmark is designed so that a generic τ²-Bench-tuned agent cannot achieve competitive scores — tasks are adversarially constructed to defeat keyword-matching and tool-sequencing evaluators. All tasks are scored deterministically via `scoring_evaluator.py`.
 
 ---
 
@@ -35,36 +35,36 @@ No public benchmark evaluates B2B outbound sales agents against segment-specific
 ### Periscopic Detail (Pushkarna et al. — contextual layer)
 
 **How many instances are there?**
-198 tasks total.
-- Train: 98 (49.5%)
-- Dev: 50 (25.3%)
-- Held-out test: 50 (25.3%)
+202 tasks total.
+- Train: 102 (50.5%)
+- Dev: 50 (24.8%)
+- Held-out test: 50 (24.8%)
 
-*Note: The initial target split was 50%/30%/20%. The final split reflects contamination remediation — 5 near-duplicate training tasks were removed, and 3 held-out tasks with genuine semantic overlap were swapped with clean dev tasks. The result is a 50/25/25 split. Held-out partition is sealed and gitignored from training scripts.*
+*Note: The initial target split was 50%/30%/20%. The final split reflects contamination remediation — 5 near-duplicate training tasks were removed, 3 held-out tasks with genuine semantic overlap were swapped with clean dev tasks, and 4 hand-authored adversarial tasks were added to secure the 200 minimum threshold. The result is a 50.5/24.8/24.8 split. Held-out partition is sealed and gitignored from training scripts.*
 
 **Authoring mode distribution:**
 | Mode | Count | Share | Description |
 |---|---|---|---|
-| LLM Synthesis | 96 | 48.5% | Multi-LLM generation via OpenRouter (GPT-4o-mini generate, Llama-3.1-70B judge) |
-| Hand-Authored Adversarial | 38 | 19.2% | Human-crafted to defeat baseline keyword filters |
-| Programmatic | 62 | 31.3% | Combinatorial parameter sweeps across 10 failure categories |
+| LLM Synthesis | 97 | 48.0% | Multi-LLM generation via OpenRouter (GPT-4o-mini generate, Llama-3.1-70B judge) |
+| Hand-Authored Adversarial | 40 | 19.8% | Human-crafted to defeat baseline keyword filters |
+| Programmatic | 63 | 31.2% | Combinatorial parameter sweeps across 10 failure categories |
 | Trace-Derived | 2 | 1.0% | Extracted from production execution logs (trace IDs 11, 34) |
 
 **Category distribution:**
 | Category | Count | Probe IDs |
 |---|---|---|
-| tone_guard | 123 | D01-D08, F01-F03 |
+| tone_guard | 126 | D01-D08, F01-F03 |
 | composer | 24 | J01-J04 |
 | enrichment | 7 | A01-A10 |
 | icp_boundary | 8 | B01-B04, H01-H04 |
 | signal_overclaiming | 7 | I01-I03 |
 | tone_drift | 6 | — |
 | integration | 7 | M01-M04 |
-| policy | 6 | C01-C07 |
+| policy | 7 | C01-C07 |
 | icp_misclassification | 5 | — |
 | injection | 5 | E01-E05 |
 
-**Difficulty distribution:** easy 11%, medium 64%, hard 12%, adversarial 14%.
+**Difficulty distribution:** easy 11%, medium 64%, hard 11%, adversarial 14%.
 
 **What does each instance consist of?**
 - `input`: A `hiring_signal_brief` (structured prospect signals: funding, layoffs, AI maturity, open roles, company size) and a `policy_decision` (segment routing 1-4, tone mode, assertable vs. question vs. omit signals, bench match status).
@@ -91,9 +91,9 @@ Yes. All inputs are generated from the Tenacious style guide, bench summary, and
 **How was the data acquired?**
 Using a four-mode authoring pipeline:
 
-1. **Programmatic (65 tasks):** `scripts/generate_programmatic.py` — Combinatorial expansion across 10 failure categories. Each category has 3-15 seed cases parameterized by segment (1-4), tone mode (assertive/suggestive/exploratory), company name, signal type, and difficulty. Fixed random seed 42 ensures full reproducibility.
+1. **Programmatic (63 tasks):** `scripts/generate_programmatic.py` — Combinatorial expansion across 10 failure categories. Each category has 3-15 seed cases parameterized by segment (1-4), tone mode (assertive/suggestive/exploratory), company name, signal type, and difficulty. Fixed random seed 42 ensures full reproducibility.
 
-2. **LLM Synthesis (96 tasks):** `scripts/generate_synthetic.py` and `scripts/generate_supplemental.py` — Routed via OpenRouter. Generation model: `openai/gpt-4o-mini`. Judge/quality-filter model: `meta-llama/llama-3.1-70b-instruct` (strict family separation per Li et al. 2025 preference leakage prevention). Each generated task carries `metadata.generation_model` and `metadata.judge_model` for full traceability.
+2. **LLM Synthesis (97 tasks):** `scripts/generate_synthetic.py` and `scripts/generate_supplemental.py` — Routed via OpenRouter. Generation model: `openai/gpt-4o-mini`. Judge/quality-filter model: `meta-llama/llama-3.1-70b-instruct` (strict family separation per Li et al. 2025 preference leakage prevention). Each generated task carries `metadata.generation_model` and `metadata.judge_model` for full traceability.
 
 3. **Hand-Authored Adversarial (40 tasks):** `scripts/hand_authored_adversarial.py` — Human-crafted to defeat the baseline keyword-based ToneGuard. Includes subtle cross-signal contradictions (D06 variants), injection via prospect name fields (E01-E05), and multi-turn context leakage (K01-K02).
 
