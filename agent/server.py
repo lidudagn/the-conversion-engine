@@ -185,10 +185,10 @@ async def generate_outreach(req: OutreachRequest):
         from agent.enrichment.ai_maturity import AIMaturityResult
         ai_data = brief.ai_maturity
         ai_result = AIMaturityResult(
-            score=ai_data.get("score", 0),
-            confidence=ai_data.get("confidence", "low"),
-            uncertainty_reason=ai_data.get("uncertainty_reason", ""),
-            language_constraint=ai_data.get("language_constraint", "must_use_question_language"),
+            score=getattr(ai_data, "score", 0),
+            confidence=getattr(ai_data, "confidence", "low"),
+            uncertainty_reason=getattr(ai_data, "uncertainty_reason", ""),
+            language_constraint=getattr(ai_data, "language_constraint", "must_use_question_language"),
         )
 
         icp_data = brief.icp_segment
@@ -246,9 +246,9 @@ async def generate_outreach(req: OutreachRequest):
         hs_result = hubspot.create_or_update_contact(
             email=to_email,
             company=req.company_name,
-            icp_segment=icp_data.get("primary"),
-            icp_confidence=icp_data.get("confidence"),
-            ai_maturity_score=ai_data.get("score"),
+            icp_segment=getattr(icp_data, "primary", None),
+            icp_confidence=getattr(icp_data, "confidence", None),
+            ai_maturity_score=getattr(ai_data, "score", None),
             enrichment_timestamp=datetime.now().isoformat(),
         )
 

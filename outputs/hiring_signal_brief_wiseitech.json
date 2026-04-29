@@ -1,36 +1,45 @@
 {
   "prospect_name": "WISEiTECH",
-  "prospect_domain": null,
+  "prospect_domain": "wisetech.io",
   "crunchbase_id": "https://www.crunchbase.com/organization/wiseitech",
   "funding": {
+    "source": "crunchbase",
+    "fetched_at": "2026-04-26T00:38:46.960733",
+    "confidence": "low",
     "event": null,
     "date": "",
     "total_usd": null,
-    "type": "",
-    "confidence": "low",
-    "source": "crunchbase"
+    "type": ""
   },
   "job_velocity": {
+    "source": "job_posts",
+    "fetched_at": "2026-04-26T00:38:46.960733",
+    "confidence": "high",
     "open_roles": 10,
-    "60d_change": "-40%",
-    "ai_roles_fraction": 0.6,
-    "confidence": "high"
+    "sixty_day_change": "-40%",
+    "ai_roles_fraction": 0.6
   },
   "layoffs": {
+    "source": "layoffs_fyi",
+    "fetched_at": "2026-04-26T00:38:46.960733",
+    "confidence": "high",
     "event": false,
     "headcount": 0,
-    "most_recent": null,
-    "confidence": "high"
+    "most_recent": null
   },
   "leadership": {
+    "source": "crunchbase",
+    "fetched_at": "2026-04-26T00:38:46.960733",
+    "confidence": "low",
     "new_cto": null,
     "new_vp_eng": null,
-    "has_recent_change": false,
-    "confidence": "low"
+    "has_recent_change": false
   },
   "ai_maturity": {
-    "score": 2,
+    "source": "derived",
+    "fetched_at": "2026-04-26T00:38:46.960733",
     "confidence": "medium",
+    "score": 2,
     "uncertainty_reason": "Score 2 from high-weight signals but lacking confirmation from additional sources. Some uncertainty remains.",
     "language_constraint": "should_hedge",
     "has_ai_leadership": false
@@ -58,5 +67,5 @@
     }
   ],
   "competitor_gap_brief_ref": "competitor_gap_brief.json",
-  "generated_at": "2026-04-25T17:35:38.884737"
+  "generated_at": "2026-04-26T00:38:46.960996"
 }

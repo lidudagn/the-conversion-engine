@@ -1,0 +1,384 @@
+{
+  "signal_grounded_summary": {
+    "n": 30,
+    "replies": 1,
+    "reply_rate_pct": 3.3,
+    "rows": [
+      {
+        "icp": 0.85,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 1.0,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.85,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 1.0,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.8,
+        "ai_m": 0,
+        "tone": "suggestive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.85,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 1.0,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.8,
+        "ai_m": 0,
+        "tone": "suggestive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.72,
+        "ai_m": 1,
+        "tone": "suggestive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.85,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 1.0,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.8,
+        "ai_m": 0,
+        "tone": "suggestive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.75,
+        "ai_m": 0,
+        "tone": "suggestive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.8,
+        "ai_m": 2,
+        "tone": "suggestive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 7,
+        "decision": "REPLY"
+      },
+      {
+        "icp": 0.85,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 1.0,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 0,
+        "tone": "assertive",
+        "score": 2,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.8,
+        "ai_m": 0,
+        "tone": "suggestive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.75,
+        "ai_m": 0,
+        "tone": "suggestive",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.8,
+        "ai_m": 2,
+        "tone": "suggestive",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.9,
+        "ai_m": 2,
+        "tone": "assertive",
+        "score": 7,
+        "decision": "IGNORE"
+      }
+    ]
+  },
+  "exploratory_summary": {
+    "n": 22,
+    "replies": 0,
+    "reply_rate_pct": 0.0,
+    "rows": [
+      {
+        "icp": 0.6,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 3,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      },
+      {
+        "icp": 0.5,
+        "ai_m": 2,
+        "tone": "exploratory",
+        "score": 0,
+        "decision": "IGNORE"
+      }
+    ]
+  },
+  "delta_pp": 3.3,
+  "model": "anthropic/claude-3-5-haiku",
+  "seed": 42,
+  "methodology": "LLM judge (anthropic/claude-3-5-haiku) roleplays as tech exec (100+ cold emails/week, 5-10% reply rate). Scores 1-10, REPLY if score>=6. Built from policy_trace.jsonl signals (n=52). seed=42. Synthetic simulation \u2014 not live prospect data."
+}
