@@ -1,0 +1,43 @@
+{
+    "task_id": "TB-PASS-001",
+    "category": "composer",
+    "difficulty": "easy",
+    "authoring_mode": "hand_authored",
+    "input": {
+        "hiring_signal_brief": {
+            "prospect_name": "GrowthCorp",
+            "funding": {
+                "total_usd": 20000000,
+                "type": "Series A",
+                "date": "2026-03-15"
+            }
+        },
+        "policy_decision": {
+            "pitch_segment": 1,
+            "tone_mode": "assertive",
+            "assertable_signals": [
+                "funding"
+            ],
+            "bench_match": true
+        }
+    },
+    "candidate_output": "Hi! I saw GrowthCorp recently closed a $20M Series A. Helping companies scale engineering velocity during high-growth phases is our core focus. We have a dedicated bench of 35+ engineers ready to support your Q3 product milestones.",
+    "ground_truth": {
+        "verdict": "pass",
+        "failure_categories": [],
+        "inferred_segment": 1,
+        "rationale": "Appropriate Seg1 pitch grounded in recent funding signal."
+    },
+    "scoring": {
+        "segment_alignment": 1.0,
+        "signal_grounding": 1.0,
+        "tone_compliance": 1.0,
+        "honesty_constraint": 1.0,
+        "style_guide_match": 0.9,
+        "composite_score": 0.98
+    },
+    "metadata": {
+        "author": "Antigravity",
+        "created_at": "2026-04-28T20:30:00Z"
+    }
+}

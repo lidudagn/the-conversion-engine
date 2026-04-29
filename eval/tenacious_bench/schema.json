@@ -1,0 +1,289 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Tenacious-Bench Task",
+    "description": "A single evaluation task for the Tenacious Conversion Engine benchmark.",
+    "type": "object",
+    "required": [
+        "task_id",
+        "category",
+        "difficulty",
+        "authoring_mode",
+        "input",
+        "candidate_output",
+        "ground_truth",
+        "scoring",
+        "metadata"
+    ],
+    "properties": {
+        "task_id": {
+            "type": "string",
+            "pattern": "^TB-[A-Z]\\d{2}-\\d{3}$",
+            "description": "Unique task identifier. Format: TB-{Category}{Number}-{Sequence}"
+        },
+        "category": {
+            "enum": [
+                "enrichment",
+                "icp_boundary",
+                "policy",
+                "tone_guard",
+                "injection",
+                "integration",
+                "composer",
+                "icp_misclassification",
+                "signal_overclaiming",
+                "tone_drift"
+            ],
+            "description": "Maps to the 10 failure categories in failure_taxonomy.md"
+        },
+        "subcategory": {
+            "type": "string",
+            "description": "Specific probe ID or sub-failure (e.g. 'wrong_segment_pitch', 'guarantee_overclaim')"
+        },
+        "difficulty": {
+            "enum": [
+                "easy",
+                "medium",
+                "hard",
+                "adversarial"
+            ],
+            "description": "easy=single clear signal; medium=2-3 signals mild ambiguity; hard=conflicting signals; adversarial=designed to trick D06"
+        },
+        "authoring_mode": {
+            "enum": [
+                "trace_derived",
+                "programmatic",
+                "llm_synthesis",
+                "hand_authored"
+            ],
+            "description": "How this task was created. Used for performance-by-mode analysis."
+        },
+        "input": {
+            "type": "object",
+            "required": [
+                "hiring_signal_brief",
+                "policy_decision"
+            ],
+            "properties": {
+                "hiring_signal_brief": {
+                    "type": "object",
+                    "description": "Subset of hiring_signal_brief.schema.json fields relevant to this task"
+                },
+                "policy_decision": {
+                    "type": "object",
+                    "required": [
+                        "pitch_segment",
+                        "tone_mode"
+                    ],
+                    "properties": {
+                        "pitch_segment": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                null
+                            ]
+                        },
+                        "tone_mode": {
+                            "enum": [
+                                "assertive",
+                                "suggestive",
+                                "exploratory"
+                            ]
+                        },
+                        "assertable_signals": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "question_signals": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "omit_signals": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "bench_match": {
+                            "type": "boolean"
+                        },
+                        "use_competitor_gap": {
+                            "type": "boolean"
+                        },
+                        "gap_delivery_mode": {
+                            "enum": [
+                                "direct",
+                                "soft"
+                            ]
+                        },
+                        "abstain": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "competitor_gap_brief": {
+                    "type": [
+                        "object",
+                        "null"
+                    ]
+                },
+                "prospect_reply": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "turn_number": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0
+                }
+            }
+        },
+        "candidate_output": {
+            "type": "string",
+            "description": "The agent-generated email draft to be evaluated"
+        },
+        "ground_truth": {
+            "type": "object",
+            "required": [
+                "verdict",
+                "failure_categories",
+                "inferred_segment"
+            ],
+            "properties": {
+                "verdict": {
+                    "enum": [
+                        "pass",
+                        "fail",
+                        "borderline"
+                    ]
+                },
+                "failure_categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of triggered failure categories (empty for pass)"
+                },
+                "inferred_segment": {
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
+                    "description": "The correct segment derived from the hiring_signal_brief signals"
+                },
+                "correct_tone_mode": {
+                    "enum": [
+                        "assertive",
+                        "suggestive",
+                        "exploratory"
+                    ]
+                },
+                "forbidden_signals": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "required_signals": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "rationale": {
+                    "type": "string"
+                }
+            }
+        },
+        "scoring": {
+            "type": "object",
+            "description": "Expected scores per dimension (ground truth for evaluator validation)",
+            "properties": {
+                "segment_alignment": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "signal_grounding": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "tone_compliance": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "honesty_constraint": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "style_guide_match": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "composite_score": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                }
+            }
+        },
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "source_trace_id": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_probe_id": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "author": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "judge_model": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "generation_model": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "additional": {
+                    "type": "object",
+                    "description": "Freeform for future fields"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-29T20:52:33.073165",
+  "checks": {
+    "time_shift": {
+      "status": "pass",
+      "violations": []
+    },
+    "ngram_overlap": {
+      "status": "pass",
+      "violations": []
+    },
+    "embedding_similarity": {
+      "status": "skipped",
+      "message": "sentence-transformers not installed. Skipping embedding check."
+    }
+  }
+}

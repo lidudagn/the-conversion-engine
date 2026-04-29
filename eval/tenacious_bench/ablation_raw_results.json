@@ -1,0 +1,548 @@
+[
+  {
+    "task_id": "TB-D06-ADV002",
+    "source": "held_out",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "REASONING_FAILURE",
+    "rule_flags": [
+      "segment_alignment"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "REASONING_FAILURE",
+    "trained_rationale": "Pitching growth to a company undergoing layoffs"
+  },
+  {
+    "task_id": "TB-D06-ADV001",
+    "source": "held_out",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The outreach is assertive, relevant to the prospect's legacy stack, and accurately pitches the correct segment."
+  },
+  {
+    "task_id": "TB-SY-PG006",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG003",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STYLE_VIOLATION",
+    "rule_flags": [
+      "banned_phrase:leverage"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG008",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG000",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG005",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content"
+  },
+  {
+    "task_id": "TB-SY-PG007",
+    "source": "held_out",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Insufficient information to evaluate against Signal Rules"
+  },
+  {
+    "task_id": "TB-SY-PG001",
+    "source": "held_out",
+    "expected_verdict": "APPROPRIATE",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG004",
+    "source": "held_out",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG005",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content"
+  },
+  {
+    "task_id": "TB-SY-PG007",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined without the actual Candidate Outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG002",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG008",
+    "source": "held_out",
+    "expected_verdict": "APPROPRIATE",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason, but the Candidate Outreach is empty, which is likely to be a style violation."
+  },
+  {
+    "task_id": "TB-SY-PG000",
+    "source": "held_out",
+    "expected_verdict": "PASS",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STYLE_VIOLATION",
+    "rule_flags": [
+      "banned_phrase:supercharge"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG003",
+    "source": "held_out",
+    "expected_verdict": "SUPPORTIVE",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG007",
+    "source": "held_out",
+    "expected_verdict": "APPROVE",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason can be determined due to lack of candidate outreach content."
+  },
+  {
+    "task_id": "TB-SY-PG002",
+    "source": "held_out",
+    "expected_verdict": "NEUTRAL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason, but the Candidate Outreach is empty."
+  },
+  {
+    "task_id": "TB-SY-PG005",
+    "source": "held_out",
+    "expected_verdict": "APPROVE",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STYLE_VIOLATION",
+    "rule_flags": [
+      "banned_phrase:leverage"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "No specific reason, but the Candidate Outreach is empty"
+  },
+  {
+    "task_id": "SG-GOOD-01",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The outreach is well-structured, relevant to the signal, and free of banned phrases and condescending tone."
+  },
+  {
+    "task_id": "SG-GOOD-02",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The email is well-structured, empathetic, and relevant to the company's current situation, without using banned phrases or making false claims."
+  },
+  {
+    "task_id": "SG-GOOD-03",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "ERROR",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "Outreach is well-structured, relevant to the signal, and free of banned phrases and condescending tone."
+  },
+  {
+    "task_id": "SG-GOOD-04",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The email is well-structured, free of banned phrases, and pitches the correct segment with a clear value proposition."
+  },
+  {
+    "task_id": "SG-GOOD-05",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "Outreach is concise, relevant, and respectful, with no banned phrases or condescending tone."
+  },
+  {
+    "task_id": "SG-GOOD-06",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "Cold PDF approach"
+  },
+  {
+    "task_id": "SG-GOOD-07",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The email is a warm reply, provides specific and relevant information, and does not contain any banned phrases or condescending tone."
+  },
+  {
+    "task_id": "SG-GOOD-08",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STRUCTURAL_VIOLATION",
+    "rule_flags": [
+      "multi_ask"
+    ],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The email is well-structured, respectful, and relevant to the candidate's situation, without any banned phrases or condescending tone."
+  },
+  {
+    "task_id": "SG-GOOD-09",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "Outreach is transparent, responsible, and respectful."
+  },
+  {
+    "task_id": "SG-GOOD-10",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "Outreach is well-structured, respectful, and relevant to the company's funding event and segment."
+  },
+  {
+    "task_id": "SG-GOOD-11",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "REASONING_FAILURE",
+    "rule_flags": [
+      "segment_alignment"
+    ],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "Outreach is a warm intro with a clear and relevant connection, and a single ask that is contingent on the recipient's roadmap."
+  },
+  {
+    "task_id": "SG-GOOD-12",
+    "source": "expert",
+    "expected_verdict": "PASS",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The email is a warm nurture follow-up, provides relevant information, and does not contain any banned phrases or structural issues."
+  },
+  {
+    "task_id": "SG-BAD-01",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "REASONING_FAILURE",
+    "rule_flags": [
+      "banned_phrase:world-class,gold standard,top talent",
+      "segment_alignment"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Uses banned phrases 'world-class' and 'top talent'."
+  },
+  {
+    "task_id": "SG-BAD-02",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STYLE_VIOLATION",
+    "rule_flags": [
+      "banned_phrase:quick question,skyrocket,top talent"
+    ],
+    "base_verdict": "PASS",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Uses banned phrase 'skyrocket' and 'top talent'"
+  },
+  {
+    "task_id": "SG-BAD-03",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "SEMANTIC_FALSEHOOD",
+    "trained_rationale": "Overcommitting the bench with unrealistic delivery timeline"
+  },
+  {
+    "task_id": "SG-BAD-04",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STYLE_VIOLATION",
+    "rule_flags": [
+      "banned_phrase:world-class"
+    ],
+    "base_verdict": "PASS",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Uses banned phrase 'world-class'"
+  },
+  {
+    "task_id": "SG-BAD-05",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Condescending tone, implying the recipient is not interested without giving them a chance to respond"
+  },
+  {
+    "task_id": "SG-BAD-06",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STYLE_VIOLATION",
+    "rule_flags": [
+      "banned_phrase:ecosystem,synergize,world-class,i hope this email finds you well,quick chat"
+    ],
+    "base_verdict": "ERROR",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Email contains banned phrases 'hope this finds you well' and 'world-class', and is also condescending in tone."
+  },
+  {
+    "task_id": "SG-BAD-07",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STYLE_VIOLATION",
+    "trained_rationale": "Uses high-pressure language ('Do not miss out on this') which can be seen as condescending."
+  },
+  {
+    "task_id": "SG-BAD-08",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "REASONING_FAILURE",
+    "rule_flags": [
+      "segment_alignment"
+    ],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The outreach is well-structured, relevant to the segment, and free of banned phrases and condescending tone."
+  },
+  {
+    "task_id": "SG-BAD-09",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "STRUCTURAL_VIOLATION",
+    "rule_flags": [
+      "cold_pdf"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "Cold PDF approach with multiple asks (review attachment and schedule call)"
+  },
+  {
+    "task_id": "SG-BAD-10",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "REASONING_FAILURE",
+    "rule_flags": [
+      "multi_ask",
+      "segment_alignment"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "FAIL",
+    "trained_failure_type": "STRUCTURAL_VIOLATION",
+    "trained_rationale": "Multiple asks in a single email"
+  },
+  {
+    "task_id": "SG-BAD-11",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "FAIL",
+    "rule_failure_type": "REASONING_FAILURE",
+    "rule_flags": [
+      "segment_alignment"
+    ],
+    "base_verdict": "FAIL",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The email is a follow-up to a previous call, provides a clear quote and contract details, and does not contain any banned phrases or condescending tone."
+  },
+  {
+    "task_id": "SG-BAD-12",
+    "source": "expert",
+    "expected_verdict": "FAIL",
+    "rule_verdict": "PASS",
+    "rule_failure_type": null,
+    "rule_flags": [],
+    "base_verdict": "PASS",
+    "trained_verdict": "PASS",
+    "trained_failure_type": null,
+    "trained_rationale": "The outreach is well-structured, relevant to the funding event signal, and does not contain any banned phrases or condescending tone."
+  }
+]
