@@ -1,0 +1,8 @@
+INFO:     Started server process [92886]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Loaded 1000 companies from Crunchbase ODM
+Loaded 4360 layoff events
+Loaded 181 job posts from frozen dataset
+INFO:     127.0.0.1:35958 - "POST /outreach HTTP/1.1" 200 OK
