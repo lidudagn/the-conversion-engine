@@ -1,0 +1,30 @@
+[
+    {
+        "timestamp": "2026-04-28-T20:00:00Z",
+        "bucket": "inference",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "synthetic_task_generation",
+        "cost_usd": 0.12
+    },
+    {
+        "timestamp": "2026-04-28T21:00:00Z",
+        "bucket": "inference",
+        "model": "meta-llama/llama-3.1-70b-instruct",
+        "purpose": "synthetic_task_audit",
+        "cost_usd": 0.35
+    },
+    {
+        "timestamp": "2026-04-29T18:30:00Z",
+        "bucket": "inference",
+        "model": "supplemental_generation",
+        "purpose": "edge_case_synthesis",
+        "cost_usd": 0.05
+    },
+    {
+        "timestamp": "2026-04-29T19:50:00Z",
+        "bucket": "storage",
+        "model": "native",
+        "purpose": "dataset_partitioning_and_storage",
+        "cost_usd": 0.00
+    }
+]

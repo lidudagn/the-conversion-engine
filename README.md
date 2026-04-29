@@ -190,3 +190,65 @@ A prioritised list for the next engineer picking this up.
 3. **Signal Usage Contract** — The composer can only reference signals classified as assertable or question by the policy engine.
 4. **Contradiction Detection** — Cross-signal contradictions make outreach feel like research findings, not pitches.
 5. **Bench Gate Enforcement** — The agent never commits capacity the bench summary doesn't show. Escalates to human.
+
+---
+
+## Week 11: Tenacious-Bench v0.1
+
+### Status
+
+| Deliverable | Status | Location |
+|---|---|---|
+| Audit Memo (600 words, 5 trace IDs, 8+ probe IDs) | ✅ Complete | [audit_memo.md](audit_memo.md) |
+| Schema JSON (10 categories, 4 authoring modes) | ✅ Complete | [eval/tenacious_bench/schema.json](eval/tenacious_bench/schema.json) |
+| Scoring Evaluator (4-layer, fatal gates, composite) | ✅ Complete | [eval/tenacious_bench/scoring_evaluator.py](eval/tenacious_bench/scoring_evaluator.py) |
+| Dataset (198 tasks, 3 partitions) | ✅ Complete | [eval/tenacious_bench/pilot_50/splits/](eval/tenacious_bench/pilot_50/splits/) |
+| Contamination Check (all 3 checks passing) | ✅ Pass | [contamination_check.json](eval/tenacious_bench/pilot_50/contamination_check.json) |
+| Datasheet (Gebru + Pushkarna, CC-BY-4.0) | ✅ Complete | [eval/tenacious_bench/datasheet.md](eval/tenacious_bench/datasheet.md) |
+| Inter-Rater Agreement (30 tasks, 2 raters, 24h re-label) | ✅ Complete | [eval/tenacious_bench/inter_rater_agreement.md](eval/tenacious_bench/inter_rater_agreement.md) |
+| Synthesis Memos (4 common papers, 400-500 words each) | ✅ Complete | [synthesis_memos/](synthesis_memos/) + [memos/](memos/) |
+| Methodology (Path B, trace IDs, paper citations) | ✅ Complete | [methodology.md](methodology.md) |
+| Generation Scripts (reproducible, seeded) | ✅ Complete | [scripts/](scripts/) |
+| Path B training data (preference pairs) | ✅ Complete | [eval/tenacious_bench/training_data/pairs.jsonl](eval/tenacious_bench/training_data/pairs.jsonl) |
+| Training run (Acts III-V) | ⏳ Pending (Days 4-7) | — |
+| HuggingFace publication | ⏳ Pending (Day 7) | — |
+
+### The Semantic Alignment Gap
+The Conversion Engine passed τ²-Bench (retail baseline, 72.67% pass@1) but failed internal audits (e.g., Probe D06: Wrong-Segment Pitch) due to the "Semantic Alignment Gap" — the inability of keyword filters to catch contextually tone-deaf B2B outreach. The **Tenacious-Bench** closes this by establishing a rigorous, machine-verifiable evaluation harness for preference-tuned judges.
+
+### Key Resources
+- **[Audit Memo](audit_memo.md)** — gap analysis of baseline failures, citing trace IDs 1, 11, 34, 66, 76, 92 and probes D06, H01-H10, I01-I03, E01-E05.
+- **[Methodology](methodology.md)** — Path B justification (Rafailov et al. DPO + Kim et al. Prometheus 2), judge rotation policy, contamination remediation log.
+- **[Datasheet](eval/tenacious_bench/datasheet.md)** — CC-BY-4.0, Gebru 7-section + Pushkarna telescopic/periscopic/microscopic layers.
+- **[Synthesis Memos](synthesis_memos/)** + **[Common Memos](memos/)** — 4 papers (Liu et al., Gebru/Pushkarna, Chen et al., Gu et al.) each with specific disagreement and evidence.
+- **[Failure Taxonomy](probes/failure_taxonomy.md)** — the 10 failure categories tested.
+- **[Generation Scripts](scripts/)** — reproducible authoring code with model routes, judge prompts, dedup logic, and contamination check.
+
+### Dataset Structure (`eval/tenacious_bench/pilot_50/splits/`)
+- **Total Tasks: 198** (after contamination remediation: 5 near-duplicate train tasks removed, 3 held-out tasks replaced with clean dev tasks)
+- `train.jsonl` — **98 tasks** (49.5%)
+- `dev.jsonl` — **50 tasks** (25.3%)
+- `held_out.jsonl` — **50 tasks** (25.3%, sealed test set)
+- Contamination: ✅ All checks pass (n-gram PASS, embedding PASS, time-shift PASS)
+- Schema: 10 failure categories × 4 authoring modes (Hand 40, Synth 96, Programmatic 65, Trace 2)
+
+### Running the Evaluator
+```bash
+# Score example tasks (from repo root)
+python eval/tenacious_bench/scoring_evaluator.py
+
+# Run evaluator unit tests
+python scripts/test_evaluator.py
+
+# Run contamination check
+python scripts/contamination_check.py
+
+# Validate schema compliance (requires: pip install jsonschema)
+python scripts/validate_schema.py
+```
+
+### What Is Next (Acts III–V)
+1. **Day 4**: Read Path B papers (Rafailov DPO, Kim Prometheus 2, Li Preference Leakage). Format training data from `training_data/pairs.jsonl`.
+2. **Day 5**: Training run — LoRA on Qwen 2.5 0.5B via Unsloth on Colab T4 (free). Log loss curves.
+3. **Day 5-6**: Ablations — Delta A (trained vs baseline on held_out), Delta B (trained vs prompt-engineered on same backbone), cost-Pareto.
+4. **Day 7**: Publish to HuggingFace, write blog post, community engagement (GitHub issue on τ²-Bench repo).
