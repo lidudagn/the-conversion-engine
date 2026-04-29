@@ -228,7 +228,7 @@ A prioritised list for the next engineer picking this up.
 | Audit Memo (600 words, 5 trace IDs, 8+ probe IDs) | ✅ Complete | [audit_memo.md](audit_memo.md) |
 | Schema JSON (10 categories, 4 authoring modes) | ✅ Complete | [eval/tenacious_bench/schema.json](eval/tenacious_bench/schema.json) |
 | Scoring Evaluator (4-layer, fatal gates, composite) | ✅ Complete | [eval/tenacious_bench/scoring_evaluator.py](eval/tenacious_bench/scoring_evaluator.py) |
-| Dataset (198 tasks, 3 partitions) | ✅ Complete | [eval/tenacious_bench/pilot_50/splits/](eval/tenacious_bench/pilot_50/splits/) |
+| Dataset (202 tasks, 3 partitions) | ✅ Complete | [eval/tenacious_bench/pilot_50/splits/](eval/tenacious_bench/pilot_50/splits/) |
 | Contamination Check (all 3 checks passing) | ✅ Pass | [contamination_check.json](eval/tenacious_bench/pilot_50/contamination_check.json) |
 | Datasheet (Gebru + Pushkarna, CC-BY-4.0) | ✅ Complete | [eval/tenacious_bench/datasheet.md](eval/tenacious_bench/datasheet.md) |
 | Inter-Rater Agreement (30 tasks, 2 raters, 24h re-label) | ✅ Complete | [eval/tenacious_bench/inter_rater_agreement.md](eval/tenacious_bench/inter_rater_agreement.md) |
@@ -251,8 +251,8 @@ The Conversion Engine passed τ²-Bench (retail baseline, 72.67% pass@1) but fai
 - **[Generation Scripts](scripts/)** — reproducible authoring code with model routes, judge prompts, dedup logic, and contamination check.
 
 ### Dataset Structure (`eval/tenacious_bench/pilot_50/splits/`)
-- **Total Tasks: 198** (after contamination remediation: 5 near-duplicate train tasks removed, 3 held-out tasks replaced with clean dev tasks)
-- `train.jsonl` — **98 tasks** (49.5%)
+- **Total Tasks: 202** (after contamination remediation: 5 near-duplicate train tasks removed, 3 held-out tasks replaced with clean dev tasks, 4 adversarial tasks added to meet 200-task floor)
+- `train.jsonl` — **102 tasks** (50.5%)
 - `dev.jsonl` — **50 tasks** (25.3%)
 - `held_out.jsonl` — **50 tasks** (25.3%, sealed test set)
 - Contamination: ✅ All checks pass (n-gram PASS, embedding PASS, time-shift PASS)

@@ -88,10 +88,10 @@ A task is marked as **FAIL** regardless of composite score if any fatal constrai
 
 ### Partitioning Protocol
 
-- Total tasks: 198 (after contamination remediation)
-- Train: 98 (49.5%)
-- Dev: 50 (25.3%)
-- Held-out: 50 (25.3%)
+- Total tasks: 202 (after contamination remediation + 4 adversarial additions to meet 200-task floor)
+- Train: 102 (50.5%)
+- Dev: 50 (24.8%)
+- Held-out: 50 (24.8%)
 - Partition script: `scripts/merge_and_partition.py` with `random.seed(42)`
 - Contamination check: `scripts/contamination_check.py` — all checks pass (see `eval/tenacious_bench/pilot_50/contamination_check.json`)
 - Held-out partition is sealed and not included in training scripts
