@@ -1,0 +1,33 @@
+{
+  "test": "paired bootstrap",
+  "n_resamples": 10000,
+  "seed": 3407,
+  "comparisons": {
+    "delta_a_trained_vs_rule": {
+      "trained_accuracy": 0.74,
+      "rule_accuracy": 0.48,
+      "observed_delta": 0.26,
+      "p_value": 0.0127,
+      "significant_p05": true,
+      "ci_95_trained": [
+        0.62,
+        0.86
+      ]
+    },
+    "delta_a_trained_vs_prompt": {
+      "trained_accuracy": 0.74,
+      "prompt_accuracy": 0.22,
+      "observed_delta": 0.52,
+      "p_value": 0.0,
+      "significant_p05": true
+    },
+    "delta_b_rule_vs_prompt": {
+      "rule_accuracy": 0.48,
+      "prompt_accuracy": 0.22,
+      "observed_delta": 0.26,
+      "p_value": 0.5499,
+      "significant_p05": false,
+      "note": "Not significant at n=50 pilot size; indicative of effect only"
+    }
+  }
+}

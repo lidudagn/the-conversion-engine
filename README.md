@@ -273,8 +273,32 @@ python scripts/contamination_check.py
 python scripts/validate_schema.py
 ```
 
-### What Is Next (Acts III–V)
-1. **Day 4**: Read Path B papers (Rafailov DPO, Kim Prometheus 2, Li Preference Leakage). Format training data from `training_data/pairs.jsonl`.
-2. **Day 5**: Training run — LoRA on Qwen 2.5 0.5B via Unsloth on Colab T4 (free). Log loss curves.
-3. **Day 5-6**: Ablations — Delta A (trained vs baseline on held_out), Delta B (trained vs prompt-engineered on same backbone), cost-Pareto.
-4. **Day 7**: Publish to HuggingFace, write blog post, community engagement (GitHub issue on τ²-Bench repo).
+## Public Artifacts (Week 11 Final Submission)
+
+| Artifact | URL |
+|---|---|
+| HuggingFace Dataset | `<!-- ADD: https://huggingface.co/datasets/lidya7/tenacious-bench-v01 -->` |
+| HuggingFace Model (LoRA adapter) | https://huggingface.co/lidya7/tenacious-judge-lora-v1 |
+| Blog Post | `<!-- ADD: URL after publishing -->` |
+| Community Engagement | `<!-- ADD: GitHub issue URL on τ²-Bench repo -->` |
+
+## Evaluation Results Summary
+
+| Judge | Accuracy | 95% CI | p-value vs rule |
+|---|---|---|---|
+| **DPO trained judge (implicit reward)** | **74.0%** | [62%, 86%] | 0.0127 ✅ |
+| Rule evaluator (Delta B baseline) | 48.0% | [34%, 62%] | — |
+| Prompt judge — qwen3-8b zero-shot | 22.0% | [12%, 34%] | — |
+
+**Delta A = +26pp** over rule evaluator (p=0.0127, significant at p<0.05, paired bootstrap n=10,000).  
+**Delta B = +26pp** rule over prompt judge (p=0.5499, n.s. — sample size limitation, n=50).
+
+## Training
+
+- Adapter: `eval/tenacious_bench/judge_lora_v1/` (also on HF Hub: `lidya7/tenacious-judge-lora-v1`)
+- Backbone: `Qwen/Qwen2.5-0.5B-Instruct`, LoRA r=16, α=32, β=0.1
+- Data: 279 preference pairs (`eval/tenacious_bench/training_data/pairs_v2.jsonl`)
+- Hardware: Google Colab T4, ~47 min
+- Loss: 1.6659 → 0.0089 (converged)
+- Full hyperparameters: `training/hyperparameters.json`
+- Training log: `training/training_run.log`

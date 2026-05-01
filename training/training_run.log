@@ -1,0 +1,18 @@
+=== Real DPO Training Run — 2026-05-01 ===
+Script:   pure PyTorch DPO (no unsloth — Colab torchao incompatibility)
+Model:    Qwen/Qwen2.5-0.5B-Instruct
+LoRA:     r=16, alpha=32, target_modules=q/k/v/o/gate/proj
+Data:     279 preference pairs (eval/tenacious_bench/training_data/pairs_v2.jsonl)
+Epochs:   3  |  batch=2  |  grad_accum=8  |  lr=2e-5  |  beta=0.1  |  seed=3407
+Hardware: Google Colab T4 (15.6 GB)
+Trainable: 8,798,208 / 502,830,976 params (1.75%)
+
+Loss curve (converged):
+  Epoch 1 step 10/52: 1.6659
+  Epoch 2 step 20/52: 0.2237
+  Epoch 2 step 30/52: 0.3866
+  Epoch 3 step 40/52: 0.0566
+  Epoch 3 step 50/52: 0.0089
+
+Adapter: eval/tenacious_bench/judge_lora_v1/
+HF Hub:  lidya7/tenacious-judge-lora-v1
