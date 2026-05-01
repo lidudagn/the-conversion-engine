@@ -12,7 +12,7 @@
     "estimated_cost_usd": 0.01,
     "note_delta_a": "Delta A (LoRA-trained judge vs baseline) requires GPU training. Run scripts/train_judge_lora.py in Google Colab T4, then scripts/run_ablation.py. The training script and preference pairs (eval/tenacious_bench/training_data/pairs_v2.jsonl) are complete and ready.",
     "key_findings": {
-      "prompt_judge_pass_rate": "100% — qwen3-8b zero-shot predicted PASS for every single held-out task. Severe positive bias; uncalibrated zero-shot LLM judge is unusable without preference training. This validates Path B: the base model CANNOT distinguish aligned from misaligned outreach without weight updates.",
+      "prompt_judge_pass_rate": "100% \u2014 qwen3-8b zero-shot predicted PASS for every single held-out task. Severe positive bias; uncalibrated zero-shot LLM judge is unusable without preference training. This validates Path B: the base model CANNOT distinguish aligned from misaligned outreach without weight updates.",
       "rule_evaluator_vs_prompt": "Rule evaluator (48%) >> Prompt judge (22%) on held-out. Rule evaluator correctly catches 15/50 failures; prompt judge catches 0.",
       "ground_truth_quality": "25/50 held-out tasks are llm_synthesis mode. These tasks have empty fail_cats=[] and GT=FAIL, suggesting a systematic labeling artifact in the synthetic generator. Rule evaluator accuracy on llm_synthesis tasks is 36% vs 58-62% on programmatic/hand_authored tasks. This is a known limitation documented in methodology_rationale.md.",
       "rule_evaluator_gaps": [
@@ -81,5 +81,23 @@
     "algorithm": "DPO (beta=0.1)",
     "hyperparameters": "r=16, alpha=32, lr=2e-5, epochs=3, batch_size=4",
     "colab_notebook": "See README.md for Colab setup instructions"
+  },
+  "delta_a_trained_judge": {
+    "accuracy": 0.2,
+    "n_correct": 10,
+    "n_total": 50,
+    "verdict_distribution": {
+      "PASS": 25,
+      "FAIL": 0,
+      "ERROR": 25
+    },
+    "gt_distribution": {
+      "PASS": 11,
+      "FAIL": 39
+    },
+    "delta_vs_rule_evaluator": -0.28,
+    "delta_vs_prompt_judge": -0.02,
+    "finding": "Trained model retains PASS bias \u2014 0 FAIL predictions, 25 ERROR (format non-compliance). DPO on 279 pairs with 0.5B backbone insufficient to override prior. Training data format mismatch likely: pairs trained email-preference semantics, not verdict calibration.",
+    "status": "COMPLETE"
   }
 }
