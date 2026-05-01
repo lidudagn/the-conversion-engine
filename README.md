@@ -277,7 +277,7 @@ python scripts/validate_schema.py
 
 | Artifact | URL |
 |---|---|
-| HuggingFace Dataset | `<!-- ADD: https://huggingface.co/datasets/lidya7/tenacious-bench-v01 -->` |
+| HuggingFace Dataset | https://huggingface.co/datasets/lidya7/tenacious-bench-v01 |
 | HuggingFace Model (LoRA adapter) | https://huggingface.co/lidya7/tenacious-judge-lora-v1 |
 | Blog Post | `<!-- ADD: URL after publishing -->` |
 | Community Engagement | `<!-- ADD: GitHub issue URL on τ²-Bench repo -->` |
