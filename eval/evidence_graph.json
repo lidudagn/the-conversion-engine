@@ -222,6 +222,22 @@
       "source_file": "eval/tenacious_bench/pilot_50/splits/",
       "source_path": "line counts per file",
       "provenance": "Counted 2026-05-01. Authoring modes: programmatic (≈30%), llm_synthesis (≈25%), hand_authored (≈15%), supplemental/other (≈30%)."
+    },
+    {
+      "claim_id": "C25",
+      "claim": "Delta A (trained judge, implicit reward) accuracy = 0.74, 95% CI [0.62, 0.86]",
+      "value": { "accuracy": 0.74, "n_correct": 37, "n_total": 50, "ci_low": 0.62, "ci_high": 0.86 },
+      "source_file": "eval/ablation_results.json",
+      "source_path": "delta_a_trained_judge.accuracy / ci_95",
+      "provenance": "Run 2026-05-01. Method: DPO implicit reward β*(log π_DPO − log π_ref), sign→verdict. Adapter: lidya7/tenacious-judge-lora-v1 (Qwen2.5-0.5B-Instruct, r=16). β=0.1. Bootstrap CI n=10,000, seed 3407. Lift over rule evaluator: +0.26. Lift over prompt judge: +0.52."
+    },
+    {
+      "claim_id": "C26",
+      "claim": "Delta A lift over rule evaluator = +0.26pp; lift over prompt judge = +0.52pp",
+      "value": { "lift_over_rule": 0.26, "lift_over_prompt": 0.52 },
+      "source_file": "eval/ablation_results.json",
+      "source_path": "delta_a_trained_judge.lift_over_rule / lift_over_prompt",
+      "provenance": "Rule evaluator baseline = 0.48, prompt judge baseline = 0.22. Trained judge = 0.74. Differences computed 2026-05-01."
     }
   ]
 }

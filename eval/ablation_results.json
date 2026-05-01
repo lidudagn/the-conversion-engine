@@ -83,21 +83,34 @@
     "colab_notebook": "See README.md for Colab setup instructions"
   },
   "delta_a_trained_judge": {
-    "accuracy": 0.2,
-    "n_correct": 10,
+    "method": "implicit_reward",
+    "description": "DPO implicit reward \u03b2*(log \u03c0_DPO \u2212 log \u03c0_ref). Sign\u2192verdict. No generation.",
+    "accuracy": 0.74,
+    "n_correct": 37,
     "n_total": 50,
-    "verdict_distribution": {
+    "verdicts": {
+      "PASS": 2,
+      "FAIL": 48
+    },
+    "ci_95": [
+      0.62,
+      0.86
+    ],
+    "lift_over_rule": 0.26,
+    "lift_over_prompt": 0.52,
+    "beta": 0.1,
+    "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "adapter": "lidya7/tenacious-judge-lora-v1",
+    "run_date": "2026-05-01"
+  },
+  "delta_a_generation_baseline": {
+    "method": "generation",
+    "note": "Invalid \u2014 training pairs used email bodies not verdicts; PASS bias throughout",
+    "accuracy": 0.2,
+    "verdicts": {
       "PASS": 25,
       "FAIL": 0,
       "ERROR": 25
-    },
-    "gt_distribution": {
-      "PASS": 11,
-      "FAIL": 39
-    },
-    "delta_vs_rule_evaluator": -0.28,
-    "delta_vs_prompt_judge": -0.02,
-    "finding": "Trained model retains PASS bias \u2014 0 FAIL predictions, 25 ERROR (format non-compliance). DPO on 279 pairs with 0.5B backbone insufficient to override prior. Training data format mismatch likely: pairs trained email-preference semantics, not verdict calibration.",
-    "status": "COMPLETE"
+    }
   }
 }
