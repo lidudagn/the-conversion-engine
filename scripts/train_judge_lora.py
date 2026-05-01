@@ -15,10 +15,10 @@ HF_TOKEN = os.environ.get("HUGGING_FACE_HUB_TOKEN")
 if not HF_TOKEN:
     raise ValueError("CRITICAL: HUGGING_FACE_HUB_TOKEN is not set. Colab execution requires this to load Qwen and push adapter.")
 
-BASE_MODEL = "Qwen/Qwen2.5-3B-Instruct"
-# TODO: Update this to your huggingface username/org
-HUB_MODEL_ID = "YOUR_HF_ORG/tenacious-judge-lora-v1" 
-TRAINING_DATA = "eval/tenacious_bench/training_data/pairs.jsonl"
+BASE_MODEL = "Qwen/Qwen2.5-0.5B-Instruct"
+# Set HUB_MODEL_ID to your HuggingFace username/repo before running in Colab.
+HUB_MODEL_ID = "lidudagn/tenacious-judge-lora-v1"
+TRAINING_DATA = "eval/tenacious_bench/training_data/pairs_v2.jsonl"
 OUTPUT_DIR = "eval/tenacious_bench/judge_lora_v1"
 
 def format_dpo_data(data_path, tokenizer):
@@ -43,12 +43,15 @@ def format_dpo_data(data_path, tokenizer):
 
 def main():
     print("Loading model and tokenizer from HF...")
+    # 16-bit LoRA per Unsloth Qwen guide: load_in_4bit=False for DPO stability on T4.
+    # The reference model in DPO doubles VRAM; 4-bit + reference OOMs on T4 with 0.5B.
+    # fp16 on T4, bf16 on L4/A40 (controlled by is_bfloat16_supported in DPOConfig).
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=BASE_MODEL,
         max_seq_length=2048,
-        dtype=None, 
-        load_in_4bit=True,
-        token=HF_TOKEN # Verified load
+        dtype=None,
+        load_in_4bit=False,
+        token=HF_TOKEN,
     )
     
     print("Applying LoRA adapters...")

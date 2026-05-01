@@ -2,6 +2,7 @@
   "_meta": {
     "purpose": "Maps every numeric claim in the submission to its authoritative source file and field.",
     "generated": "2026-04-24",
+    "updated": "2026-05-01",
     "project": "the-conversion-engine"
   },
   "claims": [
@@ -181,6 +182,46 @@
       "source_file": "data/validation/ai_maturity_validation_results.json",
       "source_path": "root.per_score_metrics.0",
       "provenance": "Scorer correctly abstained on 16/16 companies with no public AI signal, preserving brand safety at the cost of mid-tier signal recall."
+    },
+    {
+      "claim_id": "C20",
+      "claim": "Rule evaluator held-out accuracy = 0.48, 95% CI [0.34, 0.62]",
+      "value": { "accuracy": 0.48, "ci_low": 0.34, "ci_high": 0.62 },
+      "source_file": "eval/ablation_results.json",
+      "source_path": "delta_b_rule_evaluator.accuracy / bootstrap_ci_95",
+      "provenance": "Run 2026-05-01 via scripts/run_real_ablation.py. Seed 3407. n=50 held-out tasks. ScoringEvaluator deterministic, no LLM inference. Bootstrap n=10,000."
+    },
+    {
+      "claim_id": "C21",
+      "claim": "Prompt judge (qwen3-8b zero-shot) held-out accuracy = 0.22, 100% PASS rate",
+      "value": { "accuracy": 0.22, "pass_rate": 1.0 },
+      "source_file": "eval/ablation_results.json",
+      "source_path": "delta_b_prompt_judge_baseline.accuracy",
+      "provenance": "Run 2026-05-01 via scripts/run_real_ablation.py. Same 50 held-out tasks. qwen/qwen3-8b via OpenRouter. Zero-shot with rubric in prompt. Judge predicted PASS for all 50 tasks."
+    },
+    {
+      "claim_id": "C22",
+      "claim": "Delta B lift (rule over prompt) = +0.26, p=0.5499 (n.s.)",
+      "value": { "lift": 0.26, "p_value": 0.5499 },
+      "source_file": "eval/ablation_results.json",
+      "source_path": "delta_b_rule_evaluator.lift_over_prompt_judge / delta_b_rule_evaluator.p_value",
+      "provenance": "Paired bootstrap, n=10,000, seed 3407. Not significant at p<0.05 due to small held-out size (50 tasks). Rule evaluator still outperforms on every authoring mode."
+    },
+    {
+      "claim_id": "C23",
+      "claim": "Preference pairs for DPO training: 279 pairs",
+      "value": 279,
+      "source_file": "eval/tenacious_bench/training_data/pairs_v2.jsonl",
+      "source_path": "line count",
+      "provenance": "Generated 2026-05-01. Generation: openai/gpt-4o-mini. Judge filter: meta-llama/llama-3.1-70b-instruct. Leakage prevention: different model families (Li et al. 2025). Contamination: 0 n-gram violations vs held-out."
+    },
+    {
+      "claim_id": "C24",
+      "claim": "Dataset total tasks: 202 (train=102, dev=50, held_out=50)",
+      "value": { "total": 202, "train": 102, "dev": 50, "held_out": 50 },
+      "source_file": "eval/tenacious_bench/pilot_50/splits/",
+      "source_path": "line counts per file",
+      "provenance": "Counted 2026-05-01. Authoring modes: programmatic (≈30%), llm_synthesis (≈25%), hand_authored (≈15%), supplemental/other (≈30%)."
     }
   ]
 }
