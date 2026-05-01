@@ -1,0 +1,407 @@
+{
+  "accuracy": 0.0,
+  "n_correct": 0,
+  "n_total": 50,
+  "results": [
+    {
+      "task_id": "TB-MG-0012",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with Segment 3 (Enterprise) as it discusses \"offshore engagement models\" which are relevant for a company evaluating its vendor and engineering strategy.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0029",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0030",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0038",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with Segment D06 - Growth, as it focuses on engineering capacity for the next quarter, which is relevant to the funding signals mentioned in the Hiring Signal.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0041",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with Segment 2 (Restructuring) as it focuses on efficiency, cost control, and maintaining velocity amid layoffs or freezes. It does not use any keywords that apply the wrong segment's philosophical framing.\"",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0042",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with Segment 3 (Enterprise) as it discusses 'Safety', 'legacy migration', and 'specialized compliance'. It does not use any plausible keywords that apply the wrong segment's philosophical framing.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0050",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0054",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0061",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0063",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0066",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0067",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0068",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0069",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0070",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0078",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0083",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0084",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0089",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0096",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0098",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0105",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0112",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0125",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0126",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0130",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0131",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0132",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0135",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0138",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0141",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0144",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0156",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with the segment D06 - Growth, as it emphasizes Velox Enterprise's deep COBOL roots and their potential for accelerating the transition towards generative AI solutions. It also mentions efficiency and cost control",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0157",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: NONE\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0165",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with the Segment D06 (Growth) as it offers an opportunity for fast, agile, acceleration, and Series A/B momentum. It also mentions efficiency and maintaining velocity amid layoffs or freezes, which",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0171",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0173",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with the Segment D06 - Growth, focusing on the team's ability to accelerate their growth through efficient resource allocation during challenging times.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0178",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with Segment 2 (Restructuring) as it discusses cost rebalancing, efficiency, and maintaining velocity amid layoffs or freezes. It also mentions the need for alignment with the hiring signal and policy regarding",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0179",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with the Segment D06 - Growth, as it mentions \"over 200 senior engineers\" and emphasizes \"fast, agile, acceleration, Series A/B momentum\". This aligns perfectly with the",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0180",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0181",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with Segment 3 (Enterprise) as it focuses on safety, legacy migration, and specialized compliance, which are key aspects of the hiring signal and policy.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0186",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with Segment 4 (Enterprise) as it focuses on the safety and legacy migration aspects mentioned in the hiring signal and policy.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0190",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with Segment 1 (Growth) as it emphasizes fast, agile, acceleration, and series A/B momentum, which are key components of the hiring signal and policy.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0191",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email clearly aligns with Segment 1 (Growth) as it focuses on using assertive tone and AI maturity for engineering capacity.\"\n}\n```",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0192",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0193",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0198",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with the Segment D06 (Growth) as it discusses a small team for a 3-month project that could benefit from an AI feature in the next twelve months. This aligns with the hiring",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0199",
+      "ground_truth": "FAIL",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with the Segment D06 criteria for Growth, as it emphasizes fast-paced growth strategies and accelerates the company's journey towards Series A/B momentum. This aligns well with the hiring signal and policy requirements",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0201",
+      "ground_truth": "FAIL",
+      "trained_verdict": "PASS",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "VERDICT: PASS\nFAILURE_TYPE: NONE",
+      "correct": false
+    },
+    {
+      "task_id": "TB-MG-0202",
+      "ground_truth": "PASS",
+      "trained_verdict": "ERROR",
+      "trained_failure_type": "NONE",
+      "trained_rationale": "```json\n{\n  \"verdict\": \"PASS\",\n  \"rationale\": \"The email aligns perfectly with the Segment D06 criteria for Growth, as it mentions fast, agile, acceleration, series A/B momentum, which are key elements of the Hiring Signal.\"\n}\n```",
+      "correct": false
+    }
+  ]
+}

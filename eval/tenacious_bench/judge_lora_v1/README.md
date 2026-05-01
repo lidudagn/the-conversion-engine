@@ -1,11 +1,6 @@
 ---
-base_model: Qwen/Qwen2.5-0.5B-Instruct
-library_name: peft
-pipeline_tag: text-generation
-tags:
-- base_model:adapter:Qwen/Qwen2.5-0.5B-Instruct
-- lora
-- transformers
+library_name: transformers
+tags: []
 ---
 
 # Model Card for Model ID
@@ -20,7 +15,7 @@ tags:
 
 <!-- Provide a longer summary of what this model is. -->
 
-
+This is the model card of a 🤗 transformers model that has been pushed on the Hub. This model card has been automatically generated.
 
 - **Developed by:** [More Information Needed]
 - **Funded by [optional]:** [More Information Needed]
@@ -202,6 +197,3 @@ Carbon emissions can be estimated using the [Machine Learning Impact calculator]
 ## Model Card Contact
 
 [More Information Needed]
-### Framework versions
-
-- PEFT 0.19.1
