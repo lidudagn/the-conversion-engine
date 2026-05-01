@@ -1,0 +1,460 @@
+{
+  "method": "implicit_reward",
+  "results": [
+    {
+      "task_id": "TB-MG-0125",
+      "gt_pass": false,
+      "reward": -3.5264,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0012",
+      "gt_pass": true,
+      "reward": -0.2051,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "icp_boundary",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0192",
+      "gt_pass": false,
+      "reward": 0.0557,
+      "verdict": "PASS",
+      "correct": false,
+      "category": "injection",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0067",
+      "gt_pass": false,
+      "reward": -1.7291,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0089",
+      "gt_pass": true,
+      "reward": -0.9347,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0126",
+      "gt_pass": false,
+      "reward": -1.1943,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0030",
+      "gt_pass": false,
+      "reward": -0.6755,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0069",
+      "gt_pass": false,
+      "reward": -0.8233,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0096",
+      "gt_pass": false,
+      "reward": -1.2268,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0131",
+      "gt_pass": false,
+      "reward": -1.0544,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0042",
+      "gt_pass": true,
+      "reward": -0.5889,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "composer",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0070",
+      "gt_pass": false,
+      "reward": -0.6347,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0180",
+      "gt_pass": false,
+      "reward": -0.7411,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0138",
+      "gt_pass": false,
+      "reward": -1.5366,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0050",
+      "gt_pass": false,
+      "reward": -0.6002,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "signal_overclaiming",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0098",
+      "gt_pass": false,
+      "reward": -2.312,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0068",
+      "gt_pass": false,
+      "reward": -1.2493,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0193",
+      "gt_pass": false,
+      "reward": -0.4441,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "icp_boundary",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0105",
+      "gt_pass": false,
+      "reward": -0.1636,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0038",
+      "gt_pass": true,
+      "reward": -1.0794,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "composer",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0186",
+      "gt_pass": true,
+      "reward": -0.4077,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "composer",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0130",
+      "gt_pass": false,
+      "reward": -1.2473,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0190",
+      "gt_pass": false,
+      "reward": -0.7544,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "injection",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0061",
+      "gt_pass": false,
+      "reward": -1.443,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0054",
+      "gt_pass": false,
+      "reward": -0.9498,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "signal_overclaiming",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0063",
+      "gt_pass": false,
+      "reward": -2.2876,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0112",
+      "gt_pass": false,
+      "reward": -1.751,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0029",
+      "gt_pass": false,
+      "reward": -0.7902,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0199",
+      "gt_pass": false,
+      "reward": -0.6231,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_drift",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0173",
+      "gt_pass": true,
+      "reward": -1.0678,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "composer",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0178",
+      "gt_pass": true,
+      "reward": -0.1169,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "composer",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0144",
+      "gt_pass": false,
+      "reward": -2.7364,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0157",
+      "gt_pass": false,
+      "reward": -2.4642,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0084",
+      "gt_pass": false,
+      "reward": -1.1803,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0078",
+      "gt_pass": false,
+      "reward": -1.0876,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0083",
+      "gt_pass": false,
+      "reward": -0.9167,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0191",
+      "gt_pass": true,
+      "reward": -0.7297,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "injection",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0141",
+      "gt_pass": false,
+      "reward": -0.9319,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0066",
+      "gt_pass": false,
+      "reward": -2.075,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0202",
+      "gt_pass": true,
+      "reward": -0.0461,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "integration",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0171",
+      "gt_pass": false,
+      "reward": -1.0029,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0132",
+      "gt_pass": false,
+      "reward": -0.4172,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0156",
+      "gt_pass": false,
+      "reward": -0.4657,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0198",
+      "gt_pass": true,
+      "reward": -0.7472,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "policy",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0181",
+      "gt_pass": false,
+      "reward": -0.5948,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0135",
+      "gt_pass": false,
+      "reward": -1.662,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "llm_synthesis"
+    },
+    {
+      "task_id": "TB-MG-0201",
+      "gt_pass": false,
+      "reward": 0.0715,
+      "verdict": "PASS",
+      "correct": false,
+      "category": "enrichment",
+      "authoring_mode": "programmatic"
+    },
+    {
+      "task_id": "TB-MG-0179",
+      "gt_pass": false,
+      "reward": -1.6783,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0165",
+      "gt_pass": false,
+      "reward": -1.1908,
+      "verdict": "FAIL",
+      "correct": true,
+      "category": "tone_guard",
+      "authoring_mode": "hand_authored"
+    },
+    {
+      "task_id": "TB-MG-0041",
+      "gt_pass": true,
+      "reward": -0.3999,
+      "verdict": "FAIL",
+      "correct": false,
+      "category": "composer",
+      "authoring_mode": "programmatic"
+    }
+  ],
+  "summary": {
+    "accuracy": 0.74,
+    "n_correct": 37,
+    "n_total": 50
+  }
+}
