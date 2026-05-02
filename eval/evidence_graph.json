@@ -2,7 +2,7 @@
   "_meta": {
     "purpose": "Maps every numeric claim in the submission to its authoritative source file and field.",
     "generated": "2026-04-24",
-    "updated": "2026-05-01",
+    "updated": "2026-05-02",
     "project": "the-conversion-engine"
   },
   "claims": [
@@ -217,11 +217,11 @@
     },
     {
       "claim_id": "C24",
-      "claim": "Dataset total tasks: 202 (train=102, dev=50, held_out=50)",
-      "value": { "total": 202, "train": 102, "dev": 50, "held_out": 50 },
+      "claim": "Dataset total tasks: 266 (train=134, dev=82, held_out=50)",
+      "value": { "total": 266, "train": 134, "dev": 82, "held_out": 50 },
       "source_file": "eval/tenacious_bench/pilot_50/splits/",
       "source_path": "line counts per file",
-      "provenance": "Counted 2026-05-01. Authoring modes: programmatic (≈30%), llm_synthesis (≈25%), hand_authored (≈15%), supplemental/other (≈30%)."
+      "provenance": "Counted 2026-05-02. 202 original tasks (programmatic ≈24%, llm_synthesis ≈37%, hand_authored ≈15%) plus 64 trace-derived tasks converted from outputs/policy_trace.jsonl (123 agent runs) via merge_and_partition.py. Final split: train 50.4%, dev 30.8%, held_out 18.8%."
     },
     {
       "claim_id": "C25",
@@ -238,6 +238,22 @@
       "source_file": "eval/ablation_results.json",
       "source_path": "delta_a_trained_judge.lift_over_rule / lift_over_prompt",
       "provenance": "Rule evaluator baseline = 0.48, prompt judge baseline = 0.22. Trained judge = 0.74. Differences computed 2026-05-01."
+    },
+    {
+      "claim_id": "C27",
+      "claim": "Blog post published — full technical writeup of Tenacious-Bench construction, training, and results",
+      "value": null,
+      "source_file": "external",
+      "source_path": "N/A",
+      "provenance": "Published 2026-05-02. Medium: https://medium.com/@lidyadagnew7/tenacious-bench-building-a-sales-domain-evaluation-benchmark-when-no-dataset-exists-640dd6d259a3 | Dev.to: https://dev.to/lidya_dagnew_5d2e8f9a63a3/tenacious-bench-building-a-sales-domain-evaluation-benchmark-when-no-dataset-exists-5cam"
+    },
+    {
+      "claim_id": "C28",
+      "claim": "Community engagement — GitHub issue filed on τ²-Bench repo presenting B2B gap finding and linking Tenacious-Bench dataset",
+      "value": null,
+      "source_file": "external",
+      "source_path": "N/A",
+      "provenance": "Filed 2026-05-02. URL: https://github.com/sierra-research/tau2-bench/issues/281"
     }
   ]
 }

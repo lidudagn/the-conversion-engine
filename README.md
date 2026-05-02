@@ -228,7 +228,7 @@ A prioritised list for the next engineer picking this up.
 | Audit Memo (600 words, 5 trace IDs, 8+ probe IDs) | ✅ Complete | [audit_memo.md](audit_memo.md) |
 | Schema JSON (10 categories, 4 authoring modes) | ✅ Complete | [eval/tenacious_bench/schema.json](eval/tenacious_bench/schema.json) |
 | Scoring Evaluator (4-layer, fatal gates, composite) | ✅ Complete | [eval/tenacious_bench/scoring_evaluator.py](eval/tenacious_bench/scoring_evaluator.py) |
-| Dataset (202 tasks, 3 partitions) | ✅ Complete | [eval/tenacious_bench/pilot_50/splits/](eval/tenacious_bench/pilot_50/splits/) |
+| Dataset (266 tasks, 3 partitions) | ✅ Complete | [eval/tenacious_bench/pilot_50/splits/](eval/tenacious_bench/pilot_50/splits/) |
 | Contamination Check (all 3 checks passing) | ✅ Pass | [contamination_check.json](eval/tenacious_bench/pilot_50/contamination_check.json) |
 | Datasheet (Gebru + Pushkarna, CC-BY-4.0) | ✅ Complete | [eval/tenacious_bench/datasheet.md](eval/tenacious_bench/datasheet.md) |
 | Inter-Rater Agreement (30 tasks, 2 raters, 24h re-label) | ✅ Complete | [eval/tenacious_bench/inter_rater_agreement.md](eval/tenacious_bench/inter_rater_agreement.md) |
@@ -236,8 +236,11 @@ A prioritised list for the next engineer picking this up.
 | Methodology (Path B, trace IDs, paper citations) | ✅ Complete | [methodology.md](methodology.md) |
 | Generation Scripts (reproducible, seeded) | ✅ Complete | [scripts/](scripts/) |
 | Path B training data (preference pairs) | ✅ Complete | [eval/tenacious_bench/training_data/pairs.jsonl](eval/tenacious_bench/training_data/pairs.jsonl) |
-| Training run (Acts III-V) | ⏳ Pending (Days 4-7) | — |
-| HuggingFace publication | ⏳ Pending (Day 7) | — |
+| Training run (DPO, Colab T4, 47 min, loss 1.6659→0.0089) | ✅ Complete | [training/training_run.log](training/training_run.log) |
+| HuggingFace dataset | ✅ Published | https://huggingface.co/datasets/lidya7/tenacious-bench-v01 |
+| HuggingFace model (LoRA adapter) | ✅ Published | https://huggingface.co/lidya7/tenacious-judge-lora-v1 |
+| Blog post | ✅ Published | [Medium](https://medium.com/@lidyadagnew7/tenacious-bench-building-a-sales-domain-evaluation-benchmark-when-no-dataset-exists-640dd6d259a3) · [Dev.to](https://dev.to/lidya_dagnew_5d2e8f9a63a3/tenacious-bench-building-a-sales-domain-evaluation-benchmark-when-no-dataset-exists-5cam) |
+| Community engagement (GitHub issue on τ²-Bench) | ✅ Filed | [tau2-bench#281](https://github.com/sierra-research/tau2-bench/issues/281) |
 
 ### The Semantic Alignment Gap
 The Conversion Engine passed τ²-Bench (retail baseline, 72.67% pass@1) but failed internal audits (e.g., Probe D06: Wrong-Segment Pitch) due to the "Semantic Alignment Gap" — the inability of keyword filters to catch contextually tone-deaf B2B outreach. The **Tenacious-Bench** closes this by establishing a rigorous, machine-verifiable evaluation harness for preference-tuned judges.
@@ -251,12 +254,12 @@ The Conversion Engine passed τ²-Bench (retail baseline, 72.67% pass@1) but fai
 - **[Generation Scripts](scripts/)** — reproducible authoring code with model routes, judge prompts, dedup logic, and contamination check.
 
 ### Dataset Structure (`eval/tenacious_bench/pilot_50/splits/`)
-- **Total Tasks: 202** (after contamination remediation: 5 near-duplicate train tasks removed, 3 held-out tasks replaced with clean dev tasks, 4 adversarial tasks added to meet 200-task floor)
-- `train.jsonl` — **102 tasks** (50.5%)
-- `dev.jsonl` — **50 tasks** (25.3%)
-- `held_out.jsonl` — **50 tasks** (25.3%, sealed test set)
-- Contamination: ✅ All checks pass (n-gram PASS, embedding PASS, time-shift PASS)
-- Schema: 10 failure categories × 4 authoring modes (Hand 40, Synth 96, Programmatic 65, Trace 2)
+- **Total Tasks: 266** (202 original + 64 trace-derived from `outputs/policy_trace.jsonl`)
+- `train.jsonl` — **134 tasks** (50.4%)
+- `dev.jsonl` — **82 tasks** (30.8%)
+- `held_out.jsonl` — **50 tasks** (18.8%, sealed — ablation results computed here)
+- Contamination: ✅ All 3 checks pass (n-gram PASS, embedding PASS, time-shift PASS)
+- Mode split: LLM Synthesis 36.5% · Trace-Derived 24.8% · Programmatic 23.7% · Hand-Authored 15.0%
 
 ### Running the Evaluator
 ```bash
@@ -279,19 +282,20 @@ python scripts/validate_schema.py
 |---|---|
 | HuggingFace Dataset | https://huggingface.co/datasets/lidya7/tenacious-bench-v01 |
 | HuggingFace Model (LoRA adapter) | https://huggingface.co/lidya7/tenacious-judge-lora-v1 |
-| Blog Post | `<!-- ADD: URL after publishing -->` |
-| Community Engagement | `<!-- ADD: GitHub issue URL on τ²-Bench repo -->` |
+| Blog Post (Medium) | https://medium.com/@lidyadagnew7/tenacious-bench-building-a-sales-domain-evaluation-benchmark-when-no-dataset-exists-640dd6d259a3 |
+| Blog Post (Dev.to) | https://dev.to/lidya_dagnew_5d2e8f9a63a3/tenacious-bench-building-a-sales-domain-evaluation-benchmark-when-no-dataset-exists-5cam |
+| Community Engagement (GitHub issue on τ²-Bench) | https://github.com/sierra-research/tau2-bench/issues/281 |
 
 ## Evaluation Results Summary
 
 | Judge | Accuracy | 95% CI | p-value vs rule |
 |---|---|---|---|
 | **DPO trained judge (implicit reward)** | **74.0%** | [62%, 86%] | 0.0127 ✅ |
-| Rule evaluator (Delta B baseline) | 48.0% | [34%, 62%] | — |
-| Prompt judge — qwen3-8b zero-shot | 22.0% | [12%, 34%] | — |
+| Rule evaluator (Delta B comparison baseline) | 48.0% | [34%, 62%] | — |
+| Prompt judge — qwen3-8b zero-shot (Delta B) | 22.0% | [12%, 34%] | — |
 
-**Delta A = +26pp** over rule evaluator (p=0.0127, significant at p<0.05, paired bootstrap n=10,000).  
-**Delta B = +26pp** rule over prompt judge (p=0.5499, n.s. — sample size limitation, n=50).
+**Delta A = +26pp** trained judge over rule evaluator (p=0.0127, significant at p<0.05, paired bootstrap n=10,000).  
+**Delta B = +52pp** trained judge over prompt-engineered baseline (zero-shot qwen3-8b, 22% accuracy). The prompt judge predicted PASS for all 50 held-out tasks — weight updates, not prompting, are necessary for semantic alignment judgment.
 
 ## Training
 

@@ -69,18 +69,11 @@
     "mean_cost_per_task": 0.000135,
     "latency_note": "~1-2s per task via OpenRouter API"
   },
-  "delta_a_pending": {
-    "variant": "V2_DPO_LORA",
-    "status": "PENDING_GPU_TRAINING",
-    "description": "DPO-trained Qwen2.5-0.5B-Instruct judge with Tenacious preference pairs. 279 preference pairs ready in eval/tenacious_bench/training_data/pairs_v2.jsonl. Training script: scripts/train_judge_lora.py (requires Colab T4 GPU, ~45 min). Ablation script: scripts/run_ablation.py.",
-    "training_data": "eval/tenacious_bench/training_data/pairs_v2.jsonl",
-    "pairs_count": 279,
-    "training_script": "scripts/train_judge_lora.py",
-    "ablation_script": "scripts/run_ablation.py",
-    "backbone": "Qwen/Qwen2.5-0.5B-Instruct",
-    "algorithm": "DPO (beta=0.1)",
-    "hyperparameters": "r=16, alpha=32, lr=2e-5, epochs=3, batch_size=4",
-    "colab_notebook": "See README.md for Colab setup instructions"
+  "delta_c_generalization": {
+    "description": "Informational: Week 10 τ²-Bench retail score vs trained judge. Tests whether Tenacious-Bench improvement is domain-specific or general. Per spec, no re-run this week — reuses existing Week 10 score.",
+    "week10_tau2_pass_at_1": 0.7267,
+    "trained_judge_tenacious_bench": 0.74,
+    "note": "These measure different things (retail task completion vs B2B semantic alignment). The trained judge is a Path B judge artifact, not a drop-in replacement for the Week 10 retail agent. Comparison is informational: the judge improves on the domain it was trained for (Tenacious-Bench +26pp) while the Week 10 retail score is carried forward unchanged, consistent with the cost-discipline rule against re-running τ²-Bench retail."
   },
   "delta_a_trained_judge": {
     "method": "implicit_reward",
@@ -103,7 +96,7 @@
     "adapter": "lidya7/tenacious-judge-lora-v1",
     "run_date": "2026-05-01",
     "p_value_vs_rule": 0.0127,
-    "p_value_vs_prompt": 0.0,
+    "p_value_vs_prompt": 0.0001,
     "significant_p05_vs_rule": true,
     "bootstrap_n": 10000,
     "seed": 3407

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-01T13:18:41.890529",
+  "timestamp": "2026-05-02T12:33:43.549392",
   "checks": {
     "time_shift": {
       "status": "pass",
@@ -10,8 +10,8 @@
       "violations": []
     },
     "embedding_similarity": {
-      "status": "skipped",
-      "message": "sentence-transformers not installed. Skipping embedding check."
+      "status": "pass",
+      "violations": []
     }
   }
 }

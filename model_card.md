@@ -20,10 +20,10 @@ The judge classifies whether cold outreach emails correctly match the target
 segment (Growth / Restructuring / Enterprise / AI-Maturity) and are grounded
 in provided hiring signals.
 
-**Training status: READY FOR COLAB EXECUTION**
-The adapter has not yet been pushed to HuggingFace Hub because training requires
-a GPU runtime (Colab T4 or RunPod A40). The training script and all prerequisite
-data are fully prepared. See "Reproducing Training" below.
+**Training status: COMPLETE (2026-05-01)**
+Trained on Google Colab T4 (47 min, loss 1.6659 → 0.0089).
+Adapter pushed to HuggingFace Hub: `lidya7/tenacious-judge-lora-v1`.
+See "Reproducing Training" below to reproduce from scratch.
 
 ## Model Details
 

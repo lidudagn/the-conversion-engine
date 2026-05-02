@@ -49,10 +49,30 @@ Three checks before sealing the held-out partition — all documented in `eval/t
 | Check | Threshold | Result |
 |---|---|---|
 | N-gram overlap (held_out vs train) | < 8-gram | **PASS** (0 violations after remediation) |
-| Embedding similarity (held_out vs train) | cosine < 0.85 | **PASS** (0 violations via `all-MiniLM-L6-v2` evaluation of the entire partition, no skipped checks) |
+| Embedding similarity (held_out vs train) | cosine < 0.85 | **PASS** (0 violations via `all-MiniLM-L6-v2`, run 2026-05-02) |
 | Time-shift verification | Dates in 2024-2026 window | **PASS** (0 violations) |
 
 **Remediation log:** Five near-duplicate train tasks (TB-MG-0043, TB-MG-0046, TB-MG-0200, TB-MG-0183, TB-MG-0001) were removed. Three held-out tasks with genuine semantic overlap (TB-MG-0170, TB-MG-0194, TB-MG-0005) were replaced with clean dev tasks. The contamination check script uses n=8 gram threshold (matching spec) with a 28-phrase boilerplate exclusion list for Tenacious-domain template phrases.
+
+---
+
+## Judge Filter Pipeline
+
+Every generated task passes a pointwise quality filter before entering the dataset.
+Script: `scripts/judge_filter_pointwise.py`. Judge model: `meta-llama/llama-3.1-70b-instruct`
+(cross-family from generation model `openai/gpt-4o-mini`, per Li et al. 2025).
+
+### Three-Dimension Pointwise Scoring (1–5 integer scale)
+
+| Dimension | Definition | Inclusion threshold |
+|---|---|---|
+| `input_coherence` | hiring_signal_brief supplies sufficient grounded signal; segment, tone_mode, and signal fields are internally consistent | **≥ 3** |
+| `ground_truth_verifiability` | verdict (pass/fail) can be confirmed mechanically from inputs + rubric without human interpretation; failure category is unambiguous given the candidate_output | **≥ 3** |
+| `rubric_application_clarity` | single unambiguous failure category; two independent raters would reach the same label without discussion | **≥ 3** |
+
+A task fails the filter if **any** dimension scores below its threshold.
+For near-duplicate tasks, pairwise comparison selects the higher-scoring task on
+`ground_truth_verifiability`. Full prompt: `eval/prompts/judge_filter_prompt.md`.
 
 ---
 
@@ -84,10 +104,10 @@ A task is marked as **FAIL** regardless of composite score if any fatal constrai
 
 ### Partitioning Protocol
 
-- Total tasks: 202 (after contamination remediation + 4 adversarial additions to meet 200-task floor)
-- Train: 102 (50.5%)
-- Dev: 50 (24.8%)
-- Held-out: 50 (24.8%)
+- Total tasks: 266 (202 original + 64 trace-derived from `outputs/policy_trace.jsonl`)
+- Train: 134 (50.4%)
+- Dev: 82 (30.8%)
+- Held-out: 50 (18.8%) — sealed, unchanged from ablation run
 - Partition script: `scripts/merge_and_partition.py` with `random.seed(42)`
 - Contamination check: `scripts/contamination_check.py` — all checks pass (see `eval/tenacious_bench/pilot_50/contamination_check.json`)
 - Held-out partition is sealed and not included in training scripts
