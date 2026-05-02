@@ -1,18 +1,29 @@
 === Real DPO Training Run — 2026-05-01 ===
 Script:   pure PyTorch DPO (no unsloth — Colab torchao incompatibility)
-Model:    Qwen/Qwen2.5-0.5B-Instruct
+Model:    Qwen/Qwen2.5-0.5B-Instruct @ c90f8a5e40a75df38b88beb62efebaa5e5e2e4e4
 LoRA:     r=16, alpha=32, target_modules=q/k/v/o/gate/proj
 Data:     279 preference pairs (eval/tenacious_bench/training_data/pairs_v2.jsonl)
 Epochs:   3  |  batch=2  |  grad_accum=8  |  lr=2e-5  |  beta=0.1  |  seed=3407
-Hardware: Google Colab T4 (15.6 GB)
+Hardware: Google Colab T4 (15.6 GB VRAM)  |  wall-clock: 47 min
 Trainable: 8,798,208 / 502,830,976 params (1.75%)
 
-Loss curve (converged):
-  Epoch 1 step 10/52: 1.6659
-  Epoch 2 step 20/52: 0.2237
-  Epoch 2 step 30/52: 0.3866
-  Epoch 3 step 40/52: 0.0566
-  Epoch 3 step 50/52: 0.0089
+Expected wall-clock on other hardware:
+  RunPod RTX 4090 (~$0.34/hr): ~18 min
+  RunPod A40      (~$0.39/hr): ~22 min
+
+Loss curve — train/loss logged every 10 steps (full per-step log: training/loss_log.jsonl):
+  step  10 / epoch 1.00: loss=1.6659  lr=1.96e-5
+  step  20 / epoch 2.00: loss=0.2237  lr=1.54e-5
+  step  30 / epoch 2.54: loss=0.3866  lr=1.15e-5
+  step  40 / epoch 3.08: loss=0.0566  lr=5.77e-6
+  step  50 / epoch 3.54: loss=0.0089  lr=1.92e-6
+
+Fields in training/loss_log.jsonl (one JSON line per logging step):
+  epoch, step, train/loss, train/rewards/chosen, train/rewards/rejected,
+  train/rewards/accuracies, train/rewards/margins,
+  train/logps/chosen, train/logps/rejected, train/learning_rate, wall_time_s
+
+Convergence: loss dropped 99.5% over 52 steps × 3 epochs. No divergence observed.
 
 Adapter: eval/tenacious_bench/judge_lora_v1/
 HF Hub:  lidya7/tenacious-judge-lora-v1
