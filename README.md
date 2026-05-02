@@ -276,6 +276,10 @@ python scripts/contamination_check.py
 python scripts/validate_schema.py
 ```
 
+## License
+
+Dataset, evaluation scripts, and LoRA adapter are released under **[CC-BY-4.0](LICENSE)**. The base model backbone (Qwen/Qwen2.5-0.5B-Instruct) is subject to its own [upstream license](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct).
+
 ## Public Artifacts (Week 11 Final Submission)
 
 | Artifact | URL |

@@ -1,0 +1,30 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Lidya Dagnew / Tenacious Consulting Conversion Engine Project
+
+You are free to:
+  Share  — copy and redistribute the material in any medium or format
+  Adapt  — remix, transform, and build upon the material for any purpose,
+            even commercially
+
+Under the following terms:
+  Attribution — You must give appropriate credit, provide a link to the
+                license, and indicate if changes were made. You may do so
+                in any reasonable manner, but not in any way that suggests
+                the licensor endorses you or your use.
+
+No additional restrictions — You may not apply legal terms or technological
+measures that legally restrict others from doing anything the license permits.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Scope:
+  This license applies to the dataset (eval/tenacious_bench/),
+  evaluation scripts, generation scripts, and documentation in this
+  repository. The Tenacious company name is used solely as a workflow
+  domain label; no proprietary Tenacious prospect data is included.
+
+  The trained LoRA adapter (eval/tenacious_bench/judge_lora_v1/) is
+  released under the same CC-BY-4.0 terms. The base model backbone
+  (Qwen/Qwen2.5-0.5B-Instruct) is subject to its own license:
+  https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct

@@ -1,5 +1,7 @@
 {
   "backbone": "Qwen/Qwen2.5-0.5B-Instruct",
+  "backbone_revision": "c90f8a5e40a75df38b88beb62efebaa5e5e2e4e4",
+  "backbone_revision_note": "Pin verified 2026-05-01 via `git ls-remote https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct HEAD`. Re-verify before re-running: `from transformers import AutoModelForCausalLM; AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-0.5B-Instruct', revision='c90f8a5e40a75df38b88beb62efebaa5e5e2e4e4')`.",
   "method": "DPO",
   "lora_r": 16,
   "lora_alpha": 32,
@@ -31,5 +33,21 @@
   "hardware": "Google Colab T4 (15.6GB VRAM)",
   "wall_time_minutes": 47,
   "adapter_output": "eval/tenacious_bench/judge_lora_v1",
-  "hf_hub": "lidya7/tenacious-judge-lora-v1"
+  "hf_hub": "lidya7/tenacious-judge-lora-v1",
+  "training_log_fields": {
+    "logged_every_n_steps": 10,
+    "fields_per_step": [
+      "epoch",
+      "step",
+      "train/loss",
+      "train/rewards/chosen",
+      "train/rewards/rejected",
+      "train/rewards/accuracies",
+      "train/rewards/margins",
+      "train/logps/chosen",
+      "train/logps/rejected",
+      "train/learning_rate"
+    ],
+    "note": "No held-out validation split was used during training — all 279 pairs went to training. Convergence was monitored via training loss only (see training/training_run.log). A held-out validation curve is a v0.2 training improvement."
+  }
 }

@@ -1,3 +1,14 @@
+<!-- MODEL ROLES
+     This prompt is run by TWO models with DIFFERENT roles:
+     - DEV_TIER  (meta-llama/llama-3.1-70b-instruct) — high-volume filter on every task.
+                  Chosen for cross-family separation from the generator (openai/gpt-4o-mini)
+                  per Li et al. 2025 preference leakage prevention.
+     - EVAL_TIER (openai/gpt-4o) — calibration spot-check on 50 sampled tasks ONLY.
+                  Used to verify that dev-tier thresholds are correctly set (≥80% agreement
+                  required before the dev-tier filter is run on the full pool).
+     Never use the same model for generation and judging on the same task.
+-->
+
 You are a strict quality-control judge for a B2B sales evaluation dataset.
 
 Score the following task on THREE dimensions using integer scores 1–5:
