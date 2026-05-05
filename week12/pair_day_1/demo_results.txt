@@ -1,0 +1,33 @@
+======================================================================
+TEST A: Vary prompt length, fix output (50 tokens)
+  Shows: prefill scaling (should be superlinear)
+======================================================================
+  A-100w-prompt: TTFT=2623ms | Decode=839ms | Total=3463ms | Output=50 tokens | Rate=59.6 tok/s
+  A-500w-prompt: TTFT=6258ms | Decode=918ms | Total=7175ms | Output=50 tokens | Rate=54.5 tok/s
+  A-1000w-prompt: TTFT=1645ms | Decode=1069ms | Total=2714ms | Output=50 tokens | Rate=46.8 tok/s
+  A-2000w-prompt: TTFT=4174ms | Decode=42ms | Total=4216ms | Output=50 tokens | Rate=1193.6 tok/s
+
+======================================================================
+TEST B: Fix prompt (500 words), vary output length
+  Shows: decode scaling (should be ~linear)
+======================================================================
+  B-25-max-out: TTFT=4169ms | Decode=430ms | Total=4598ms | Output=25 tokens | Rate=58.2 tok/s
+  B-50-max-out: TTFT=1651ms | Decode=27ms | Total=1678ms | Output=50 tokens | Rate=1845.0 tok/s
+  B-100-max-out: TTFT=1583ms | Decode=547ms | Total=2130ms | Output=87 tokens | Rate=159.0 tok/s
+  B-200-max-out: TTFT=1189ms | Decode=1432ms | Total=2621ms | Output=96 tokens | Rate=67.0 tok/s
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Label                  TTFT(ms)   Decode(ms)  Total(ms)  Out Tok    Tok/s
+----------------------------------------------------------------------
+A-100w-prompt              2623          839       3463       50     59.6
+A-500w-prompt              6258          918       7175       50     54.5
+A-1000w-prompt             1645         1069       2714       50     46.8
+A-2000w-prompt             4174           42       4216       50   1193.6
+B-25-max-out               4169          430       4598       25     58.2
+B-50-max-out               1651           27       1678       50   1845.0
+B-100-max-out              1583          547       2130       87    159.0
+B-200-max-out              1189         1432       2621       96     67.0
+
+Results saved to week12/pair_day_1/demo_results.json

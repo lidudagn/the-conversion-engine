@@ -143,7 +143,7 @@ Two simultaneous failures when this occurs: (1) Prospect A receives an email ref
 
 ### Business cost derivation
 
-Tenacious's per-run budget target is $4 (Days 1-4). A single runaway inference call (15K token prompt instead of 1K) inflates cost 15x. At scale across 1,000 prospects per week, a cost pathology bug turns a $0.004/prospect cost into $0.06/prospect — a 15x overage that exceeds the unit economics of the outreach.
+Tenacious's per-run budget target is $4 (Days 1-4). A 15K-token prompt vs 1K does not simply inflate cost 15×. Attention computation in the prefill phase scales quadratically in sequence length in theory, though real-world latency grows sub-quadratically due to hardware optimizations (fused kernels, memory-bandwidth bottlenecks). Additionally, KV cache memory scales linearly with prompt length, potentially causing memory pressure. The cost asymmetry matters: prompt tokens are cheaper per-unit because prefill is parallelizable, while output tokens are priced higher because decode is sequential and cannot be parallelized across tokens, limiting throughput.
 
 | Failure mode | Mechanism | Business cost |
 |---|---|---|

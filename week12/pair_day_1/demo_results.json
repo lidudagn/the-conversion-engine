@@ -1,0 +1,82 @@
+[
+  {
+    "label": "A-100w-prompt",
+    "prompt_tokens_approx": 122,
+    "max_tokens": 50,
+    "output_tokens": 50,
+    "ttft_ms": 2623,
+    "decode_ms": 839,
+    "total_ms": 3463,
+    "decode_tok_per_sec": 59.6
+  },
+  {
+    "label": "A-500w-prompt",
+    "prompt_tokens_approx": 542,
+    "max_tokens": 50,
+    "output_tokens": 50,
+    "ttft_ms": 6258,
+    "decode_ms": 918,
+    "total_ms": 7175,
+    "decode_tok_per_sec": 54.5
+  },
+  {
+    "label": "A-1000w-prompt",
+    "prompt_tokens_approx": 1046,
+    "max_tokens": 50,
+    "output_tokens": 50,
+    "ttft_ms": 1645,
+    "decode_ms": 1069,
+    "total_ms": 2714,
+    "decode_tok_per_sec": 46.8
+  },
+  {
+    "label": "A-2000w-prompt",
+    "prompt_tokens_approx": 2054,
+    "max_tokens": 50,
+    "output_tokens": 50,
+    "ttft_ms": 4174,
+    "decode_ms": 42,
+    "total_ms": 4216,
+    "decode_tok_per_sec": 1193.6
+  },
+  {
+    "label": "B-25-max-out",
+    "prompt_tokens_approx": 542,
+    "max_tokens": 25,
+    "output_tokens": 25,
+    "ttft_ms": 4169,
+    "decode_ms": 430,
+    "total_ms": 4598,
+    "decode_tok_per_sec": 58.2
+  },
+  {
+    "label": "B-50-max-out",
+    "prompt_tokens_approx": 542,
+    "max_tokens": 50,
+    "output_tokens": 50,
+    "ttft_ms": 1651,
+    "decode_ms": 27,
+    "total_ms": 1678,
+    "decode_tok_per_sec": 1845.0
+  },
+  {
+    "label": "B-100-max-out",
+    "prompt_tokens_approx": 542,
+    "max_tokens": 100,
+    "output_tokens": 87,
+    "ttft_ms": 1583,
+    "decode_ms": 547,
+    "total_ms": 2130,
+    "decode_tok_per_sec": 159.0
+  },
+  {
+    "label": "B-200-max-out",
+    "prompt_tokens_approx": 542,
+    "max_tokens": 200,
+    "output_tokens": 96,
+    "ttft_ms": 1189,
+    "decode_ms": 1432,
+    "total_ms": 2621,
+    "decode_tok_per_sec": 67.0
+  }
+]

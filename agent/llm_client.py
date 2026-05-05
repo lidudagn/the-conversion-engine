@@ -62,7 +62,11 @@ async def chat_completion(
     # Estimate cost (OpenRouter pricing varies per model)
     prompt_tokens = usage.prompt_tokens if usage else 0
     completion_tokens = usage.completion_tokens if usage else 0
-    # Rough estimate: ~$0.50/M input, ~$1.50/M output for dev models
+    # Input tokens (prefill): processed in parallel via matrix multiplication,
+    # high compute but parallelizable → cheaper per token.
+    # Output tokens (decode): generated sequentially, each requiring a KV cache
+    # read across all prior tokens — non-parallelizable, limiting throughput
+    # → priced ~3× higher. See: Kwon et al. 2023 (PagedAttention).
     cost_usd = (prompt_tokens * 0.5 + completion_tokens * 1.5) / 1_000_000
 
     result = {
