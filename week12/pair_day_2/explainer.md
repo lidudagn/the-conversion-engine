@@ -27,6 +27,40 @@ At every single step of generation:
 
 This means if your schema says `variant` must be `["signal_grounded", "exploratory"]`, and the model has already generated `{"variant": "`, the engine will mask out every token in the library except those starting with `s` or `e`. The model *cannot* generate a third option because that option's probability is zero at the hardware level.
 
+## Showing the Difference
+
+```python
+# --- Prompt-Stuffing (what Rahel has) ---
+messages = [{"role": "user", "content": """
+  Available tools: book_calendar_slot(email, time)
+  If you need to call a tool, return JSON: {"action": "...", "args": {...}}
+  Otherwise return email text.
+  Compose outreach for cto@novapay.io
+"""}]
+response = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+text = response.choices[0].message.content  # raw string — you parse it yourself
+# finish_reason: "stop" — model just ended a sentence
+# No guarantee of valid JSON. Could output a typo like "book_calender_slot".
+
+# --- Function-Calling (tools parameter) ---
+tools = [{"type": "function", "function": {
+    "name": "book_calendar_slot",
+    "parameters": {"type": "object", "properties": {
+        "email": {"type": "string"},
+        "time":  {"type": "string"}
+    }, "required": ["email", "time"]}
+}}]
+response = client.chat.completions.create(
+    model="gpt-4o-mini", messages=messages, tools=tools, tool_choice="auto"
+)
+call = response.choices[0].message.tool_calls[0]
+print(call.function.name)       # "book_calendar_slot" — guaranteed match
+print(call.function.arguments)  # schema-valid JSON — logit masking enforced it
+# finish_reason: "tool_calls" — generation stopped at schema completion, not sentence end
+```
+
+The observable proof: with function-calling, `finish_reason` is `"tool_calls"`, not `"stop"`. The model didn't end a sentence — the engine halted it because the schema was complete.
+
 ## Why P-023 (HubSpot) and P-026 (Cal.com) Fail
 
 In Rahel's probes, she sees "model failures" where the model generates a valid-looking decision that the scaffolding then executes incorrectly.
