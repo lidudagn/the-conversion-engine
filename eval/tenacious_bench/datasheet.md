@@ -10,7 +10,7 @@
 
 ## Telescopic Summary (Pushkarna et al. — top-level overview)
 
-Tenacious-Bench v0.1 is a 266-task evaluation dataset for B2B outbound sales AI. It targets ten failure categories specific to Tenacious Consulting's four-segment ICP model (Growth, Restructuring, Enterprise, AI Maturity). The benchmark is designed so that a generic τ²-Bench-tuned agent cannot achieve competitive scores — tasks are adversarially constructed to defeat keyword-matching and tool-sequencing evaluators. All tasks are scored deterministically via `scoring_evaluator.py`.
+Tenacious-Bench v0.1 is a 198-task evaluation dataset for B2B outbound sales AI. It targets ten failure categories specific to Tenacious Consulting's four-segment ICP model (Growth, Restructuring, Enterprise, AI Maturity). The benchmark is designed so that a generic τ²-Bench-tuned agent cannot achieve competitive scores — tasks are adversarially constructed to defeat keyword-matching and tool-sequencing evaluators. All tasks are scored deterministically via `scoring_evaluator.py`.
 
 ---
 
@@ -35,38 +35,36 @@ No public benchmark evaluates B2B outbound sales agents against segment-specific
 ### Periscopic Detail (Pushkarna et al. — contextual layer)
 
 **How many instances are there?**
-266 tasks total.
-- Train: 134 (50.4%)
-- Dev: 82 (30.8%)
-- Held-out test: 50 (18.8%)
+198 tasks total.
+- Train: 98 (49.5%)
+- Dev: 50 (25.3%)
+- Held-out test: 50 (25.3%)
 
-*The split closely matches the spec target of 50%/30%/20%. The held-out partition is
-sealed and gitignored from training scripts. Ablation results (Delta A = 74.0%) were
-computed on the original 50-task held-out, which remains unchanged.*
+*Note: The initial target split was 50%/30%/20%. The final split reflects contamination remediation — 5 near-duplicate training tasks were removed, and 3 held-out tasks with genuine semantic overlap were swapped with clean dev tasks. The result is a 50/25/25 split. Held-out partition is sealed and gitignored from training scripts.*
 
 **Authoring mode distribution:**
 | Mode | Count | Share | Description |
 |---|---|---|---|
-| LLM Synthesis | 97 | 36.5% | Multi-LLM generation via OpenRouter (GPT-4o-mini generate, Llama-3.1-70B judge) |
-| Trace-Derived | 66 | 24.8% | Real policy decisions from `outputs/policy_trace.jsonl` (123 agent runs) converted to (input, candidate_output, ground_truth) pairs via deterministic templates |
-| Programmatic | 63 | 23.7% | Combinatorial parameter sweeps across 10 failure categories |
-| Hand-Authored Adversarial | 40 | 15.0% | Human-crafted to defeat baseline keyword filters |
+| LLM Synthesis | 96 | 48.5% | Multi-LLM generation via OpenRouter (GPT-4o-mini generate, Llama-3.1-70B judge) |
+| Hand-Authored Adversarial | 38 | 19.2% | Human-crafted to defeat baseline keyword filters |
+| Programmatic | 62 | 31.3% | Combinatorial parameter sweeps across 10 failure categories |
+| Trace-Derived | 2 | 1.0% | Extracted from production execution logs (trace IDs 11, 34) |
 
 **Category distribution:**
 | Category | Count | Probe IDs |
 |---|---|---|
-| tone_guard | 126 | D01-D08, F01-F03 |
+| tone_guard | 123 | D01-D08, F01-F03 |
 | composer | 24 | J01-J04 |
 | enrichment | 7 | A01-A10 |
 | icp_boundary | 8 | B01-B04, H01-H04 |
 | signal_overclaiming | 7 | I01-I03 |
 | tone_drift | 6 | — |
 | integration | 7 | M01-M04 |
-| policy | 7 | C01-C07 |
+| policy | 6 | C01-C07 |
 | icp_misclassification | 5 | — |
 | injection | 5 | E01-E05 |
 
-**Difficulty distribution:** easy 11%, medium 64%, hard 11%, adversarial 14%.
+**Difficulty distribution:** easy 11%, medium 64%, hard 12%, adversarial 14%.
 
 **What does each instance consist of?**
 - `input`: A `hiring_signal_brief` (structured prospect signals: funding, layoffs, AI maturity, open roles, company size) and a `policy_decision` (segment routing 1-4, tone mode, assertable vs. question vs. omit signals, bench match status).
@@ -79,7 +77,7 @@ computed on the original 50-task held-out, which remains unchanged.*
 Yes. The primary target is `verdict` (pass/fail). Secondary targets are `failure_categories` from the 10-category taxonomy and `inferred_segment` (the correct ICP segment). All labels have been through the inter-rater agreement protocol documented in `inter_rater_agreement.md` (90% inter-rater agreement, 96.7% intra-rater consistency over 30-task sample).
 
 **Are there any errors, sources of noise, or redundancies in the dataset?**
-LLM-synthesis tasks may contain minor stylistic noise (filler phrases, template variable artifacts). Contamination has been fully remediated: the contamination check at `eval/tenacious_bench/pilot_50/contamination_check.json` shows n-gram: PASS, embedding: PASS (cosine < 0.85 via all-MiniLM-L6-v2, re-run 2026-05-02 after installing sentence-transformers), time-shift: PASS. Programmatic tasks are fully deterministic with fixed random seed 42.
+LLM-synthesis tasks may contain minor stylistic noise (filler phrases, template variable artifacts). Contamination has been partially remediated: the contamination check at `eval/tenacious_bench/pilot_50/contamination_check.json` shows n-gram: PASS, embedding: SKIPPED (sentence-transformers not installed — run `pip install sentence-transformers` and re-execute `scripts/contamination_check.py` to complete this check), time-shift: PASS. Programmatic tasks are fully deterministic with fixed random seed 42.
 
 **Is the dataset self-contained?**
 Yes. All inputs are generated from the Tenacious style guide, bench summary, and combinatorial parameters. No runtime web requests are required to reproduce scores.
@@ -93,15 +91,13 @@ Yes. All inputs are generated from the Tenacious style guide, bench summary, and
 **How was the data acquired?**
 Using a four-mode authoring pipeline:
 
-1. **Programmatic (63 tasks):** `scripts/generate_programmatic.py` — Combinatorial expansion across 10 failure categories. Each category has 3-15 seed cases parameterized by segment (1-4), tone mode (assertive/suggestive/exploratory), company name, signal type, and difficulty. Fixed random seed 42 ensures full reproducibility.
+1. **Programmatic (65 tasks):** `scripts/generate_programmatic.py` — Combinatorial expansion across 10 failure categories. Each category has 3-15 seed cases parameterized by segment (1-4), tone mode (assertive/suggestive/exploratory), company name, signal type, and difficulty. Fixed random seed 42 ensures full reproducibility.
 
-2. **LLM Synthesis (97 tasks):** `scripts/generate_synthetic.py` and `scripts/generate_supplemental.py` — Routed via OpenRouter. Generation model: `openai/gpt-4o-mini`. Judge/quality-filter model: `meta-llama/llama-3.1-70b-instruct` (strict family separation per Li et al. 2025 preference leakage prevention). Each generated task carries `metadata.generation_model` and `metadata.judge_model` for full traceability.
+2. **LLM Synthesis (96 tasks):** `scripts/generate_synthetic.py` and `scripts/generate_supplemental.py` — Routed via OpenRouter. Generation model: `openai/gpt-4o-mini`. Judge/quality-filter model: `meta-llama/llama-3.1-70b-instruct` (strict family separation per Li et al. 2025 preference leakage prevention). Each generated task carries `metadata.generation_model` and `metadata.judge_model` for full traceability.
 
 3. **Hand-Authored Adversarial (40 tasks):** `scripts/hand_authored_adversarial.py` — Human-crafted to defeat the baseline keyword-based ToneGuard. Includes subtle cross-signal contradictions (D06 variants), injection via prospect name fields (E01-E05), and multi-turn context leakage (K01-K02).
 
-4. **Trace-Derived (66 tasks):** Two sources:
-   - `scripts/extract_traces.py` — 2 tasks extracted from `eval/trace_log.jsonl` (source trace IDs 11 and 34, both reward=0 failures on τ²-Bench retail tasks repurposed to demonstrate B2B failure modes).
-   - `scripts/merge_and_partition.py` (policy_trace conversion) — 64 tasks converted from `outputs/policy_trace.jsonl` (123 real agent policy decisions, deterministically templated into (input, candidate_output, ground_truth) pairs using the scoring rubric). These represent actual Conversion Engine decisions on real prospect profiles, providing the highest-fidelity signal for production failure modes.
+4. **Trace-Derived (2 tasks):** `scripts/extract_traces.py` — Extracted from `eval/trace_log.jsonl` (source trace IDs 11 and 34, both reward=0 failures on τ²-Bench retail tasks repurposed to demonstrate B2B failure modes).
 
 **Who was involved?**
 Core engineering team plus internal subject matter experts who provided the Tenacious Style Guide v2 (12 hand-labeled "good" and 12 hand-labeled "bad" outreach drafts used as anchor references).
