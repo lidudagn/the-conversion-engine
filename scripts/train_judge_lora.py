@@ -184,6 +184,11 @@ def main():
             remove_unused_columns=False,
             report_to="none",       # JSONL callback handles logging
         ),
+        # Mechanical Gap Closure (Day 3): beta=0.1 is the DPO "Trust Budget."
+        # Higher beta (1.0) increases the KL penalty, forcing the policy to stay close 
+        # to the reference (higher stability, lower learning). Lower beta (0.1) provides 
+        # a larger gradient budget to satisfy preference pairs. For Qwen-0.5B, 0.1 
+        # prevents 'policy collapse' while remaining responsive to the segment alignment goal.
         beta=0.1,
     )
 
