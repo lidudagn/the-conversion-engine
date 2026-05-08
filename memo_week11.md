@@ -23,6 +23,7 @@ We built Tenacious-Bench v0.1 — a 266-task evaluation benchmark targeting the 
 | Latency per task | ~2s (T4 GPU) | <1ms | ~1.5s |
 
 **Delta A (Trained vs Rule Baseline):** +26pp, p=0.0127, significant at p<0.05. The preference-tuned judge catches segment-mismatch failures (D06) that keyword heuristics miss entirely.
+**Statistical caveat (Week 12 Gap Closure):** This p-value establishes that the accuracy lift is not sampling noise (internal validity), but does not guarantee performance on under-sampled subgroups such as confidence-boundary cases, which comprise <10% of the held-out set. Stratified evaluation by failure type is required before production deployment decisions. See Wasserstein & Lazar (2016), ASA Statement on p-Values.
 
 **Delta B (Rule vs Prompt-Only, Honest Report):** The zero-shot prompt judge predicted PASS for all 50 held-out tasks (100% PASS bias), achieving only 22% accuracy on a FAIL-heavy held-out set. This validates that weight updates — not prompt engineering — are necessary for semantic alignment judgment.
 
