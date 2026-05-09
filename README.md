@@ -310,3 +310,32 @@ Dataset, evaluation scripts, and LoRA adapter are released under **[CC-BY-4.0](L
 - Loss: 1.6659 → 0.0089 (converged)
 - Full hyperparameters: `training/hyperparameters.json`
 - Training log: `training/training_run.log`
+
+## Week 12: Knowledge Gap Formulation — Public Artifacts
+
+### Blog Posts (Medium)
+
+| Day | Topic | URL |
+|---|---|---|
+| 1 | Inference-Time Mechanics: Prefill vs Decode | https://medium.com/p/4dc021012e29 |
+| 2 | Agent & Tool-Use Internals: Token-Level Mechanics | https://medium.com/p/1af6102f253f |
+| 3 | Training Mechanics: LoRA Rank & Intrinsic Dimensionality | https://medium.com/p/b7a88f4c7978 |
+| 4 | Evaluation & Statistics: When p < 0.05 Lies | https://medium.com/p/656335215618 |
+| 5 | Production Patterns: Structured Output & Constrained Decoding | (standalone post) |
+
+### Tweet Threads (X)
+
+| Day | URL |
+|---|---|
+| 1 | https://x.com/LidyaDagnew/status/2051730743517155371 |
+| 2 | https://x.com/LidyaDagnew/status/2052103181635576216 |
+| 3 | https://x.com/LidyaDagnew/status/2052472986054074811 |
+| 4 | https://x.com/LidyaDagnew/status/2052829695922618769 |
+| 5 | https://x.com/LidyaDagnew/status/2053160478101180917 |
+
+### Final Submission Documents
+
+- [`week12/synthesis.md`](week12/synthesis.md) — Week synthesis (8 gaps closed + 1 standalone)
+- [`week12/canonical_list.md`](week12/canonical_list.md) — Annotated reading list (10 papers + 5 tools)
+- [`week12/portfolio_update.md`](week12/portfolio_update.md) — Portfolio summary for FDE hiring manager
+
